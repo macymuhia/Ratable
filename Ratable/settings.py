@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party
     'bootstrap3',
+    'widget_tweaks',
+    'bootstrap4',
 
     # Own apps
-    'auth',
+    'users',
+    'Departments',
+    'KPIs',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +123,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = ''
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
