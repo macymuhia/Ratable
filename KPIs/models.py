@@ -13,6 +13,7 @@ class Area(model.Model):
         method used the save the areas added.
         '''
         self.save()
+        
 
     def delete_area(self):
         '''
