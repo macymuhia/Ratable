@@ -20,6 +20,7 @@ class Area(model.Model):
         method used the delete the areas added.
         '''
         self.delete()
+        
 
     def update_area(self):
         '''
