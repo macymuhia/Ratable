@@ -17,6 +17,11 @@ class UserProfile(models.Model):
     )
     phone = models.CharField(max_length=20, blank=True, default="")
     bio = models.TextField()
+    first_name = models.CharField(max_length=20, default="")
+    last_name = models.CharField(max_length=20, default="")
+    email = models.EmailField(default='')
+    role = models.CharField(max_length=20, default="")
+    department = models.CharField(max_length=20, default="")
 
 
 @receiver(post_save, sender=User)
