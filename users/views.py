@@ -61,3 +61,8 @@ def edit_profile(request):
         )
     else:
         raise PermissionDenied
+
+
+@login_required(login_url="")
+def add_user(request):
+    pass
