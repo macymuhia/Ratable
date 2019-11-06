@@ -21,6 +21,37 @@ class Role(models.Model):
 
     def __str__(self):
       return self.get_id_display()
+
+ class Permission(models.Model):
+    '''
+    The Permission entries are managed by the role cateory in the roles class.
+    '''
+
+    class Meta:
+        permissions = [
+            ("add_user_staff", "Can add a staff Member"),
+            ("delete_user_staff", "Can remove a staff Member"),
+            ("update_user_staff", "Can update a staff Member"),
+            ("add_manager_staff", "Can add a Line Manager"),
+            ("delete_manager_staff", "Can remove a Line Manager"),
+            ("update_manager_staff", "Can update a Line Manager"),
+            ("add_admin_staff", "Can add an Admin"),
+            ("delete_admin_staff", "Can remove an Admin"),
+            ("update_admin_staff", "Can update an Admin"),
+            ("add_department", "Can add a Departnment"),
+            ("delete_department", "Can remove a Departnment"),
+            ("update_department", "Can update a Departnment"),
+            ("assign_manager_department", "Can assign a manager for a Departnment"),
+            ("remover_manager_departmet", "Can remove a manager from a Department"),
+            ("add_review_area", "Can add an area for the employee review"),
+
+            ("edit_review_area", "Can edit an area for the employee review"),
+            ("delete_review_area", "Can delete an area for the employee review"),
+            ("add_indicator_item", "Can add an indicator for the employee review"),
+            ("edit_indicator_item", "Can edit an indicatorindicator for the employee review"),
+            ("delete_indicator_item", "Can delete an indicator for the employee review"),
+            ("close_task", "Can remove a task by setting its status as closed"),
+        ]
       
 class UserProfile(models.Model):
     user = models.OneToOneField(
