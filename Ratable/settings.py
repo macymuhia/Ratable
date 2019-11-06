@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party
     'bootstrap3',
-    'widget_tweaks',
+    # 'widget_tweaks',
     'bootstrap4',
 
     # Own apps
