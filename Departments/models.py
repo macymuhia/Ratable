@@ -3,4 +3,5 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class departments(models.Model):
-    name = 
+    name = models.CharField(max_length=60)
+    
