@@ -11,9 +11,33 @@
 	<title>Amiran Sign In</title>
 	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 	<script src="{% static 'js/scripts.js' %}"></script>
-	<script src="{% static 'static_jquery/js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.js' %}"></script>
 </head>
 <body>
+	<script>
+		$('#login-button').click(function(){
+	$('#login-button').fadeOut("slow",function(){
+	  $("#container").fadeIn();
+	  TweenMax.from("#container", .4, { scale: 0, ease:Sine.easeInOut});
+	  TweenMax.to("#container", .4, { scale: 1, ease:Sine.easeInOut});
+	});
+  });
+  
+  $(".close-btn").click(function(){
+	TweenMax.from("#container", .4, { scale: 1, ease:Sine.easeInOut});
+	TweenMax.to("#container", .4, { left:"0px", scale: 0, ease:Sine.easeInOut});
+	$("#container, #forgotten-container").fadeOut(800, function(){
+	  $("#login-button").fadeIn(800);
+	});
+  });
+  
+  /* Forgotten Password */
+  $('#forgotten').click(function(){
+	$("#container").fadeOut(function(){
+	  $("#forgotten-container").fadeIn();
+	});
+  });
+		</script>
 	<div id="main_cont">
 		<div id="login-button">
 			<img src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png">
@@ -58,8 +82,5 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
-  </script>
-  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 </body>
 </html>
