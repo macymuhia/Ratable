@@ -28,7 +28,7 @@ def edit_profile(request):
     user = User.objects.get(id=current_user.id)
 
     # prepopulate UserProfileForm with retrieved user values from above.
-    user_form = UserForm(instance=user)
+    user_form = UserProfileForm(instance=user)
 
     # The sorcery begins from here, see explanation below
     ProfileInlineFormset = inlineformset_factory(
@@ -38,7 +38,8 @@ def edit_profile(request):
 
     if request.user.is_authenticated and request.user.id == user.id:
         if request.method == "POST":
-            user_form = UserForm(request.POST, request.FILES, instance=user)
+            user_form = UserProfileForm(
+                request.POST, request.FILES, instance=user)
             formset = ProfileInlineFormset(
                 request.POST, request.FILES, instance=user)
 
