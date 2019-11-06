@@ -5,10 +5,12 @@ from django.dispatch import receiver
 
 # Create your models here.
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(
-        User, related_name="profile", on_delete=models.CASCADE)
+        User,
+        related_name="profile",
+        on_delete=models.CASCADE
+    )
     photo = models.ImageField(
         upload_to="profile/",
         max_length=255,
@@ -18,9 +20,20 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, blank=True, default="")
     bio = models.TextField()
 
+      def __str__(self):
+        return self.user.username
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-    instance.profile.save()
+    @receiver(post_save, sender = User) 
+    def create_profile(instance,sender,created, **kwargs):
+        if created:
+            Profile.objects.create(user = instance)
+
+    @receiver(post_save, sender= User)
+    def save_profile(sender, instance, **kwargs):
+        instance.profile.save()
+
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+        instance.profile.save()
