@@ -4,7 +4,24 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+class Role(models.Model):
+    '''
+    The Role entries are managed by the admin and define the role a user takes.
+    '''
+    ADMIN = 1
+    MANAGER = 2
+    STAFF = 3
+    ROLE_CHOICES = (
+      (MANAGER, 'staff'),
+      (STAFF, 'staff'),
+      (ADMIN, 'admin'),
+    )
 
+    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True, blank=True)
+
+    def __str__(self):
+      return self.get_id_display()
+      
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
