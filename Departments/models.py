@@ -12,5 +12,8 @@ class departments(models.Model):
         self.save()
 
     def delete_departments(self):
-        self.delete()    
+        self.delete()  
+        
+    def update_departments(self):
+        self.update()  
     
