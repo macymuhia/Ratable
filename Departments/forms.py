@@ -1,7 +1,8 @@
 from django import forms
-from .models import Departments
+from .models import Department
 
-class DepartmentCreationForm(forms.Form):
+class DepartmentCreationForm(forms.ModelForm):
     
-    model = Department
-    fields = ['name', 'line_manager']
+    class Meta:
+        model = Department
+        fields = ['name', 'line_manager']
