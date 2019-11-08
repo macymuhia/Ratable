@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
-from .models import UserProfile
+from .models import *
+from .forms import *
 
 # Create your views here.
 @login_required(login_url="")
@@ -65,4 +66,10 @@ def edit_profile(request):
 
 @login_required(login_url="")
 def add_user(request):
-    pass
+    form = AddUserForm()
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            form = AddUserForm()
+
+    return render(request, "add_user.html", {"form": form})
