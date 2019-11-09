@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400|Lora");
+
 body {
   background: #C2CADB;
+}
+
+hr{
+  color: #FFFFFF;
 }
 
 /* div box styling */
@@ -57,10 +62,10 @@ body {
 h1 {
   font-family: "Open Sans", sans-serif;
   text-align: center;
-  margin-top: 90px;
-  color: #f6f6f6;
-  font-size: 1.2em;
-  letter-spacing: 4px;
+  padding-top:100px;
+  color: #6296CB;
+  font-size: 0.7em;
+  letter-spacing: 3px;
 }
 
 .title {
@@ -101,8 +106,8 @@ span {
   position: absolute;
   width: 270px;
   height: 270px;
-  top: 40%;
-  left: 10%;
+  top: 10%;
+  left: 5%;
   opacity: .7;
 }
 
@@ -127,7 +132,7 @@ button {
 }
 
 button:hover {
-  background: #EAC7CC;
+  background: #C2CADB;
   color: #f6f6f6;
   transition: background-color 1s ease-out;
 }
@@ -136,7 +141,7 @@ button:hover {
   margin-top: 3%;
   background: #f6f6f6;
   color: #6296CB;
-  border: solid 1px #EAC7CC;
+  border: solid 1px #C2CADB;
 }
 
 /* form styling */
@@ -148,10 +153,10 @@ form {
 }
 
 .more-padding {
-  padding-top: 35px;
+  padding-top: 100px;
 }
 .more-padding input {
-  padding: 12px;
+  padding: 14px;
 }
 .more-padding .submit {
   margin-top: 45px;
@@ -178,13 +183,13 @@ input {
   margin: 7px;
   transition: all 0.5s ease-in-out;
 }
+
 input::placeholder {
   color: #f6f6f6;
   letter-spacing: 2px;
   font-size: 1.3em;
   font-weight: 100;
   text-align: center;
-  
 }
 input:focus {
   color: black;
@@ -208,8 +213,8 @@ label {
   display: inline;
   white-space: nowrap;
   position: relative;
-  left: -62px;
-  top: 5px;
+  left: 0px;
+  top: 10px;
 }
 
 input[type=checkbox] {

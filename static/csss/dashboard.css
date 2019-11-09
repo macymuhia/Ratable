@@ -1,0 +1,38 @@
+
+body {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.image {
+	background-color: #C2CADB;
+	padding-top: 200px;
+	padding-bottom: 10px;
+    position: absolute;
+	width: 1700px;
+	mix-blend-mode:  color;
+	opacity: 0;
+    height: 600px;
+    z-index: -1;
+	transform: scale(0.3);
+    animation: scaleImage 3s ease-out backwards;
+}
+
+
+
+@keyframes scaleImage {
+    100% {
+		transform: scale(1);
+		opacity: 2;
+    }
+}
+
+@keyframes fadeInText {
+    100% {
+        opacity: 2;
+    }
+}
+
+
+
