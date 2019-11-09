@@ -8,15 +8,3 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["email"]
-
-
-class AddUserForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = [
-            'first_name',
-            'last_name',
-            'email',
-            'role',
-            'department',
-        ]

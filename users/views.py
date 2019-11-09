@@ -62,14 +62,3 @@ def edit_profile(request):
         )
     else:
         raise PermissionDenied
-
-
-@login_required(login_url="")
-def add_user(request):
-    form = AddUserForm()
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            form = AddUserForm()
-
-    return render(request, "add_user.html", {"form": form})
