@@ -19,7 +19,23 @@ body {
     animation: scaleImage 3s ease-out backwards;
 }
 
-
+.text {
+    display: flex;
+    /* justify-content: center;
+    height: 100%;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: calc(10px + 8vw);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: white;
+    mix-blend-mode:  luminosity;
+    opacity: -0.4;
+    animation: fadeInText 3s 2s ease-out forwards; */
+}
 
 @keyframes scaleImage {
     100% {
