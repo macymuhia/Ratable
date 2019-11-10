@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_static_jquery',
+    
     # Third party
     'bootstrap3',
-    'widget_tweaks',
+    # 'widget_tweaks',
     'bootstrap4',
+    'jquery',
 
     # Own apps
     'users',
@@ -83,6 +86,12 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -91,7 +100,6 @@ DATABASES = {
         "PASSWORD": "1234",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
