@@ -28,7 +28,8 @@ class UserProfile(models.Model):
         ]
 
     def __str__(self):
-            return self.user.username
+        return self.user.username
+
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -38,7 +39,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class CustomGroup(Group):
-​
+
     class Meta:
         proxy = True
         permissions = [

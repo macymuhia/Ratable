@@ -15,5 +15,4 @@ class CustomGroupForm(forms.ModelForm):
         model = CustomGroup
         fields = [
             'name',
-            'permissions'
         ]
