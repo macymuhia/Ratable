@@ -8,3 +8,12 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["email"]
+
+
+class CustomGroupForm(forms.ModelForm):
+    class Meta:
+        model = CustomGroup
+        fields = [
+            'name',
+            'permissions'
+        ]
