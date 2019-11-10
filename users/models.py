@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+
+
 class Role(models.Model):
     '''
     The Role entries are managed by the admin and define the role a user takes.
@@ -12,17 +14,19 @@ class Role(models.Model):
     MANAGER = 2
     STAFF = 3
     ROLE_CHOICES = (
-      (MANAGER, 'staff'),
-      (STAFF, 'staff'),
-      (ADMIN, 'admin'),
+        (MANAGER, 'staff'),
+        (STAFF, 'staff'),
+        (ADMIN, 'admin'),
     )
 
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True, blank=True)
+    id = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES, primary_key=True, blank=True)
 
     def __str__(self):
-      return self.get_id_display()
+        return self.get_id_display()
 
- class Permission(models.Model):
+
+class Permission(models.Model):
     '''
     The Permission entries are managed by the role cateory in the roles class.
     '''
@@ -48,11 +52,13 @@ class Role(models.Model):
             ("edit_review_area", "Can edit an area for the employee review"),
             ("delete_review_area", "Can delete an area for the employee review"),
             ("add_indicator_item", "Can add an indicator for the employee review"),
-            ("edit_indicator_item", "Can edit an indicatorindicator for the employee review"),
+            ("edit_indicator_item",
+             "Can edit an indicatorindicator for the employee review"),
             ("delete_indicator_item", "Can delete an indicator for the employee review"),
             ("close_task", "Can remove a task by setting its status as closed"),
         ]
-      
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
@@ -68,15 +74,15 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, blank=True, default="")
     bio = models.TextField()
 
-      def __str__(self):
-        return self.user.username
+    def __str__(self):
+            return self.user.username
 
-    @receiver(post_save, sender = User) 
-    def create_profile(instance,sender,created, **kwargs):
+    @receiver(post_save, sender=User)
+    def create_profile(instance, sender, created, **kwargs):
         if created:
-            Profile.objects.create(user = instance)
+            Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender= User)
+    @receiver(post_save, sender=User)
     def save_profile(sender, instance, **kwargs):
         instance.profile.save()
 

@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_static_jquery',
-    
+    # 'django_static_jquery',
+
     # Third party
     'bootstrap3',
     # 'widget_tweaks',
     'bootstrap4',
-    'jquery',
+    # 'jquery',
 
     # Own apps
     'users',
