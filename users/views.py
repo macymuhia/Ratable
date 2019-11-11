@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
@@ -62,3 +62,31 @@ def edit_profile(request):
         )
     else:
         raise PermissionDenied
+
+
+def group_create_view(request):
+    perms = Permission.objects.all()
+    form = CustomGroupForm(request.POST)
+    if form.is_valid():
+        grp = form.cleaned_data['name']
+        group, created = Group.objects.get_or_create(name=grp)
+        if created:
+            group.permissions.set(form.cleaned_data['permissions'])
+        form = CustomGroupForm()
+    context = {
+        'form': form,
+        'perms': perms,
+    }
+    return render(request, "groups/group_create.html", context)
+
+
+def group_list_view(request):
+    queryset = CustomGroup.objects.all()  # list of objects
+    context = {
+        "object_list": queryset
+    }
+    return render(request, "groups/group_list.html", context)
+
+
+def group_delete_view(request):
+    pass
