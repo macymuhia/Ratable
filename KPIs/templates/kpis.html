@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Bites: Fancy Flyout Selector</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+	<script>
+		// bullshit routes for demo
+
+const Default = {
+  template: `
+      <div class="content">
+        <h1>Hello There!</h1>
+        <p>Please select a delicious item from our menu selector above!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+      </div>
+  ` };
+
+
+const Pizza = {
+  template: `
+      <div class="content">
+        <h1>Pizza</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+      </div>
+  ` };
+
+
+const Tacos = {
+  template: `
+      <div class="content">
+        <h1>Tacos</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+      </div>
+  ` };
+
+
+const Burger = {
+  template: `
+      <div class="content">
+        <h1>Burger</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit aliquam ea quam placeat, consectetur assumenda vel. Commodi alias repellat deleniti totam quas quod dicta quasi quos ipsum, molestiae culpa veniam.</p>
+      </div>
+  ` };
+
+
+const Burrito = {
+  template: `
+      <div class="content">
+        <h1>Burrito</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+        <ul>
+          <li>List Item about Burritos</li>
+          <li>List Item about Burritos</li>
+          <li>List Item about Burritos</li>
+          <li>List Item about Burritos</li>
+        </ul>
+      </div>
+  ` };
+
+
+const Sushi = {
+  template: `
+      <div class="content">
+        <h1>Sushi</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+      </div>
+  `
+
+
+  // our actual app
+};
+const router = new VueRouter({
+  routes: [
+  { name: 'Home', path: '/', component: Default },
+  { name: 'Pizza', path: '/pizza/', component: Pizza },
+  { name: 'Tacos', path: '/tacos/', component: Tacos },
+  { name: 'Burger', path: '/burger/', component: Burger },
+  { name: 'Burrito', path: '/burrito/', component: Burrito },
+  { name: 'Sushi', path: '/sushi/', component: Sushi }] });
+
+
+
+const App = new Vue({
+  el: '#app',
+  router,
+  data() {
+    return {
+      selected: '👉 Choose an option 👈',
+      expanded: false,
+      prevHeight: 0,
+      items: [
+      { label: 'Pizza', icon: '🍕', path: '/pizza/' },
+      { label: 'Tacos', icon: '🌮', path: '/tacos/' },
+      { label: 'Burger', icon: '🍔', path: '/burger/' },
+      { label: 'Burrito', icon: '🌯', path: '/burrito/' },
+      { label: 'Sushi', icon: '🍣', path: '/sushi/' }] };
+
+
+  },
+  methods: {
+    toggleFlyout() {
+      this.expanded = !this.expanded;
+    },
+    closeFlyout() {
+      this.expanded = false;
+    },
+    setTopLevel(ev) {
+      const icon = ev.target.children[0].innerHTML;
+      const text = ev.target.children[1].innerHTML;
+      this.selected = `${icon} ${text}`;
+      this.toggleFlyout();
+    },
+    leave(el) {
+      this.prevHeight = getComputedStyle(el).height;
+    },
+    enter(el) {
+      const { height } = getComputedStyle(el);
+      el.style.height = this.prevHeight;
+      setTimeout(() => {
+        el.style.height = height;
+      });
+    } } });
+		</script>
+<!-- partial:index.partial.html -->
+<div id="app">
+  
+  <div class="selektor">
+    
+    <header class="selektor__header">
+      <a
+        href="#"
+        class="selektor__toplevel"
+        :class="{ 'is-active': ( expanded === true ) }"
+        @click="toggleFlyout">
+        {{selected}}
+      </a>
+    </header>
+    
+    <transition name="shift">
+      <div class="selektor__inner" v-if="expanded">
+        
+        <a href="#" @click="closeFlyout" class="close">
+          <div class="sr-only" aria-hidden="true">Close Menu</div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+            <path d="M357 35.7L321.3 0 178.5 142.8 35.7 0 0 35.7l142.8 142.8L0 321.3 35.7 357l142.8-142.8L321.3 357l35.7-35.7-142.8-142.8z"/>
+          </svg>
+        </a>
+        
+        <ul class="selektor__options">
+          <li v-for="(item, index) of items" :key="index">
+            <router-link
+              :to="{ name: item.label }"
+              :ref="item.label"
+              @click.native="setTopLevel">
+              <span class="item__icon">{{item.icon}}</span>
+              <span class="item__label">{{item.label}}</span>
+            </router-link>
+          </li>
+        </ul>
+        
+      </div>
+    </transition>
+    
+  </div>
+  
+  <transition
+    name="fade"
+    mode="out-in"
+    @leave="leave"
+    @enter="enter">
+    <router-view/>
+  </transition>
+  
+  <footer>
+    <p>&copy; {{ new Date().getFullYear() }} Food &amp; Stuff</p>
+  </footer>
+  
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
