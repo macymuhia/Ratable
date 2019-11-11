@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_static_jquery',
-    
+    # 'django_static_jquery',
+
     # Third party
     'bootstrap3',
-    'widget_tweaks',
+    # 'widget_tweaks',
     'bootstrap4',
-    'jquery',
+    # 'jquery',
 
     # Own apps
     'users',
@@ -93,11 +93,11 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rate',
-        'USER': 'hillarydalie',
-    'PASSWORD':'password',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ratable",
+        "USER": "macy",
+        "PASSWORD": "1234",
     }
 }
 
