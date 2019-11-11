@@ -1,11 +1,12 @@
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.conf import settings
+from django.contrib.auth import views as auth_views
+from .forms import CustomAuthForm
 from . import views
 
 urlpatterns = [
-    path("", LoginView.as_view(), {
-         "next_page": settings.LOGIN_REDIRECT_URL}, name="login",),
+    path("", views.login_user, name="login",),
     path("logout/", LogoutView.as_view(),
          {"next_page": settings.LOGOUT_REDIRECT_URL}, name="logout",),
     path('profile/', views.profile, name="profile"),
