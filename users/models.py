@@ -1,10 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from Departments.models import Department
 
 
-# Create your models here.
+class CustomGroup(Group):
+
+    class Meta:
+        proxy = True
+        permissions = [
+            ("add_group", "Can add group"),
+            ("change_group", "Can change group"),
+            ("delete_group", "Can remove a group"),
+        ]
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
@@ -19,6 +30,10 @@ class UserProfile(models.Model):
     )
     phone = models.CharField(max_length=20, blank=True, default="")
     bio = models.TextField()
+    group = models.ManyToManyField(CustomGroup)
+    role = models.CharField(max_length=30, default='')
+    department = models.ForeignKey(
+        Department, null=True, blank=True, on_delete=models.DO_NOTHING)
 
     class Meta:
         permissions = [
@@ -36,14 +51,3 @@ def update_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
     instance.profile.save()
-
-
-class CustomGroup(Group):
-
-    class Meta:
-        proxy = True
-        permissions = [
-            ("add_group", "Can add group"),
-            ("change_group", "Can change group"),
-            ("delete_group", "Can remove a group"),
-        ]
