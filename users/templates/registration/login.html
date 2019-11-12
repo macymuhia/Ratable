@@ -19,12 +19,15 @@
                 <div class="signup nodisplay">
                 </div>
                 <div class="signin">
-                    <form class="more-padding" autocomplete="off">
-                        <input type="text" placeholder="username">
-                        <input type="password" placeholder="password">
+                    <form method="POST" action="/users/" class="more-padding" autocomplete="off">
+                        {% csrf_token %}
+                        <input type="text" placeholder="username" name="username">
+                        <input type="password" placeholder="password" name="password">
                         <div class="checkbox">
                             <input type="checkbox" id="remember" /><label for="remember">remember me</label>
                         </div>
+                        {% if request.GET.next %}
+                        <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
                         <button class="button submit">SIGN IN</button>
                     </form>
                 </div>

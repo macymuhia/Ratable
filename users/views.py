@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
@@ -8,7 +9,30 @@ from .models import *
 from .forms import *
 
 # Create your views here.
-@login_required(login_url="")
+
+
+def login_user(request):
+    # logout(request)
+    next_page = ''
+    username = password = ''
+    if 'next' in request.POST:
+        next_page = request.POST['next']
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        # import pdb
+        # pdb.set_trace()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                if next_page:
+                    return redirect(next_page)
+                return redirect('profile')
+    return render(request, 'registration/login.html')
+
+
+@login_required(login_url="/users/")
 def profile(request):
 
     current_user = request.user
@@ -22,7 +46,7 @@ def profile(request):
     )
 
 
-@login_required(login_url="")  # only logged in users should access this
+@login_required(login_url="/users/")  # only logged in users should access this
 def edit_profile(request):
 
     current_user = request.user
