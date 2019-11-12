@@ -1,10 +1,12 @@
+{% load static%}
+
 <!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>Vue.js Bites: Fancy Flyout Selector</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}"></link>
 
 </head>
 <body>
@@ -180,7 +182,7 @@ const App = new Vue({
   </transition>
   
   <footer>
-    <p>&copy; {{ new Date().getFullYear() }} Food &amp; Stuff</p>
+    <p>&copy;Food &amp; Stuff</p>
   </footer>
   
 </div>
