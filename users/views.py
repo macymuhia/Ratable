@@ -32,6 +32,33 @@ def login_user(request):
     return render(request, 'registration/login.html')
 
 
+def add_user_view(request):
+    AddUserInlineFormset = inlineformset_factory(
+        User, UserProfile, fields=(
+            "group", 'role', 'department')
+    )
+    # formset = AddUserInlineFormset()
+    user_form = UserProfileForm(
+        request.POST, request.FILES)
+    formset = AddUserInlineFormset(
+        request.POST, request.FILES)
+    context = {"formset": formset, "user_form": user_form}
+    if request.method == "POST":
+
+        if user_form.is_valid():
+            created_user = user_form.save(commit=False)
+            formset = AddUserInlineFormset(
+                request.POST, request.FILES
+            )
+
+            if formset.is_valid():
+                created_user.save()
+                formset.save()
+                return redirect("profile")
+
+    return render(request, 'registration/add_user.html', context)
+
+
 @login_required(login_url="/users/")
 def profile(request):
 
