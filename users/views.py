@@ -11,7 +11,7 @@ def profile(request):
     return render(request, 'profile.html', {"profile":profile})
 
 def users(request):
-    return render(request, 'users.html', {"users":users})
+    return render(request, 'adduser.html', {"users":users})
 # @login_required(login_url="")
 # def profile(request):
 

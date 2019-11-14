@@ -219,29 +219,24 @@ html, body {
   background: transparent;
 }
 .nav-elem.nav-1 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
 }
 .nav-elem.nav-2 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2016/02/19/11/27/silhouette-people-1209722__340.jpg");
 }
 .nav-elem.nav-3 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
+  background-image: url("https://www.baltoncp.com/amirancomm/wp-content/uploads/sites/8/2018/11/kdn-img1-230x267.jpg");
 }
 .nav-elem.nav-4 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg");
 }
 .nav-elem.nav-5 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
+  background-image: url("https://image.shutterstock.com/image-photo/close-businesswoman-holding-graphs-hand-260nw-229854826.jpg");
 }
 .nav-elem.nav-6 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/03/08/09/30/head-663997_960_720.jpg");
 }
-.nav-elem.nav-7 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
-}
-.nav-elem.nav-8 {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
-}
+
 
 /* REAL SIDEBAR STYLES END */
 /* SECTIONS STYLES */
@@ -256,53 +251,42 @@ html, body {
   height: 100%;
 }
 .section.section-1 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
 }
 .section.section-1 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
 }
 .section.section-2 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2016/02/19/11/27/silhouette-people-1209722__340.jpg");
 }
 .section.section-2 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2016/02/19/11/27/silhouette-people-1209722__340.jpg");
 }
 .section.section-3 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2013/02/15/10/10/silhouettes-81830_960_720.jpg");
 }
 .section.section-3 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2013/02/15/10/10/silhouettes-81830_960_720.jpg");
 }
 .section.section-4 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg");
 }
 .section.section-4 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg");
 }
 .section.section-5 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
+  background-image: url("https://image.shutterstock.com/image-photo/close-businesswoman-holding-graphs-hand-260nw-229854826.jpg");
 }
 .section.section-5 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
+  background-image: url("https://image.shutterstock.com/image-photo/close-businesswoman-holding-graphs-hand-260nw-229854826.jpg");
 }
 .section.section-6 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/03/08/09/30/head-663997_960_720.jpg");
 }
 .section.section-6 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2015/03/08/09/30/head-663997_960_720.jpg");
 }
-.section.section-7 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
-}
-.section.section-7 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
-}
-.section.section-8 .left-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
-}
-.section.section-8 .bg-part {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
-}
+
 
 .left-part,
 .bg-part {
