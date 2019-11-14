@@ -1,8 +1,7 @@
-from django.urls import path,include
-from . import views
+from django.urls import path, include
 from django.conf import settings
+from Departments import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-        
+    path('add_department/', views.add_department_view, name='add_department'),
 ]
