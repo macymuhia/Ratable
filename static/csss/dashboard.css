@@ -1,9 +1,9 @@
 @font-face {
-  src: url();
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/PFDinTextCompPro-Medium.ttf);
   font-family: pfd-medium;
 }
 @font-face {
-  src: url();
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/PT_Sans-Web-Regular.ttf);
   font-family: ptsans-regular;
 }
 *, *:before, *:after {
@@ -219,32 +219,28 @@ html, body {
   background: transparent;
 }
 .nav-elem.nav-1 {
-  background-image: url("https://www.baltoncp.com/amirancomm/wp-content/uploads/sites/8/2018/12/10-2.svg");
-  width: 500px;
-  height: 100px;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
 }
 .nav-elem.nav-2 {
-  /* tiny 1 on the side */
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
 }
 .nav-elem.nav-3 {
-  /* second tiny one */
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
 }
 .nav-elem.nav-4 {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
 }
 .nav-elem.nav-5 {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
 }
 .nav-elem.nav-6 {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
 }
 .nav-elem.nav-7 {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
 }
 .nav-elem.nav-8 {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
 }
 
 /* REAL SIDEBAR STYLES END */
@@ -259,48 +255,54 @@ html, body {
   position: relative;
   height: 100%;
 }
-/* rectangular one on the left side */
 .section.section-1 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
 }
-
-/* big pictures */
 .section.section-1 .bg-part {
-  background-image: url("");
-  width: 500px;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/2side-pagi-1.jpg");
 }
-
 .section.section-2 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
 }
 .section.section-2 .bg-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/scr-split-2.jpg");
 }
 .section.section-3 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
 }
 .section.section-3 .bg-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/ironman.jpg");
 }
 .section.section-4 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
 }
 .section.section-4 .bg-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
 }
 .section.section-5 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
 }
 .section.section-5 .bg-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/captainamerica.jpg");
 }
 .section.section-6 .left-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
 }
 .section.section-6 .bg-part {
-  background-image: url("");
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/blackwidow.jpg");
 }
-
+.section.section-7 .left-part {
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
+}
+.section.section-7 .bg-part {
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-4.jpg");
+}
+.section.section-8 .left-part {
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
+}
+.section.section-8 .bg-part {
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/thor.jpg");
+}
 
 .left-part,
 .bg-part {
@@ -363,7 +365,7 @@ html, body {
   cursor: pointer;
 }
 .section-heading:hover {
-  color:#6296CB;
+  color: rgba(255, 89, 89, 0.7);
 }
 
 .additional-text {
