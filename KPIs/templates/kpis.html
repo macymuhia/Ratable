@@ -3,125 +3,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{% static 'csss/kpis.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="{% static 'csss/graphs.css' %}">
 	<script src="{% static 'jsss/jquery.js' %}"></script>
-  <title>KPI's</title>
+	<title>graphs</title>
 </head>
 <body>
-  <script>
-    $(document).ready(function () {
-      var $messages = $('.messages-content'),
-    d, h, m,
-    i = 0;
+		<script>
+				$(document).ready(function () {
+					var label = document.querySelector(".label");
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var cw = c.width = 700;
+var ch = c.height = 350;
+var cx = cw / 2,
+  cy = ch / 2;
+var rad = Math.PI / 180;
+var frames = 0;
 
-$(window).load(function() {
-  $messages.mCustomScrollbar();
-  setTimeout(function() {
-    fakeMessage();
-  }, 100);
-});
+ctx.lineWidth = 1;
+ctx.strokeStyle = "#999";
+ctx.fillStyle = "#ccc";
+ctx.font = "14px monospace";
 
-function updateScrollbar() {
-  $messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
-    scrollInertia: 10,
-    timeout: 0
-  });
+var grd = ctx.createLinearGradient(0, 0, 0, cy);
+grd.addColorStop(0, "hsla(167,72%,60%,1)");
+grd.addColorStop(1, "hsla(167,72%,60%,0)");
+
+var oData = {
+  "2008": 20,
+  "2009": 20,
+  "2010": 20,
+  "2011": 20,
+  "2012": 5.3,
+  "2013": 38.4,
+  "2014": 15.7,
+  "2015": 9.0
+};
+
+var valuesRy = [];
+var propsRy = [];
+for (var prop in oData) {
+
+  valuesRy.push(oData[prop]);
+  propsRy.push(prop);
 }
 
-function setDate(){
-  d = new Date()
-  if (m != d.getMinutes()) {
-    m = d.getMinutes();
-    $('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
-  }
+
+var vData = 4;
+var hData = valuesRy.length;
+var offset = 50.5; //offset chart axis
+var chartHeight = ch - 2 * offset;
+var chartWidth = cw - 2 * offset;
+var t = 1 / 7; // curvature : 0 = no curvature 
+var speed = 2; // for the animation
+
+var A = {
+  x: offset,
+  y: offset
+}
+var B = {
+  x: offset,
+  y: offset + chartHeight
+}
+var C = {
+  x: offset + chartWidth,
+  y: offset + chartHeight
 }
 
-function insertMessage() {
-  msg = $('.message-input').val();
-  if ($.trim(msg) == '') {
-    return false;
+/*
+      A  ^
+	    |  |  
+	    + 25
+	    |
+	    |
+	    |
+	    + 25  
+      |__|_________________________________  C
+      B
+*/
+
+// CHART AXIS -------------------------
+ctx.beginPath();
+ctx.moveTo(A.x, A.y);
+ctx.lineTo(B.x, B.y);
+ctx.lineTo(C.x, C.y);
+ctx.stroke();
+
+// vertical ( A - B )
+var aStep = (chartHeight - 50) / (vData);
+
+var Max = Math.ceil(arrayMax(valuesRy) / 10) * 10;
+var Min = Math.floor(arrayMin(valuesRy) / 10) * 10;
+var aStepValue = (Max - Min) / (vData);
+console.log("aStepValue: " + aStepValue); //8 units
+var verticalUnit = aStep / aStepValue;
+
+var a = [];
+ctx.textAlign = "right";
+ctx.textBaseline = "middle";
+for (var i = 0; i <= vData; i++) {
+
+  if (i == 0) {
+    a[i] = {
+      x: A.x,
+      y: A.y + 25,
+      val: Max
+    }
+  } else {
+    a[i] = {}
+    a[i].x = a[i - 1].x;
+    a[i].y = a[i - 1].y + aStep;
+    a[i].val = a[i - 1].val - aStepValue;
   }
-  $('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
-  setDate();
-  $('.message-input').val(null);
-  updateScrollbar();
-  setTimeout(function() {
-    fakeMessage();
-  }, 1000 + (Math.random() * 20) * 100);
+  drawCoords(a[i], 3, 0);
 }
 
-$('.message-submit').click(function() {
-  insertMessage();
-});
+//horizontal ( B - C )
+var b = [];
+ctx.textAlign = "center";
+ctx.textBaseline = "hanging";
+var bStep = chartWidth / (hData + 1);
 
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    insertMessage();
-    return false;
+for (var i = 0; i < hData; i++) {
+  if (i == 0) {
+    b[i] = {
+      x: B.x + bStep,
+      y: B.y,
+      val: propsRy[0]
+    };
+  } else {
+    b[i] = {}
+    b[i].x = b[i - 1].x + bStep;
+    b[i].y = b[i - 1].y;
+    b[i].val = propsRy[i]
   }
-})
-
-var Fake = [
-  'Hi there, I\'m Fabio and you?',
-  'Nice to meet you',
-  'How are you?',
-  'Not too bad, thanks',
-  'What do you do?',
-  'That\'s awesome',
-  'Codepen is a nice place to stay',
-  'I think you\'re a nice person',
-  'Why do you think that?',
-  'Can you explain?',
-  'Anyway I\'ve gotta go now',
-  'It was a pleasure chat with you',
-  'Time to make a new codepen',
-  'Bye',
-  ':)'
-]
-
-function fakeMessage() {
-  if ($('.message-input').val() != '') {
-    return false;
-  }
-  $('<div class="message loading new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-  updateScrollbar();
-
-  setTimeout(function() {
-    $('.message.loading').remove();
-    $('<div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
-    setDate();
-    updateScrollbar();
-    i++;
-  }, 1000 + (Math.random() * 20) * 100);
-
+  drawCoords(b[i], 0, 3)
 }
-    });
-    </script>
-    <div class="chat">
-      <div class="chat-title">
-        <h1>Fabio Ottaviani</h1>
-        <h2>Supah</h2>
-        <figure class="avatar">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
-      </div>
-      <div class="messages">
-        <div class="messages-content"></div>
-      </div>
-      <div class="message-box">
-        <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-        <button type="submit" class="message-submit">Send</button>
-      </div>
+
+function drawCoords(o, offX, offY) {
+  ctx.beginPath();
+  ctx.moveTo(o.x - offX, o.y - offY);
+  ctx.lineTo(o.x + offX, o.y + offY);
+  ctx.stroke();
+
+  ctx.fillText(o.val, o.x - 2 * offX, o.y + 2 * offY);
+}
+//----------------------------------------------------------
+
+// DATA
+var oDots = [];
+var oFlat = [];
+var i = 0;
+
+for (var prop in oData) {
+  oDots[i] = {}
+  oFlat[i] = {}
+
+  oDots[i].x = b[i].x;
+  oFlat[i].x = b[i].x;
+
+  oDots[i].y = b[i].y - oData[prop] * verticalUnit - 25;
+  oFlat[i].y = b[i].y - 25;
+
+  oDots[i].val = oData[b[i].val];
+  
+  i++
+}
+
+
+
+///// Animation Chart ///////////////////////////
+//var speed = 3;
+function animateChart() {
+  requestId = window.requestAnimationFrame(animateChart);
+  frames += speed; //console.log(frames)
+  ctx.clearRect(60, 0, cw, ch - 60);
+  
+  for (var i = 0; i < oFlat.length; i++) {
+    if (oFlat[i].y > oDots[i].y) {
+      oFlat[i].y -= speed;
+    }
+  }
+  drawCurve(oFlat);
+  for (var i = 0; i < oFlat.length; i++) {
+      ctx.fillText(oDots[i].val, oFlat[i].x, oFlat[i].y - 25);
+      ctx.beginPath();
+      ctx.arc(oFlat[i].x, oFlat[i].y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+  if (frames >= Max * verticalUnit) {
+    window.cancelAnimationFrame(requestId);
     
-    </div>
-    <div class="bg"></div>
-    <!-- partial -->
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
+  }
+}
+requestId = window.requestAnimationFrame(animateChart);
+
+/////// EVENTS //////////////////////
+c.addEventListener("mousemove", function(e) {
+  label.innerHTML = "";
+  label.style.display = "none";
+  this.style.cursor = "default";
+
+  var m = oMousePos(this, e);
+  for (var i = 0; i < oDots.length; i++) {
+
+    output(m, i);
+  }
+
+}, false);
+
+function output(m, i) {
+  ctx.beginPath();
+  ctx.arc(oDots[i].x, oDots[i].y, 20, 0, 2 * Math.PI);
+  if (ctx.isPointInPath(m.x, m.y)) {
+    //console.log(i);
+    label.style.display = "block";
+    label.style.top = (m.y + 10) + "px";
+    label.style.left = (m.x + 10) + "px";
+    label.innerHTML = "<strong>" + propsRy[i] + "</strong>: " + valuesRy[i] + "%";
+    c.style.cursor = "pointer";
+  }
+}
+
+// CURVATURE
+function controlPoints(p) {
+  // given the points array p calculate the control points
+  var pc = [];
+  for (var i = 1; i < p.length - 1; i++) {
+    var dx = p[i - 1].x - p[i + 1].x; // difference x
+    var dy = p[i - 1].y - p[i + 1].y; // difference y
+    // the first control point
+    var x1 = p[i].x - dx * t;
+    var y1 = p[i].y - dy * t;
+    var o1 = {
+      x: x1,
+      y: y1
+    };
+
+    // the second control point
+    var x2 = p[i].x + dx * t;
+    var y2 = p[i].y + dy * t;
+    var o2 = {
+      x: x2,
+      y: y2
+    };
+
+    // building the control points array
+    pc[i] = [];
+    pc[i].push(o1);
+    pc[i].push(o2);
+  }
+  return pc;
+}
+
+function drawCurve(p) {
+
+  var pc = controlPoints(p); // the control points array
+
+  ctx.beginPath();
+  //ctx.moveTo(p[0].x, B.y- 25);
+  ctx.lineTo(p[0].x, p[0].y);
+  // the first & the last curve are quadratic Bezier
+  // because I'm using push(), pc[i][1] comes before pc[i][0]
+  ctx.quadraticCurveTo(pc[1][1].x, pc[1][1].y, p[1].x, p[1].y);
+
+  if (p.length > 2) {
+    // central curves are cubic Bezier
+    for (var i = 1; i < p.length - 2; i++) {
+      ctx.bezierCurveTo(pc[i][0].x, pc[i][0].y, pc[i + 1][1].x, pc[i + 1][1].y, p[i + 1].x, p[i + 1].y);
+    }
+    // the first & the last curve are quadratic Bezier
+    var n = p.length - 1;
+    ctx.quadraticCurveTo(pc[n - 1][0].x, pc[n - 1][0].y, p[n].x, p[n].y);
+  }
+
+  //ctx.lineTo(p[p.length-1].x, B.y- 25);
+  ctx.stroke();
+  ctx.save();
+  ctx.fillStyle = grd;
+  ctx.fill();
+  ctx.restore();
+}
+
+function arrayMax(array) {
+  return Math.max.apply(Math, array);
+};
+
+function arrayMin(array) {
+  return Math.min.apply(Math, array);
+};
+
+function oMousePos(canvas, evt) {
+  var ClientRect = canvas.getBoundingClientRect();
+  return { //objeto
+    x: Math.round(evt.clientX - ClientRect.left),
+    y: Math.round(evt.clientY - ClientRect.top)
+  }
+}
+				});
+				</script>
+	<div class="wrapper">
+		<canvas id='c'></canvas>
+		<div class="label">text</div>
+	  </div>
 </body>
 </html>
