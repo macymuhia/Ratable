@@ -22,6 +22,7 @@ class UserProfile(models.Model):
         related_name="profile",
         on_delete=models.CASCADE
     )
+    email_confirmed = models.BooleanField(default=False)
     photo = models.ImageField(
         upload_to="profile/",
         max_length=255,
