@@ -2,6 +2,6 @@ virtual
 __pycache__/
 .vscode/
 .idea/
-.env
+# .env
 *.__pycache__
 .venv/
