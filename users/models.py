@@ -27,9 +27,10 @@ class UserProfile(models.Model):
         max_length=255,
         null=True,
         blank=True,
+        default="",
     )
     phone = models.CharField(max_length=20, blank=True, default="")
-    bio = models.TextField()
+    bio = models.TextField(blank=True, default="", null=True)
     group = models.ManyToManyField(CustomGroup)
     role = models.CharField(max_length=30, default='')
     department = models.ForeignKey(
