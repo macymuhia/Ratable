@@ -45,7 +45,7 @@ def add_user_view(request):
 
             # passing in the context vairables
             text_content = render_to_string(
-                "registration/account_activation_email.txt",
+                "registration/emails/account_activation_email.txt",
                 {
                     "user": user,
                     "domain": current_site.domain,
@@ -54,7 +54,7 @@ def add_user_view(request):
                 },
             )
             html_content = render_to_string(
-                "registration/account_activation_email.html",
+                "registration/emails/account_activation_email.html",
                 {
                     "user": user,
                     "domain": current_site.domain,
@@ -67,7 +67,7 @@ def add_user_view(request):
                 subject, text_content, sender, [user.email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            return redirect("registration/account_activation_sent")
+            return redirect("registration/emails/account_activation_sent")
         else:
             return redirect('profile')
             # user_form = UserForm()
@@ -82,11 +82,38 @@ def add_user_view(request):
 
 
 def account_activation_sent(request):
-    return render(request, 'registration/account_activation_sent.html')
+    return render(request, 'registration/emails/account_activation_sent.html')
 
 
-def activate(request):
-    pass
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.profile.email_confirmed = True
+        user.save()
+        login(request, user)
+        subject = "Welcome to Ratable"
+        sender = "atst.acc19@gmail.com"
+
+        # passing in the context vairables
+        text_content = render_to_string(
+            "registration/emails/welcome_email.txt", {"user": user})
+        html_content = render_to_string(
+            "registration/emails/welcome_email.html", {"user": user})
+
+        msg = EmailMultiAlternatives(
+            subject, text_content, sender, [user.email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        return redirect("edit_profile")
+    else:
+        return render(request, "registration/emails/account_activation_invalid.html")
 
 
 def login_user(request):
