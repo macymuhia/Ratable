@@ -35,14 +35,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('photo', models.ImageField(blank=True, default='', max_length=255, null=True, upload_to='profile/')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('photo', models.ImageField(blank=True, default='',
+                                            max_length=255, null=True, upload_to='profile/')),
                 ('phone', models.CharField(blank=True, default='', max_length=20)),
                 ('bio', models.TextField(blank=True, default='')),
                 ('role', models.CharField(default='', max_length=30)),
-                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='Departments.Department')),
+                ('department', models.ForeignKey(blank=True, null=True,
+                                                 on_delete=django.db.models.deletion.DO_NOTHING, to='Departments.Department')),
                 ('group', models.ManyToManyField(to='users.CustomGroup')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE,
+                                              related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'permissions': [('add_user', 'Can add user'), ('change_user', 'Can change user'), ('delete_user', 'Can remove a user')],
