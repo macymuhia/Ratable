@@ -7,8 +7,17 @@ from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 
-from .models import *
-from .forms import *
+from django.contrib.sites.models import Site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.http import request
+from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth import update_session_auth_hash
+from users.tokens import account_activation_token
+
+from users.models import *
+from users.forms import *
 
 
 # Create your views here.
@@ -28,9 +37,41 @@ def add_user_view(request):
             user.profile.department = dept
             user.profile.role = details_form.cleaned_data.get('role')
             user.profile.save()
-            return redirect('/users/profile/')
+
+            # Email sending functionality
+            subject = "Activate Your Ratable Account"
+            current_site = Site.objects.get_current()
+            sender = "atst.acc19@gmail.com"
+
+            # passing in the context vairables
+            text_content = render_to_string(
+                "registration/account_activation_email.txt",
+                {
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user),
+                },
+            )
+            html_content = render_to_string(
+                "registration/account_activation_email.html",
+                {
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user),
+                },
+            )
+
+            msg = EmailMultiAlternatives(
+                subject, text_content, sender, [user.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            return redirect("registration/account_activation_sent")
         else:
-            user_form = UserForm()
+            return redirect('profile')
+            # user_form = UserForm()
+            # return render(request, 'registration/add_user.html', {'user_form': user_form, 'details_form': details_form})
     else:
         user_form = UserForm()
         details_form = UserDetailsForm()
@@ -38,6 +79,14 @@ def add_user_view(request):
         'user_form': user_form,
         'details_form': details_form
     })
+
+
+def account_activation_sent(request):
+    return render(request, 'registration/account_activation_sent.html')
+
+
+def activate(request):
+    pass
 
 
 def login_user(request):
