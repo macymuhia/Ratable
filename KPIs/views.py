@@ -3,6 +3,13 @@ from forms import *
 from models import *
 
 # Create your views here.
+<<<<<<< HEAD
+def kpis(request):
+    return render(request, 'kpis.html', {"kpis":kpis})
+
+def graphs(request):
+    return render(request, 'reports.html', {"reports":reports})
+=======
 
 @login_required(login_url='/accounts/login')
 def area(request):
@@ -26,3 +33,4 @@ def area(request):
         form = AddArea()
         
     return render(request, 'new_area.html', {"form": form})    
+>>>>>>> develop
