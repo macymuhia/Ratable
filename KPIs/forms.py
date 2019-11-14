@@ -7,3 +7,9 @@ class AddArea(forms.ModelForm):
   class Meta:
     model = Area
     fields = ['name']
+
+
+class AddIndicator(forms.ModelForm):
+  class Meta:
+    model = Indicators
+    fields = ['name', 'area']
