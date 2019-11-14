@@ -5,10 +5,39 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
+from django.db import transaction
+
 from .models import *
 from .forms import *
 
+
 # Create your views here.
+@login_required(login_url="/users/")
+@transaction.atomic
+def add_user_view(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        details_form = UserDetailsForm(request.POST)
+        if user_form.is_valid() and details_form.is_valid():
+            user = user_form.save()
+            user.profile.bio = details_form.cleaned_data.get('bio')
+            group = details_form.cleaned_data.get('group')
+            department = details_form.cleaned_data.get('department')
+            user.profile.group.add(group[0].pk)
+            dept = Department.objects.get(pk=department.pk)
+            user.profile.department = dept
+            user.profile.role = details_form.cleaned_data.get('role')
+            user.profile.save()
+            return redirect('/users/profile/')
+        else:
+            user_form = UserForm()
+    else:
+        user_form = UserForm()
+        details_form = UserDetailsForm()
+    return render(request, 'registration/add_user.html', {
+        'user_form': user_form,
+        'details_form': details_form
+    })
 
 
 def login_user(request):
@@ -30,33 +59,6 @@ def login_user(request):
                     return redirect(next_page)
                 return redirect('profile')
     return render(request, 'registration/login.html')
-
-
-def add_user_view(request):
-    AddUserInlineFormset = inlineformset_factory(
-        User, UserProfile, fields=(
-            "group", 'role', 'department')
-    )
-    # formset = AddUserInlineFormset()
-    user_form = UserProfileForm(
-        request.POST, request.FILES)
-    formset = AddUserInlineFormset(
-        request.POST, request.FILES)
-    context = {"formset": formset, "user_form": user_form}
-    if request.method == "POST":
-
-        if user_form.is_valid():
-            created_user = user_form.save(commit=False)
-            formset = AddUserInlineFormset(
-                request.POST, request.FILES
-            )
-
-            if formset.is_valid():
-                created_user.save()
-                formset.save()
-                return redirect("profile")
-
-    return render(request, 'registration/add_user.html', context)
 
 
 @login_required(login_url="/users/")
