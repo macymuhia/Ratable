@@ -139,6 +139,7 @@ def login_user(request):
 
 @login_required(login_url="/users/")
 def profile(request):
+    return render(request, 'profile.html', {"profile": profile})
 
     current_user = request.user
     user_data = User.objects.get(id=current_user.id)

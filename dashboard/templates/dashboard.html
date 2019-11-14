@@ -1,133 +1,311 @@
-{% load static from staticfiles %}
-{% load bootstrap3 %}
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>A Pen by  Max</title>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'><link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <script src="{% static 'js/scripts.js' %}"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}"></link>
-  <script src="https://kit.fontawesome.com/2060f788b7.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'csss/dashboard.css' %}">
+	<script src="{% static 'jsss/jquery.js' %}"></script>
+  <title>dashboard</title>
 </head>
 <body>
-	<script>
-if (window.matchMedia("(max-width: 768px)").matches) {
-  /* The viewport is less than, or equal to, 700 pixels wide */
-   $("i.menu").on("click", function() {
-    $("div.wide").css({
-        "background": "black",
-        "transition": ".5s"
-    });
-});
-   $("i.close").on("click", function() {
-    $("div.wide").css({
-       "background": "none"
-    });
-   $("i.close").css({
-        "display": "initial"
-    });
-    $("i.menu").css({
-        "display": "initial"
-    });
-    $("div.main-bg").css({
-       "filter": "none"
-    });
-});
-} else {
-  /* The viewport is greater than 700 pixels wide */
+    <script>
+        $(document).ready(function () {
+          'use strict';
+// Abandon all hope ye who enter here
+$(document).ready(function() {
   
+  var navigating = false,
+      curPage = 1,
+      pages = $(".section").length,
+      $sections = $(".sections"),
+      $paginationPage = $(".pagination .page"),
+      $paginationTotal = $(".total-pages"),
+      $textStuff = $(".section-heading, .additional-text");
   
-}
-$("i.menu").on("click", function() {
-    $("i.menu").css({
-        "display": "none"
-    });
-    $("i.close").css({
-        "display": "initial"
-    });
-    $("div.main-bg").css({
-       "filter": "blur(10px)"
-    });
-    $("div.row-1").css({
-        "transform": "translateX(41%)",
-        "animation": "slideright 1s ease"
-    });
-    $("div.row-2").css({
-        "transform": "translateX(-40%)",
-        "animation": "slideleft 1s ease"
-    });
+  if (pages >= 10) {
+    $paginationTotal.text(pages);
+  } else {
+    $paginationTotal.text("0" + pages);
+  }
+  
+  /*
+  Sets random transition-delay for blocks between 0.4 and 1.2 seconds on every call
+  */
+  function randomDelay() {
+    $(".left-part").css("transition-delay", (Math.floor(Math.random() * 9) + 4)/10 + "s");
+    for (var i = 1; i <= pages; i++) {
+      $(".bg-part:nth-child("+i+")").css("transition-delay", (Math.floor(Math.random() * 9) + 4)/10 + "s");
+    }
+  }
+  
+  /* Async hell, with hardcoded numbers.
+  On production, 410 number must be .section-heading transform transition time in miliseconds + 10, but i'm sort of tired of this demo :D
+  */
+  function timeoutNav(t) {
+    var time = t || 2000;
+    $textStuff.addClass("not-visible");
+    setTimeout(function() {
+      navigating = false;
+      randomDelay();
+    }, time);
+    setTimeout(function() {
+      // cached selector not working because of newely created clone when moving up more then 2 positions
+      $(".section-heading, .additional-text").css({"margin-top": 0 - (parseInt($(".nav-elem.active").attr("data-page")) - 1) * 100 + "vh"}).hide();
+    }, 410);
+    setTimeout(function() {
+      $textStuff.show();
+      $textStuff.css("top");
+      $textStuff.removeClass("not-visible");
+    }, time + 10);
+  }
+  
+  function magicStuff(paramPage) {
+    if (paramPage) curPage = paramPage;
+    navigating = true;
+    var calculatedMargin = 0 - (curPage - 1) * 100;
+    $(".bg-part, .left-part").css("margin-top", calculatedMargin +"vh");
+    $(".scroll-down").addClass("removed");
+    if (parseInt($(".nav-elem.active").attr("data-page")) === 1) {
+      $(".scroll-down").removeClass("removed");
+    }
+  }
+  
+  function trickyStuff(page) {
+    $(".left-part, .bg-part").css({"transition-duration": "0s", "transition-delay": "0s"});
+    $(".main").css("top");
+    magicStuff(page);
+    $(".main").css("top");
+    $(".left-part, .bg-part").css("transition-duration", "0.8s");
+    randomDelay();
+  }
+  
+  function pagination(pg) {
+    $(".nav-elem").removeClass("active");
+    $(".nav-" + pg).addClass("active");
+    curPage = pg;
     
+    if (pages >= 10) {
+      $paginationPage.text(pg);
+    } else {
+      $paginationPage.text("0" + pg);
+    }
+  }
+  
+  function navigateUp() {
+    if (curPage > 1) {
+      curPage--;
+      pagination(curPage);
+      magicStuff();
+      timeoutNav();
+    }
+  }
+  
+  function navigateDown() {
+    if (curPage < pages) {
+      curPage++;
+      pagination(curPage);
+      magicStuff();
+      timeoutNav();
+    }
+  }
+  
+  $(document).on("mousewheel DOMMouseScroll", function(e) {
+    if (!navigating) {
+      if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+        navigateUp();
+      } else { 
+        navigateDown();
+      }
+    }
+  });
+  
+  $(document).on("mousewheel DOMMouseScroll",
+                 ".sidebar-hover, .sidebar-real",
+                 function(e) {
+    e.stopPropagation();
+  });
+  
+  var sidebarScroll = 0,
+      $navEl =  $(".nav-elem"),
+      $sidebar = $(".sidebar-real"),
+      maxScroll = $navEl.length * $navEl.height() - $(window).height();
+  
+  $(document).on("mousewheel DOMMouseScroll", ".sidebar-real", function(e) {
+    if (navigating) return;
+    if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+      if (!sidebarScroll) return;
+      sidebarScroll += 100;
+      if (sidebarScroll > 0) sidebarScroll = 0;
+    } else { 
+      if (Math.abs(sidebarScroll) === maxScroll) return;
+      sidebarScroll -= 100;
+      if (Math.abs(sidebarScroll) > maxScroll) sidebarScroll = 0 - maxScroll;
+    }
+    $sidebar.css("transform", "translateY("+ sidebarScroll +"px)");
+  });
+  
+  $(document).on("click", ".nav-elem:not(.active)", function() {
+    if (navigating) return;
+    var activePage = parseInt($(".nav-elem.active").attr("data-page"), 10),
+        futurePage = $(this).attr("data-page");
+    
+    pagination(futurePage);
+    
+    if (Math.abs(activePage - futurePage) > 2) {
+      var $fakePage = $(".section-" + futurePage).clone(),
+          $currentPage = $(".section-" + activePage),
+          fakeNumber = 0;
+      // ugly code, do not enter here
+      if (activePage < futurePage) {
+        // moving down
+        $currentPage.after($fakePage);
+        fakeNumber = activePage + 1;
+        $(".main").css("top");
+        randomDelay();
+        magicStuff(fakeNumber);
+      } else {
+        // moving up (real hell)
+        $currentPage.before($fakePage);
+        fakeNumber = activePage - 1;
+        trickyStuff(activePage + 1);
+        $(".main").css("top");
+        randomDelay();
+        $(".main").css("top");
+        magicStuff(activePage);
+      }
+      timeoutNav(2050);
+      setTimeout(function() {
+        $fakePage.remove();
+        trickyStuff(futurePage);
+      }, 2000);
+    } else {
+      magicStuff(futurePage);
+      timeoutNav();
+    }
+  });
+  
+  $(window).resize(function() {
+    maxScroll = $navEl.length * $navEl.height() - $(window).height();
+    $sidebar.css("transform", "translateY(0)");
+  });
+  
 });
-
-$("i.close").on("click", function() {
-    $("i.close").css({
-        "display": "none"
-    });
-    $("i.menu").css({
-        "display": "initial"
-    });
-    $("div.main-bg").css({
-       "filter": "none"
-    });
-    $("div.row-1").css({
-        "transform": "translateX(-100%)",
-        "animation": "sliderightbk 1s ease"
-    
-    });
-    $("div.row-2").css({
-        "transform": "translateX(100%)",
-        "animation": "slideleftbk2 1s ease"
-    
-    });
-    
-});
-		</script>
-<!-- partial:index.partial.html -->
-
-    <!-- partial:index.partial.html -->
-    <nav>
-        <i class="fas fa-bars menu"></i>
-        <i class="fas fa-window-close close"></i>
-      </nav>
-    <div class="main-bg"> 
+        });
+        </script>
+  <div class="main">
+    <div class="sidebar-hover">
+      <p class="pagination">
+        <span class="page">01</span> / <span class="total-pages">08</span>
+      </p>
     </div>
-    <div class="wide">
-        <div class="row-1"></div>
-        <div class="row-2"></div>
-        <div class="row-1"></div>
-        <div class="row-2">
-          <a href="#">Home</a>
+    <div class="sidebar-real">
+      <div data-page="1" class="nav-elem nav-1 active"></div>
+      <div data-page="2" class="nav-elem nav-2"></div>
+      <div data-page="3" class="nav-elem nav-3"></div>
+      <div data-page="4" class="nav-elem nav-4"></div>
+      <div data-page="5" class="nav-elem nav-5"></div>
+      <div data-page="6" class="nav-elem nav-6"></div>
+      <div data-page="7" class="nav-elem nav-7"></div>
+      <div data-page="8" class="nav-elem nav-8"></div>
+    </div>
+    <div class="sections">
+      <div class="section section-1">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">Amiran Communications</h2>
+          <p class="additional-text">Tomorrow's technology today.</p>
         </div>
-        <div class="row-1">
-          <a href="#">Work</a>
-        </div>
-        <div class="row-2">
-          <a href="#">About</a>
-        </div>  
-        <div class="row-1">
-          <a href="#">Contact</a>
-        </div>
-        <div class="row-2"></div>
-        <div class="row-1"></div>
-        <div class="row-2"></div>
       </div>
-    <!-- partial -->
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script><script  src="./script.js"></script>
-    
-    </body>
+      <div class="section section-2">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">USERS</h2>
+          <p class="additional-text">button</p>
+        </div>
+      </div>
+      <div class="section section-3">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">DEPARTMENTS</h2>
+          <p class="additional-text">button</p>
+        </div>
+      </div>
+      <div class="section section-4">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">KPI's</h2>
+          <p class="additional-text">button</p>
+        </div>
+      </div>
+      <div class="section section-5">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">REPORTS</h2>
+          <p class="additional-text">button</p>
+        </div>
+      </div>
+      <div class="section section-6">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">PROFILE</h2>
+          <p class="additional-text">button</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="scroll-down">Scroll down</h2>
+  </div>
+  <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+</body>
 </html>
