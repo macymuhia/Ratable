@@ -9,14 +9,21 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', "email"]
+        fields = ['username', 'first_name', 'last_name', "email"]
+
+
+class UserDetailsForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ['group', 'role', 'department']
 
 
 class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ["group", 'role', 'department']
+        fields = ["photo", 'phone', 'bio']
 
 
 class CustomGroupForm(forms.ModelForm):
