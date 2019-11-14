@@ -1,194 +1,127 @@
 {% load static%}
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vue.js Bites: Fancy Flyout Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="{% static 'css/styles.css' %}"></link>
-
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'csss/kpis.css' %}">
+	<script src="{% static 'jsss/jquery.js' %}"></script>
+  <title>KPI's</title>
 </head>
 <body>
-	<script>
-		// bullshit routes for demo
+  <script>
+    $(document).ready(function () {
+      var $messages = $('.messages-content'),
+    d, h, m,
+    i = 0;
 
-const Default = {
-  template: `
-      <div class="content">
-        <h1>Hello There!</h1>
-        <p>Please select a delicious item from our menu selector above!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+$(window).load(function() {
+  $messages.mCustomScrollbar();
+  setTimeout(function() {
+    fakeMessage();
+  }, 100);
+});
+
+function updateScrollbar() {
+  $messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
+    scrollInertia: 10,
+    timeout: 0
+  });
+}
+
+function setDate(){
+  d = new Date()
+  if (m != d.getMinutes()) {
+    m = d.getMinutes();
+    $('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
+  }
+}
+
+function insertMessage() {
+  msg = $('.message-input').val();
+  if ($.trim(msg) == '') {
+    return false;
+  }
+  $('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
+  setDate();
+  $('.message-input').val(null);
+  updateScrollbar();
+  setTimeout(function() {
+    fakeMessage();
+  }, 1000 + (Math.random() * 20) * 100);
+}
+
+$('.message-submit').click(function() {
+  insertMessage();
+});
+
+$(window).on('keydown', function(e) {
+  if (e.which == 13) {
+    insertMessage();
+    return false;
+  }
+})
+
+var Fake = [
+  'Hi there, I\'m Fabio and you?',
+  'Nice to meet you',
+  'How are you?',
+  'Not too bad, thanks',
+  'What do you do?',
+  'That\'s awesome',
+  'Codepen is a nice place to stay',
+  'I think you\'re a nice person',
+  'Why do you think that?',
+  'Can you explain?',
+  'Anyway I\'ve gotta go now',
+  'It was a pleasure chat with you',
+  'Time to make a new codepen',
+  'Bye',
+  ':)'
+]
+
+function fakeMessage() {
+  if ($('.message-input').val() != '') {
+    return false;
+  }
+  $('<div class="message loading new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+  updateScrollbar();
+
+  setTimeout(function() {
+    $('.message.loading').remove();
+    $('<div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
+    setDate();
+    updateScrollbar();
+    i++;
+  }, 1000 + (Math.random() * 20) * 100);
+
+}
+    });
+    </script>
+    <div class="chat">
+      <div class="chat-title">
+        <h1>Fabio Ottaviani</h1>
+        <h2>Supah</h2>
+        <figure class="avatar">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
       </div>
-  ` };
-
-
-const Pizza = {
-  template: `
-      <div class="content">
-        <h1>Pizza</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
+      <div class="messages">
+        <div class="messages-content"></div>
       </div>
-  ` };
-
-
-const Tacos = {
-  template: `
-      <div class="content">
-        <h1>Tacos</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+      <div class="message-box">
+        <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+        <button type="submit" class="message-submit">Send</button>
       </div>
-  ` };
-
-
-const Burger = {
-  template: `
-      <div class="content">
-        <h1>Burger</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit aliquam ea quam placeat, consectetur assumenda vel. Commodi alias repellat deleniti totam quas quod dicta quasi quos ipsum, molestiae culpa veniam.</p>
-      </div>
-  ` };
-
-
-const Burrito = {
-  template: `
-      <div class="content">
-        <h1>Burrito</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
-        <ul>
-          <li>List Item about Burritos</li>
-          <li>List Item about Burritos</li>
-          <li>List Item about Burritos</li>
-          <li>List Item about Burritos</li>
-        </ul>
-      </div>
-  ` };
-
-
-const Sushi = {
-  template: `
-      <div class="content">
-        <h1>Sushi</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa illo maxime, vel accusamus commodi est beatae voluptatibus eius ab corporis mollitia iure deserunt provident. Alias placeat veniam dolores laudantium nam.</p>
-      </div>
-  `
-
-
-  // our actual app
-};
-const router = new VueRouter({
-  routes: [
-  { name: 'Home', path: '/', component: Default },
-  { name: 'Pizza', path: '/pizza/', component: Pizza },
-  { name: 'Tacos', path: '/tacos/', component: Tacos },
-  { name: 'Burger', path: '/burger/', component: Burger },
-  { name: 'Burrito', path: '/burrito/', component: Burrito },
-  { name: 'Sushi', path: '/sushi/', component: Sushi }] });
-
-
-
-const App = new Vue({
-  el: '#app',
-  router,
-  data() {
-    return {
-      selected: '👉 Choose an option 👈',
-      expanded: false,
-      prevHeight: 0,
-      items: [
-      { label: 'Pizza', icon: '🍕', path: '/pizza/' },
-      { label: 'Tacos', icon: '🌮', path: '/tacos/' },
-      { label: 'Burger', icon: '🍔', path: '/burger/' },
-      { label: 'Burrito', icon: '🌯', path: '/burrito/' },
-      { label: 'Sushi', icon: '🍣', path: '/sushi/' }] };
-
-
-  },
-  methods: {
-    toggleFlyout() {
-      this.expanded = !this.expanded;
-    },
-    closeFlyout() {
-      this.expanded = false;
-    },
-    setTopLevel(ev) {
-      const icon = ev.target.children[0].innerHTML;
-      const text = ev.target.children[1].innerHTML;
-      this.selected = `${icon} ${text}`;
-      this.toggleFlyout();
-    },
-    leave(el) {
-      this.prevHeight = getComputedStyle(el).height;
-    },
-    enter(el) {
-      const { height } = getComputedStyle(el);
-      el.style.height = this.prevHeight;
-      setTimeout(() => {
-        el.style.height = height;
-      });
-    } } });
-		</script>
-<!-- partial:index.partial.html -->
-<div id="app">
-  
-  <div class="selektor">
     
-    <header class="selektor__header">
-      <a
-        href="#"
-        class="selektor__toplevel"
-        :class="{ 'is-active': ( expanded === true ) }"
-        @click="toggleFlyout">
-        {{selected}}
-      </a>
-    </header>
-    
-    <transition name="shift">
-      <div class="selektor__inner" v-if="expanded">
-        
-        <a href="#" @click="closeFlyout" class="close">
-          <div class="sr-only" aria-hidden="true">Close Menu</div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
-            <path d="M357 35.7L321.3 0 178.5 142.8 35.7 0 0 35.7l142.8 142.8L0 321.3 35.7 357l142.8-142.8L321.3 357l35.7-35.7-142.8-142.8z"/>
-          </svg>
-        </a>
-        
-        <ul class="selektor__options">
-          <li v-for="(item, index) of items" :key="index">
-            <router-link
-              :to="{ name: item.label }"
-              :ref="item.label"
-              @click.native="setTopLevel">
-              <span class="item__icon">{{item.icon}}</span>
-              <span class="item__label">{{item.label}}</span>
-            </router-link>
-          </li>
-        </ul>
-        
-      </div>
-    </transition>
-    
-  </div>
-  
-  <transition
-    name="fade"
-    mode="out-in"
-    @leave="leave"
-    @enter="enter">
-    <router-view/>
-  </transition>
-  
-  <footer>
-    <p>&copy;Food &amp; Stuff</p>
-  </footer>
-  
-</div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.min.js'></script><script  src="./script.js"></script>
-
+    </div>
+    <div class="bg"></div>
+    <!-- partial -->
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
 </body>
 </html>

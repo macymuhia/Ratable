@@ -1,139 +1,399 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Daily UI #007 | Settings</title>
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'><link rel="stylesheet" href="./style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-<link rel="stylesheet" href="{% static 'csss/dashboard.css' %}">
+  <title>Amiran Communications Dashboard</title>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <link rel="stylesheet" href="{% static 'csss/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'csss/popupbutton.css' %}">
   <script src="{% static 'jsss/dashboard.js' %}"></script>
-
+  <script src="{% static 'jsss/jquery.js' %}"></script>
 </head>
+
 <body>
   <script>
     /*active button class onclick*/
-    $( document ).ready(function() {
-$('nav a').click(function(e) {
-  e.preventDefault();
-  $('nav a').removeClass('active');
-  $(this).addClass('active');
-  if(this.id === !'payment'){
-    $('.payment').addClass('noshow');
-  }
-  else if(this.id === 'payment') {
-    $('.payment').removeClass('noshow');
-    $('.rightbox').children().not('.payment').addClass('noshow');
-  }
-  else if (this.id === 'profile') {
-    $('.profile').removeClass('noshow');
-     $('.rightbox').children().not('.profile').addClass('noshow');
-  }
-  else if(this.id === 'subscription') {
-    $('.subscription').removeClass('noshow');
-    $('.rightbox').children().not('.subscription').addClass('noshow');
-  }
-    else if(this.id === 'privacy') {
-    $('.privacy').removeClass('noshow');
-    $('.rightbox').children().not('.privacy').addClass('noshow');
-  }
-  else if(this.id === 'settings') {
-    $('.settings').removeClass('noshow');
-    $('.rightbox').children().not('.settings').addClass('noshow');
-  }
-});
-});
-    </script>
-<!-- partial:index.partial.html -->
-<div onload="startup()" class="container">
+    $(document).ready(function () {
+      'use strict';
+// Abandon all hope ye who enter here
+$(document).ready(function() {
   
-  <div class="leftbox">
-    <nav>
-      <a id="profile" class="active"><i class="fa fa-user"></i></a>
-      <a id="payment"><i class="fa fa-credit-card"></i></a>
-      <a id="subscription"><i class="fa fa-tv"></i></a>
-      <a id="privacy"><i class="fa fa-tasks"></i></a>
-      <a id="settings"><i class="fa fa-cog"></i></a>
-    </nav>
-  </div>
-  <div class="rightbox">
-    <div class="profile">
-      <h1>Personal Info</h1>
-      <h2>Full Name</h2>
-      <p>Tina Tasha <button class="btn">update</button></p>
-      <h2>Birthday</h2>
-      <p>July 15</p>
-      <h2>Gender</h2>
-      <p>Female</p>
-      <h2>Email</h2>
-      <p>example@example.com <button class="btn">update</button></p>
-      <h2>Password </h2>
-      <p>••••••• <button class="btn">Change</button></p>
-    </div>
+  var navigating = false,
+      curPage = 1,
+      pages = $(".section").length,
+      $sections = $(".sections"),
+      $paginationPage = $(".pagination .page"),
+      $paginationTotal = $(".total-pages"),
+      $textStuff = $(".section-heading, .additional-text");
+  
+  if (pages >= 10) {
+    $paginationTotal.text(pages);
+  } else {
+    $paginationTotal.text("0" + pages);
+  }
+  
+  /*
+  Sets random transition-delay for blocks between 0.4 and 1.2 seconds on every call
+  */
+  function randomDelay() {
+    $(".left-part").css("transition-delay", (Math.floor(Math.random() * 9) + 4)/10 + "s");
+    for (var i = 1; i <= pages; i++) {
+      $(".bg-part:nth-child("+i+")").css("transition-delay", (Math.floor(Math.random() * 9) + 4)/10 + "s");
+    }
+  }
+  
+  /* Async hell, with hardcoded numbers.
+  On production, 410 number must be .section-heading transform transition time in miliseconds + 10, but i'm sort of tired of this demo :D
+  */
+  function timeoutNav(t) {
+    var time = t || 2000;
+    $textStuff.addClass("not-visible");
+    setTimeout(function() {
+      navigating = false;
+      randomDelay();
+    }, time);
+    setTimeout(function() {
+      // cached selector not working because of newely created clone when moving up more then 2 positions
+      $(".section-heading, .additional-text").css({"margin-top": 0 - (parseInt($(".nav-elem.active").attr("data-page")) - 1) * 100 + "vh"}).hide();
+    }, 410);
+    setTimeout(function() {
+      $textStuff.show();
+      $textStuff.css("top");
+      $textStuff.removeClass("not-visible");
+    }, time + 10);
+  }
+  
+  function magicStuff(paramPage) {
+    if (paramPage) curPage = paramPage;
+    navigating = true;
+    var calculatedMargin = 0 - (curPage - 1) * 100;
+    $(".bg-part, .left-part").css("margin-top", calculatedMargin +"vh");
+    $(".scroll-down").addClass("removed");
+    if (parseInt($(".nav-elem.active").attr("data-page")) === 1) {
+      $(".scroll-down").removeClass("removed");
+    }
+  }
+  
+  function trickyStuff(page) {
+    $(".left-part, .bg-part").css({"transition-duration": "0s", "transition-delay": "0s"});
+    $(".main").css("top");
+    magicStuff(page);
+    $(".main").css("top");
+    $(".left-part, .bg-part").css("transition-duration", "0.8s");
+    randomDelay();
+  }
+  
+  function pagination(pg) {
+    $(".nav-elem").removeClass("active");
+    $(".nav-" + pg).addClass("active");
+    curPage = pg;
     
-    <div class="payment noshow">
-      <h1>Payment Info</h1>
-      <h2>Payment Method</h2>
-      <p>Mastercard •••• •••• •••• 0000 <button class="btn">update</button></p>
-      <h2>Billing Address</h2>
-      <p>1234 Example Ave | Seattle, WA <button class="btn">change</button></p>
-      <h2>Zipcode</h2>
-      <p>999000</p>
-      <h2>Billing History</h2>
-      <p>2018<button class="btn">view</button></p>
-      <h2>Redeem Gift Subscription </h2>
-      <p><input type="text" placeholder="Enter Gift Code"></input> <button class="btn">Redeem</button></p>
-    </div>
-
-    <div class="subscription noshow">
-      <h1>Your Subscription</h1>
-      <h2>Payment Date</h2>
-      <p>05-15-2018 <button class="btn">pay now</button></p>
-      <h2>Your Next Charge</h2>
-      <p>$8.48<span> includes tax</span></p>
-      <h2>Hulu Base Plan</h2>
-      <p>Limited Commercials <button class="btn">change plan</button></p>
-      <h2>Add-ons</h2>
-      <p>None <button class="btn">manage</button></p>
-      <h2>Monthly Recurring Total </h2>
-      <p>$7.99/month</p>
-    </div>
-
-    <div class="privacy noshow">
-      <h1>Privacy Settings</h1>
-      <h2>Manage Email Notifications<button class="btn">manage</button></h2>
-      <p></p>
-      <h2>Manage Privacy Settings<button class="btn">manage</button></h2>
-      <p></p>
-      <h2>View Terms of Use <button class="btn">view</button></h2>
-      <p></p>
-      <h2>Personalize Ad Experience <button class="btn">update</button></h2>
-      <p></p>
-      <h2>Protect Your Account <button class="btn">protect</button></h2>
-      <p></p>
-    </div>
- <div class="settings noshow">
-      <h1>Account Settings</h1>
-      <h2>Sync Watchlist to My Stuff<button class="btn">sync</button></h2>
-      <p></p>
-      <h2>Hold Your Subscription<button class="btn">hold</button></h2>
-      <p></p>
-      <h2>Cancel Your Subscription <button class="btn">cancel</button></h2>
-      <p></p>
-      <h2>Your Devices <button class="btn">Manage Devices</button></h2>
-      <p></p>
-      <h2>Referrals <button class="btn">get $10</button></h2>
-   <p></p>
-    </div>
+    if (pages >= 10) {
+      $paginationPage.text(pg);
+    } else {
+      $paginationPage.text("0" + pg);
+    }
+  }
+  
+  function navigateUp() {
+    if (curPage > 1) {
+      curPage--;
+      pagination(curPage);
+      magicStuff();
+      timeoutNav();
+    }
+  }
+  
+  function navigateDown() {
+    if (curPage < pages) {
+      curPage++;
+      pagination(curPage);
+      magicStuff();
+      timeoutNav();
+    }
+  }
+  
+  $(document).on("mousewheel DOMMouseScroll", function(e) {
+    if (!navigating) {
+      if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+        navigateUp();
+      } else { 
+        navigateDown();
+      }
+    }
+  });
+  
+  $(document).on("mousewheel DOMMouseScroll",
+                 ".sidebar-hover, .sidebar-real",
+                 function(e) {
+    e.stopPropagation();
+  });
+  
+  var sidebarScroll = 0,
+      $navEl =  $(".nav-elem"),
+      $sidebar = $(".sidebar-real"),
+      maxScroll = $navEl.length * $navEl.height() - $(window).height();
+  
+  $(document).on("mousewheel DOMMouseScroll", ".sidebar-real", function(e) {
+    if (navigating) return;
+    if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+      if (!sidebarScroll) return;
+      sidebarScroll += 100;
+      if (sidebarScroll > 0) sidebarScroll = 0;
+    } else { 
+      if (Math.abs(sidebarScroll) === maxScroll) return;
+      sidebarScroll -= 100;
+      if (Math.abs(sidebarScroll) > maxScroll) sidebarScroll = 0 - maxScroll;
+    }
+    $sidebar.css("transform", "translateY("+ sidebarScroll +"px)");
+  });
+  
+  $(document).on("click", ".nav-elem:not(.active)", function() {
+    if (navigating) return;
+    var activePage = parseInt($(".nav-elem.active").attr("data-page"), 10),
+        futurePage = $(this).attr("data-page");
     
+    pagination(futurePage);
+    
+    if (Math.abs(activePage - futurePage) > 2) {
+      var $fakePage = $(".section-" + futurePage).clone(),
+          $currentPage = $(".section-" + activePage),
+          fakeNumber = 0;
+      // ugly code, do not enter here
+      if (activePage < futurePage) {
+        // moving down
+        $currentPage.after($fakePage);
+        fakeNumber = activePage + 1;
+        $(".main").css("top");
+        randomDelay();
+        magicStuff(fakeNumber);
+      } else {
+        // moving up (real hell)
+        $currentPage.before($fakePage);
+        fakeNumber = activePage - 1;
+        trickyStuff(activePage + 1);
+        $(".main").css("top");
+        randomDelay();
+        $(".main").css("top");
+        magicStuff(activePage);
+      }
+      timeoutNav(2050);
+      setTimeout(function() {
+        $fakePage.remove();
+        trickyStuff(futurePage);
+      }, 2000);
+    } else {
+      magicStuff(futurePage);
+      timeoutNav();
+    }
+    
+    // for button
+    
+  });
+  
+  $(window).resize(function() {
+    maxScroll = $navEl.length * $navEl.height() - $(window).height();
+    $sidebar.css("transform", "translateY(0)");
+  });
+  
+});
+    });
+  </script>
+  <!-- partial:index.partial.html -->
+  <div class="main">
+    <div class="sidebar-hover">
+      <p class="pagination">
+        <span class="page">01</span> / <span class="total-pages">08</span>
+      </p>
+    </div>
+    <div style="color: white; font-size: 25px; font-weight: 200;" class="sidebar-real">
+      <div data-page="1" class="nav-elem nav-1 active"></div>
+      <br>
+      <br>
+      <div data-page="2" class="nav-elem nav-2"><h2  >DEPARTMENTS</h2></div>
+      <div data-page="3" class="nav-elem nav-3">USERS</div>
+      <div data-page="4" class="nav-elem nav-4">KPI's</div>
+      <div data-page="5" class="nav-elem nav-5">REPORTS</div>
+      <div data-page="6" class="nav-elem nav-6">PROFILE</div>
+      <div data-page="7" class="nav-elem nav-7">LOGOUT</div>
+      <div data-page="8" class="nav-elem nav-8">THANK YOU</div>
+    </div>
+    <div class="sections">
+      <div class="section section-1">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">Amiran Communications</h2>
+          <p class="additional-text">Hello (person X), and welcome to your dashboard.
+          </p>
+        </div>
+      </div>
+      <div class="section section-2">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">DEPARTMENTS
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+            <div class="additional-text" class="popups-cont">
+              <div class="popups-cont__overlay"></div>
+              <div class="popup">
+                <div class="popup__pieces"></div>
+                <div class="popup__content">
+                  <div class="popup__close"></div>
+                  <h3 class="popup__heading"></h3>
+                  <p style="display: none;" class="popup__text">Works with any popup width and height (auto). Whole animation and triangulation made purely with css (SCSS). Javascript used only to trigger classes (I could do it css only with checkbox, but I'm tired of this crap). Requires browser with clip-path: polygon support.</p>
+                </div>
+              </div>
+            </div>
+            
+            
+        </div>
+      </div>
+      <div class="section section-3">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">USERS
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+          <p class="additional-text"></p>
+        </div>
+      </div>
+      <div class="section section-4">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">KPI's
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+          <p class="additional-text"></p>
+        </div>
+      </div>
+      <div class="section section-5">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">REPORTS
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+          <p class="additional-text"></p>
+        </div>
+      </div>
+      <div class="section section-6">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">PROFILE
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+          <p class="additional-text"></p>
+        </div>
+      </div>
+      <div class="section section-7">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading">LOG OUT
+            <br>
+            <br>
+            <br>
+            <button type="button" class="popup-btn">GO</button>
+          </h2>
+          <p class="additional-text"></p>
+        </div>
+      </div>
+      <div class="section section-8">
+        <div class="left-part"></div>
+        <div class="content">
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <div class="bg-part"></div>
+          <h2 class="section-heading"><a class="codepen-link" href="https://codepen.io/suez/public/" target="_blank">THANK YOU!</a></h2>
+          <p class="check-out additional-text"></p>
+        </div>
+      </div>
+    </div>
+    <h2 class="scroll-down">Scroll down</h2>
   </div>
-</div>
 
-<footer>
-  <p>made by <a href="https://codepen.io/juliepark"> julie</a> ♡
-</footer>
-<!-- partial -->
+  <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 </body>
+
 </html>
