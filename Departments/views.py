@@ -8,16 +8,18 @@ from Departments.forms import DepartmentCreationForm
 
 # Create your views here.
 def departments(request):
-    return render(request, 'departments.html', {"departments": departments})
+    return render(request, 'departments.html', {"departments":departments})
+# @login_required(login_url='users/')
+# def add_department_view(request):
+#     form = DepartmentCreationForm(request.POST)
+#     if request.method == 'POST':
 
+#         if form.is_valid():
+#             form.save()
+#             form = DepartmentCreationForm()
 
-@login_required(login_url='users/')
-def add_department_view(request):
-    form = DepartmentCreationForm(request.POST)
-    if request.method == 'POST':
-
-        if form.is_valid():
-            form.save()
-            form = DepartmentCreationForm()
-
+<<<<<<< HEAD
+#     return render(request, 'add_department.html', {"form": form})
+=======
     return render(request, 'add_department.html', {"form": form})
+>>>>>>> dff68f43d6dd83ff80e916644c94b9390b8d546a
