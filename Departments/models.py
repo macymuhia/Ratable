@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Department(models.Model):
@@ -12,10 +13,14 @@ class Department(models.Model):
 
     def save_departments(self):
         self.save()
+        
+    def update_departments(self):
+        self.update()      
 
     def delete_departments(self):
         self.delete()  
         
-    def update_departments(self):
-        self.update()  
+    def edit_departments(self):
+        self.edit()
     
+        

@@ -6,3 +6,4 @@ class DepartmentCreationForm(forms.ModelForm):
     class Meta:
         model = Department
         fields = ['name', 'line_manager']
+        

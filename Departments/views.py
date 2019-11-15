@@ -26,3 +26,5 @@ def index(request):
                         "comment_form":form}
                 )
    
+
+    
