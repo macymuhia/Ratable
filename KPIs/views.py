@@ -1,32 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from KPIs.forms import *
-from KPIs.models import *
+from .forms import *
+from .models import *
 
 # Create your views here.
 
 
-def kpis(request):
-    return render(request, 'kpis.html', {"kpis": kpis})
+def welcome(request):
+    areas = Area.objects.all()
+    indicators = Indicators.objects.all()
+    print(indicators)
+    return render (request, 'home.html',{"areas":areas,"indicators":indicators})  
+
+@login_required
+def score(request):
+    current_user = request.user 
+    return render (request, 'score.html')
 
 
-def graphs(request):
-    return render(request, 'reports.html', {"reports": reports})
-
-
-@login_required(login_url='users/')
-def area(request):
-
-    profile = Profile.objects.get(user=request.user)
-
+def new_area(request):
+    
     if request.method == 'POST':
 
         form = AddArea(request.POST)
 
         if form.is_valid():
-
-            post = form.save(commit=False)
-            post.user = request.user
+            
+            post = form.save(commit = False)
             post.save()
 
         return redirect('/')
@@ -34,5 +35,47 @@ def area(request):
     else:
 
         form = AddArea()
+        
+    return render(request,'addarea.html',{"form":form}) 
 
-    return render(request, 'new_area.html', {"form": form})
+
+def areas(request):
+    areas = Area.objects.all()
+    return render(request,'home.html',{"areas":areas}) 
+
+
+def new_indicator(request):
+    
+    if request.method == 'POST':
+        
+        form = AddIndicator(request.POST)
+        
+        if form.is_valid():
+            
+            post = form.save(commit = False)
+            post.save()
+            
+        return redirect('/')
+    
+    else:
+        
+        form = AddIndicator()
+        
+    return render(request,'addindicator.html',{"form":form})
+
+def new_score(request):
+    if request.method == 'POST':
+
+        score = request.POST.get('options')
+        ind = request.POST.get('indicator')
+
+        Score(
+            score=score,
+            indicators_id=ind,
+            user=request.user
+        ).save()
+
+        return redirect('/')
+
+    return render(request, 'score.html')
+        

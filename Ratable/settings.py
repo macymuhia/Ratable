@@ -102,11 +102,11 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 #     }
 # }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ratable",
-        "USER": "macy",
-        "PASSWORD": "1234",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kpis',
+        'USER': 'naomi',
+    'PASSWORD':'7269',
     }
 }
 
@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
