@@ -104,9 +104,9 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kpis',
-        'USER': 'naomi',
-    'PASSWORD':'7269',
+        'NAME': 'ratable',
+        'USER': 'macy',
+        'PASSWORD': '1234',
     }
 }
 
