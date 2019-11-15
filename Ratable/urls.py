@@ -19,14 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
     path('users', include('users.urls')),
     path('dashboard', include('dashboard.urls')),
     path('kpis', include('KPIs.urls')),
-    
-    
-=======
-    path('users/', include("users.urls")),
-    path('departments/', include("Departments.urls")),
->>>>>>> develop
+    path('departments', include('Departments.urls')),
+
 ]

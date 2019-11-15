@@ -1,4 +1,5 @@
-{% load static%}
+{% load static %}
+{% load bootstrap4 %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,309 +7,141 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="{% static 'csss/graphs.css' %}">
+	<link rel="stylesheet" href="{% static 'csss/kpis.css' %}">
 	<script src="{% static 'jsss/jquery.js' %}"></script>
-	<title>graphs</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title>KPIS</title>
 </head>
 <body>
-		<script>
-				$(document).ready(function () {
-					var label = document.querySelector(".label");
-var c = document.getElementById("c");
-var ctx = c.getContext("2d");
-var cw = c.width = 700;
-var ch = c.height = 350;
-var cx = cw / 2,
-  cy = ch / 2;
-var rad = Math.PI / 180;
-var frames = 0;
-
-ctx.lineWidth = 1;
-ctx.strokeStyle = "#999";
-ctx.fillStyle = "#ccc";
-ctx.font = "14px monospace";
-
-var grd = ctx.createLinearGradient(0, 0, 0, cy);
-grd.addColorStop(0, "hsla(167,72%,60%,1)");
-grd.addColorStop(1, "hsla(167,72%,60%,0)");
-
-var oData = {
-  "2008": 20,
-  "2009": 20,
-  "2010": 20,
-  "2011": 20,
-  "2012": 5.3,
-  "2013": 38.4,
-  "2014": 15.7,
-  "2015": 9.0
-};
-
-var valuesRy = [];
-var propsRy = [];
-for (var prop in oData) {
-
-  valuesRy.push(oData[prop]);
-  propsRy.push(prop);
+	<script>
+		$(document).ready(function () {
+			function Quiz (questions) {
+	this.score = 0; 
+	this.questions = questions;
+	this.questionIndex = 0;
 }
 
-
-var vData = 4;
-var hData = valuesRy.length;
-var offset = 50.5; //offset chart axis
-var chartHeight = ch - 2 * offset;
-var chartWidth = cw - 2 * offset;
-var t = 1 / 7; // curvature : 0 = no curvature 
-var speed = 2; // for the animation
-
-var A = {
-  x: offset,
-  y: offset
-}
-var B = {
-  x: offset,
-  y: offset + chartHeight
-}
-var C = {
-  x: offset + chartWidth,
-  y: offset + chartHeight
+Quiz.prototype.getQuestionIndex = function () {
+	return this.questions[this.questionIndex]
 }
 
-/*
-      A  ^
-	    |  |  
-	    + 25
-	    |
-	    |
-	    |
-	    + 25  
-      |__|_________________________________  C
-      B
-*/
-
-// CHART AXIS -------------------------
-ctx.beginPath();
-ctx.moveTo(A.x, A.y);
-ctx.lineTo(B.x, B.y);
-ctx.lineTo(C.x, C.y);
-ctx.stroke();
-
-// vertical ( A - B )
-var aStep = (chartHeight - 50) / (vData);
-
-var Max = Math.ceil(arrayMax(valuesRy) / 10) * 10;
-var Min = Math.floor(arrayMin(valuesRy) / 10) * 10;
-var aStepValue = (Max - Min) / (vData);
-console.log("aStepValue: " + aStepValue); //8 units
-var verticalUnit = aStep / aStepValue;
-
-var a = [];
-ctx.textAlign = "right";
-ctx.textBaseline = "middle";
-for (var i = 0; i <= vData; i++) {
-
-  if (i == 0) {
-    a[i] = {
-      x: A.x,
-      y: A.y + 25,
-      val: Max
-    }
-  } else {
-    a[i] = {}
-    a[i].x = a[i - 1].x;
-    a[i].y = a[i - 1].y + aStep;
-    a[i].val = a[i - 1].val - aStepValue;
-  }
-  drawCoords(a[i], 3, 0);
+Quiz.prototype.isEnded = function() {
+	return this.questions.length === this.questionIndex;
 }
 
-//horizontal ( B - C )
-var b = [];
-ctx.textAlign = "center";
-ctx.textBaseline = "hanging";
-var bStep = chartWidth / (hData + 1);
+Quiz.prototype.guess = function(answer) {
 
-for (var i = 0; i < hData; i++) {
-  if (i == 0) {
-    b[i] = {
-      x: B.x + bStep,
-      y: B.y,
-      val: propsRy[0]
-    };
-  } else {
-    b[i] = {}
-    b[i].x = b[i - 1].x + bStep;
-    b[i].y = b[i - 1].y;
-    b[i].val = propsRy[i]
-  }
-  drawCoords(b[i], 0, 3)
-}
+	if (this.getQuestionIndex().correctAnswer(answer)) {
+		this.score++;
+	}
 
-function drawCoords(o, offX, offY) {
-  ctx.beginPath();
-  ctx.moveTo(o.x - offX, o.y - offY);
-  ctx.lineTo(o.x + offX, o.y + offY);
-  ctx.stroke();
-
-  ctx.fillText(o.val, o.x - 2 * offX, o.y + 2 * offY);
-}
-//----------------------------------------------------------
-
-// DATA
-var oDots = [];
-var oFlat = [];
-var i = 0;
-
-for (var prop in oData) {
-  oDots[i] = {}
-  oFlat[i] = {}
-
-  oDots[i].x = b[i].x;
-  oFlat[i].x = b[i].x;
-
-  oDots[i].y = b[i].y - oData[prop] * verticalUnit - 25;
-  oFlat[i].y = b[i].y - 25;
-
-  oDots[i].val = oData[b[i].val];
-  
-  i++
+	this.questionIndex++;
 }
 
 
 
-///// Animation Chart ///////////////////////////
-//var speed = 3;
-function animateChart() {
-  requestId = window.requestAnimationFrame(animateChart);
-  frames += speed; //console.log(frames)
-  ctx.clearRect(60, 0, cw, ch - 60);
-  
-  for (var i = 0; i < oFlat.length; i++) {
-    if (oFlat[i].y > oDots[i].y) {
-      oFlat[i].y -= speed;
-    }
-  }
-  drawCurve(oFlat);
-  for (var i = 0; i < oFlat.length; i++) {
-      ctx.fillText(oDots[i].val, oFlat[i].x, oFlat[i].y - 25);
-      ctx.beginPath();
-      ctx.arc(oFlat[i].x, oFlat[i].y, 3, 0, 2 * Math.PI);
-      ctx.fill();
-    }
 
-  if (frames >= Max * verticalUnit) {
-    window.cancelAnimationFrame(requestId);
-    
-  }
-}
-requestId = window.requestAnimationFrame(animateChart);
 
-/////// EVENTS //////////////////////
-c.addEventListener("mousemove", function(e) {
-  label.innerHTML = "";
-  label.style.display = "none";
-  this.style.cursor = "default";
 
-  var m = oMousePos(this, e);
-  for (var i = 0; i < oDots.length; i++) {
-
-    output(m, i);
-  }
-
-}, false);
-
-function output(m, i) {
-  ctx.beginPath();
-  ctx.arc(oDots[i].x, oDots[i].y, 20, 0, 2 * Math.PI);
-  if (ctx.isPointInPath(m.x, m.y)) {
-    //console.log(i);
-    label.style.display = "block";
-    label.style.top = (m.y + 10) + "px";
-    label.style.left = (m.x + 10) + "px";
-    label.innerHTML = "<strong>" + propsRy[i] + "</strong>: " + valuesRy[i] + "%";
-    c.style.cursor = "pointer";
-  }
+function Question (text, choices, answer) {
+	this.text = text;
+	this.choices = choices;
+	this.answer = answer;
 }
 
-// CURVATURE
-function controlPoints(p) {
-  // given the points array p calculate the control points
-  var pc = [];
-  for (var i = 1; i < p.length - 1; i++) {
-    var dx = p[i - 1].x - p[i + 1].x; // difference x
-    var dy = p[i - 1].y - p[i + 1].y; // difference y
-    // the first control point
-    var x1 = p[i].x - dx * t;
-    var y1 = p[i].y - dy * t;
-    var o1 = {
-      x: x1,
-      y: y1
-    };
-
-    // the second control point
-    var x2 = p[i].x + dx * t;
-    var y2 = p[i].y + dy * t;
-    var o2 = {
-      x: x2,
-      y: y2
-    };
-
-    // building the control points array
-    pc[i] = [];
-    pc[i].push(o1);
-    pc[i].push(o2);
-  }
-  return pc;
+Question.prototype.correctAnswer = function(choice) {
+	return choice === this.answer;
 }
 
-function drawCurve(p) {
 
-  var pc = controlPoints(p); // the control points array
 
-  ctx.beginPath();
-  //ctx.moveTo(p[0].x, B.y- 25);
-  ctx.lineTo(p[0].x, p[0].y);
-  // the first & the last curve are quadratic Bezier
-  // because I'm using push(), pc[i][1] comes before pc[i][0]
-  ctx.quadraticCurveTo(pc[1][1].x, pc[1][1].y, p[1].x, p[1].y);
 
-  if (p.length > 2) {
-    // central curves are cubic Bezier
-    for (var i = 1; i < p.length - 2; i++) {
-      ctx.bezierCurveTo(pc[i][0].x, pc[i][0].y, pc[i + 1][1].x, pc[i + 1][1].y, p[i + 1].x, p[i + 1].y);
-    }
-    // the first & the last curve are quadratic Bezier
-    var n = p.length - 1;
-    ctx.quadraticCurveTo(pc[n - 1][0].x, pc[n - 1][0].y, p[n].x, p[n].y);
-  }
 
-  //ctx.lineTo(p[p.length-1].x, B.y- 25);
-  ctx.stroke();
-  ctx.save();
-  ctx.fillStyle = grd;
-  ctx.fill();
-  ctx.restore();
+
+function populate() {
+	if (quiz.isEnded()) {
+		showScores();
+	} else {
+		var element = document.getElementById('question');
+		element.innerHTML = quiz.getQuestionIndex().text;
+
+		//show choices
+		var choices = quiz.getQuestionIndex().choices;
+		for (var i = 0; i < choices.length; i++) {
+			var element = document.getElementById('choice' + i);
+			element.innerHTML = choices[i];
+
+			guess("btn" + i, choices[i]);
+		}
+
+		showProgress();
+	}
 }
 
-function arrayMax(array) {
-  return Math.max.apply(Math, array);
-};
 
-function arrayMin(array) {
-  return Math.min.apply(Math, array);
-};
-
-function oMousePos(canvas, evt) {
-  var ClientRect = canvas.getBoundingClientRect();
-  return { //objeto
-    x: Math.round(evt.clientX - ClientRect.left),
-    y: Math.round(evt.clientY - ClientRect.top)
-  }
+function guess(id, guess) {
+	var button = document.getElementById(id);
+	button.onclick = function() {
+		quiz.guess(guess);
+		populate();
+	}
 }
-				});
-				</script>
-	<div class="wrapper">
-		<canvas id='c'></canvas>
-		<div class="label">text</div>
-	  </div>
+
+
+function showProgress() {
+	var currentQuestionNumber = quiz.questionIndex + 1;
+	var element = document.getElementById('progress');
+	element.innerHTML = "Questions " + currentQuestionNumber + " of " + quiz.questions.length;
+}
+
+
+function showScores() {
+	var gameOverHTML = "<h1>DONE!</h1>";
+	gameOverHTML += "<br> <br> <br> <br> <br> <br><h2 id='score'>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your ratings have been forwarded to your respective line manager.</h2>";
+	var element = document.getElementById('quiz');
+	element.innerHTML = gameOverHTML;
+}
+
+
+var questions = [
+	new Question("ATTENDANCE", ["1", "2", "3", "4", "5"], "5"),
+	new Question("TIME WORK", ["1", "2", "3", "4", "5"], "5"),
+	new Question("TIME MANAGEMENT", ["1", "2", "3", "4", "5"], "5"),
+	new Question("CUSTOMER SATISFACTION", ["1", "2", "3", "4", "5"], "5"),
+];
+
+var quiz = new Quiz (questions);
+
+populate();
+		});
+		</script>
+		<div class="container">
+			<div id="quiz">
+				<h1>KEY PERFORMANCE INDICATORS</h1>
+				
+				<hr style="margin-bottom: 20px">
+	
+				<p id="question"></p>
+				
+				<div class="button-grp">
+					<button id="btn0"><span id="choice0"></span></button>
+					<button id="btn1"><span id="choice1"></span></button>
+					<button id="btn2"><span id="choice2"></span></button>
+					<button id="btn3"><span id="choice3"></span></button>
+				</div>
+				
+				<hr style="margin-top: 50px">
+				
+				<footer>
+					<p id="progress">Rate yourself according to the scale</p>
+				</footer>
+			</div>
+		</div>
+	
+	<script type="text/JavaScript" src="js/quiz controller.js"></script>
+	<script type="text/JavaScript" src="js/question.js"></script>
+	<script type="text/JavaScript" src="js/app.js"></script>
 </body>
 </html>
