@@ -62,3 +62,20 @@ def new_indicator(request):
         form = AddIndicator()
         
     return render(request,'addindicator.html',{"form":form})
+
+def new_score(request):
+    if request.method == 'POST':
+
+        score = request.POST.get('options')
+        ind = request.POST.get('indicator')
+
+        Score(
+            score=score,
+            indicators_id=ind,
+            user=request.user
+        ).save()
+
+        return redirect('/')
+
+    return render(request, 'score.html')
+        
