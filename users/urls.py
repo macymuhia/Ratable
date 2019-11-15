@@ -6,8 +6,8 @@ from . import views
 urlpatterns = [
     path("users", views.users, name="users"),
     path("profile", views.profile, name="profile"),
-    path("adduser", views.adduser, name="adduser"),
-    path("", views.login, name="login"),
+    path("", views.adduser, name="adduser"),
+    path("login", views.login, name="login"),
 #     path("", LoginView.as_view(), {
 #          "next_page": settings.LOGIN_REDIRECT_URL}, name="login",),
 #     path("", views.login_user, name="login",),
