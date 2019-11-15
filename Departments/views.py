@@ -10,7 +10,6 @@ from .forms import DepartmentCreationForm
 @login_required(login_url='account/login/')
 def index(request):
     name = 'departments'
-    current_user = request.user
     if request.method == 'POST':
         form = departmentCreationForm(request.POST)
         if form.is_valid():
@@ -26,5 +25,15 @@ def index(request):
                         "comment_form":form}
                 )
    
-
+def edit_deparments(request, department):
+    department = Department.objects.all(department=department)
+    if request.method == 'POST':
+        form = EditDepartmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            update = form.save(commit=False)
+            form.save():
+            return redirect('profile',)
+    else:
+        form = EditDeparmentForm()
+    return render(request, 'edit_department.html', {'form': form})
     
