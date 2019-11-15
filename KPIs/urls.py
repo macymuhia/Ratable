@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from KPIs import views
 
 urlpatterns = [
     path("kpis", views.kpis, name="kpis"),

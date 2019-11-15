@@ -138,6 +138,10 @@ from users.forms import *
 
 
 # @login_required(login_url="/users/")
+
+
+
+# mine
 def profile(request):
     return render(request, 'profile.html', {"profile":profile})
 
@@ -149,6 +153,33 @@ def adduser(request):
 
 def login(request):
     return render(request, 'login.html', {"login":login})
+
+# mine
+
+# @login_required(login_url="")
+# def profile(request):
+
+#     current_user = request.user
+#     user_data = User.objects.get(id=current_user.id)
+#     user_profile = UserProfile.objects.get(id=current_user.id)
+
+#     return render(
+#         request,
+#         "registration/profile.html",
+#         {"user_data": user_data, "user_profile": user_profile},
+#     )
+
+
+# @login_required(login_url="")  # only logged in users should access this
+# def edit_profile(request):
+
+#     current_user = request.user
+#     user = User.objects.get(id=current_user.id)
+
+#     # prepopulate UserProfileForm with retrieved user values from above.
+#     user_form = UserForm(instance=user)
+
+#     # The sorcery begins from he
 # @login_required(login_url="")
 # def profile(request):
 

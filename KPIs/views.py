@@ -4,7 +4,8 @@ from django.shortcuts import render
 
 # Create your views here.
 def kpis(request):
-    return render(request, 'kpis.html', {"kpis":kpis})
+    return render(request, 'kpis.html', {"kpis": kpis})
+
 
 def reports(request):
     return render(request, 'reports.html', {"reports":reports})
