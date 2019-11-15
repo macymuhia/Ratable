@@ -66,6 +66,9 @@ class Indicators(models.Model):
 
 
 class Score(models.Model):
-    
     score = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    indicators = models.ForeignKey(Indicators, on_delete=models.CASCADE, null=True)
+
+    def save_score(self):
+        self.save()
