@@ -1,0 +1,11 @@
+<!-- content -->
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <!-- Create group form -->
+    {{form.as_p}}
+    <!-- Looping through -->
+
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

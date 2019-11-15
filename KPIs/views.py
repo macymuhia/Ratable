@@ -22,18 +22,18 @@ def score(request):
 def new_area(request):
     
     if request.method == 'POST':
-        
+
         form = AddArea(request.POST)
-        
+
         if form.is_valid():
             
             post = form.save(commit = False)
             post.save()
-            
+
         return redirect('/')
-    
+
     else:
-        
+
         form = AddArea()
         
     return render(request,'addarea.html',{"form":form}) 
