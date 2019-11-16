@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views
+from django.conf import settings
+from dashboard import views
 
 urlpatterns = [
     path("", views.index, name="dashboard-index"),
