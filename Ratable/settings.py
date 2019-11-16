@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'widget_tweaks',
     'bootstrap4',
+    'fontawesome',
 
     # Own apps
     'users',

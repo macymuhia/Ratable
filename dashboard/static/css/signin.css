@@ -1,228 +1,239 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400|Lora");
-
 body {
-  background: #C2CADB;
+    background: #C2CADB;
 }
 
-hr{
-  color: #FFFFFF;
+hr {
+    color: #FFFFFF;
 }
+
 
 /* div box styling */
+
 .container {
-  margin: auto;
-  width: 650px;
-  height: 650px;
-  position: relative;
+    margin: auto;
+    width: 650px;
+    height: 650px;
+    position: relative;
 }
 
 .welcome {
-  background: #FFFFFF;
-  width: 720px;
-  height: 415px;
-  position: absolute;
-  top: 25%;
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    width: 720px;
+    height: 415px;
+    position: absolute;
+    top: 18%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .pinkbox {
-  position: absolute;
-  top: -10%;
-  left: 5%;
-  background: #6296CB;
-  width: 320px;
-  height: 500px;
-  border-radius: 5px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  transition: all .5s ease-in-out;
-  z-index: 2;
+    position: absolute;
+    top: -10%;
+    left: 5%;
+    background: #6296CB;
+    width: 320px;
+    height: 500px;
+    border-radius: 5px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: all .5s ease-in-out;
+    z-index: 2;
 }
 
 .nodisplay {
-  display: none;
-  transition: all .5s ease;
+    display: none;
+    transition: all .5s ease;
 }
 
-.leftbox, .rightbox {
-  position: absolute;
-  width: 50%;
-  transition: 1s all ease;
+.leftbox,
+.rightbox {
+    position: absolute;
+    width: 50%;
+    transition: 1s all ease;
 }
 
 .leftbox {
-  left: -2%;
+    left: -2%;
 }
 
 .rightbox {
-  right: -2%;
+    right: -2%;
 }
 
+
 /* font & button styling */
+
 h1 {
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-  padding-top:100px;
-  color: #6296CB;
-  font-size: 0.7em;
-  letter-spacing: 3px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    padding-top: 100px;
+    color: #6296CB;
+    font-size: 0.7em;
+    letter-spacing: 3px;
 }
 
 .title {
-  font-family: "Lora", serif;
-  color: #8E9AAF;
-  font-size: 1.8em;
-  line-height: 1.1em;
-  letter-spacing: 3px;
-  text-align: center;
-  font-weight: 300;
-  margin-top: 20%;
-  padding-left: 0px;
-  padding-right: 25px;
+    font-family: "Lora", serif;
+    color: #8E9AAF;
+    font-size: 1.8em;
+    line-height: 1.1em;
+    letter-spacing: 3px;
+    text-align: center;
+    font-weight: 300;
+    margin-top: 20%;
+    padding-left: 0px;
+    padding-right: 25px;
 }
 
 .desc {
-  margin-top: -8px;
+    margin-top: -8px;
 }
 
 .account {
-  margin-top: 45%;
-  font-size: 10px;
+    margin-top: 45%;
+    font-size: 10px;
 }
 
 p {
-  font-family: "Open Sans", sans-serif;
-  font-size: .7em;
-  letter-spacing: 2px;
-  color: #6296CB;
-  text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: .7em;
+    letter-spacing: 2px;
+    color: #6296CB;
+    text-align: center;
 }
 
 span {
-  color: #6296CB;
+    color: #6296CB;
 }
 
 .flower {
-  position: absolute;
-  width: 270px;
-  height: 270px;
-  top: 10%;
-  left: 5%;
-  opacity: .7;
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    top: 10%;
+    left: 5%;
+    opacity: .7;
 }
 
 .smaller {
-  width: 90px;
-  height: 100px;
-  top: 48%;
-  left: 38%;
-  opacity: .9;
+    width: 90px;
+    height: 100px;
+    top: 48%;
+    left: 38%;
+    opacity: .9;
 }
 
 button {
-  padding: 12px;
-  font-family: "Open Sans", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 11px;
-  border-radius: 10px;
-  margin: auto;
-  outline: none;
-  display: block;
+    padding: 12px;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    border-radius: 10px;
+    margin: auto;
+    outline: none;
+    display: block;
 }
 
 button:hover {
-  background: #C2CADB;
-  color: #f6f6f6;
-  transition: background-color 1s ease-out;
+    background: #C2CADB;
+    color: #f6f6f6;
+    transition: background-color 1s ease-out;
 }
 
 .button {
-  margin-top: 3%;
-  background: #f6f6f6;
-  color: #6296CB;
-  border: solid 1px #C2CADB;
+    margin-top: 3%;
+    background: #f6f6f6;
+    color: #6296CB;
+    border: solid 1px #C2CADB;
 }
 
+
 /* form styling */
+
 form {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 7px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 7px;
 }
 
 .more-padding {
-  padding-top: 100px;
+    padding-top: 100px;
 }
+
 .more-padding input {
-  padding: 14px;
+    padding: 14px;
 }
+
 .more-padding .submit {
-  margin-top: 45px;
+    margin-top: 45px;
 }
 
 .submit {
-  margin-top: 25px;
-  padding: 12px;
-  border-color: #6296CB;
+    margin-top: 25px;
+    padding: 12px;
+    border-color: #6296CB;
 }
+
 .submit:hover {
-  background: #CBC0D3;
-  border-color: #bfb1c9;
+    background: #CBC0D3;
+    border-color: #bfb1c9;
 }
 
 input {
-  padding: 15px 20px;
-  border-radius: 25px;
-  background: rgba(255,255,255,.1);
-  width: 70%;
-  color: #FFFFFF;
-  border: none;
-  border-bottom: 1px solid rgba(246, 246, 246, 0.5);
-  margin: 7px;
-  transition: all 0.5s ease-in-out;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, .1);
+    width: 70%;
+    color: #FFFFFF;
+    border: none;
+    border-bottom: 1px solid rgba(246, 246, 246, 0.5);
+    margin: 7px;
+    transition: all 0.5s ease-in-out;
 }
 
 input::placeholder {
-  color: #f6f6f6;
-  letter-spacing: 2px;
-  font-size: 1.3em;
-  font-weight: 100;
-  text-align: center;
+    color: #f6f6f6;
+    letter-spacing: 2px;
+    font-size: 1.3em;
+    font-weight: 100;
+    text-align: center;
 }
+
 input:focus {
-  color: black;
-  outline: none;
-  border-bottom: 1.2px solid#6296CB;
-  font-size: 1em;
-  transition: .8s all ease;
+    color: black;
+    outline: none;
+    border-bottom: 1.2px solid#6296CB;
+    font-size: 1em;
+    transition: .8s all ease;
 }
+
 input:focus::placeholder {
-  opacity: 0;
+    opacity: 0;
 }
 
 label {
-  font-family: "Open Sans", sans-serif;
-  color: #FFFFFF;
-  font-size: 0.8em;
-  letter-spacing: 1px;
+    font-family: "Open Sans", sans-serif;
+    color: #FFFFFF;
+    font-size: 0.8em;
+    letter-spacing: 1px;
 }
 
 .checkbox {
-  display: inline;
-  white-space: nowrap;
-  position: relative;
-  left: 0px;
-  top: 10px;
+    display: inline;
+    white-space: nowrap;
+    position: relative;
+    left: 0px;
+    top: 10px;
 }
 
 input[type=checkbox] {
-  width: 7px;
-  background: #C2CADB;
+    width: 7px;
+    background: #C2CADB;
 }
 
-.checkbox input[type="checkbox"]:checked + label {
-  color: black;
-  transition: .5s all ease;
+.checkbox input[type="checkbox"]:checked+label {
+    color: black;
+    transition: .5s all ease;
 }

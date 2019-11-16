@@ -23,10 +23,7 @@
                         {% csrf_token %}
                         <input type="text" placeholder="username" name="username">
                         <input type="password" placeholder="password" name="password">
-                        <div class="checkbox">
-                            <input type="checkbox" id="remember" /><label for="remember">remember me</label>
-                        </div>
-                        {% if request.GET.next %}
+                        <a href=" {% url 'password_reset' %} ">Forgot password</a> {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
                         <button class="button submit">SIGN IN</button>
                     </form>
