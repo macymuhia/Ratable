@@ -145,7 +145,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = 'dashbboard/'
+LOGIN_REDIRECT_URL = 'landing_page/'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Static files (CSS, JavaScript, Images)

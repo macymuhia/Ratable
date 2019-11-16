@@ -131,7 +131,7 @@ def login_user(request):
                 login(request, user)
                 if next_page:
                     return redirect(next_page)
-                return redirect('profile')
+                return redirect('landing_page')
     return render(request, 'registration/login.html')
 
 

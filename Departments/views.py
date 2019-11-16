@@ -7,6 +7,7 @@ from Departments.forms import DepartmentCreationForm
 
 
 # Create your views here.
+@login_required(login_url='users/')
 def list_departments_view(request):
     departments = Department.get_all_departments()
     context = {'departments': departments}
