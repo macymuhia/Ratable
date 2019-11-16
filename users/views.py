@@ -21,7 +21,7 @@ from users.forms import *
 
 
 # Create your views here.
-@login_required(login_url="/users/")
+@login_required(login_url="users/")
 @transaction.atomic
 def add_user_view(request):
     if request.method == 'POST':
@@ -131,7 +131,7 @@ def login_user(request):
                 login(request, user)
                 if next_page:
                     return redirect(next_page)
-                return redirect('profile')
+                return redirect('landing_page')
     return render(request, 'registration/login.html')
 
 
@@ -167,7 +167,7 @@ def profile(request):
     )
 
 
-@login_required(login_url="/users/")  # only logged in users should access this
+@login_required(login_url="users/")  # only logged in users should access this
 def edit_profile(request):
 
     current_user = request.user
@@ -209,6 +209,7 @@ def edit_profile(request):
         raise PermissionDenied
 
 
+@login_required(login_url="users/")
 def group_create_view(request):
     perms = Permission.objects.all()
     form = CustomGroupForm(request.POST)
@@ -225,6 +226,7 @@ def group_create_view(request):
     return render(request, "groups/group_create.html", context)
 
 
+@login_required(login_url="users/")
 def group_list_view(request):
     queryset = CustomGroup.objects.all()  # list of objects
     context = {
@@ -233,5 +235,6 @@ def group_list_view(request):
     return render(request, "groups/group_list.html", context)
 
 
+@login_required(login_url="users/")
 def group_delete_view(request):
     pass
