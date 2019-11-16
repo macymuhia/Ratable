@@ -102,14 +102,14 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "ratable",
-#         "USER": "macy",
-#         "PASSWORD": "1234",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ratable",
+        "USER": "macy",
+        "PASSWORD": "1234",
+    }
+}
 
 
 # Password validation
