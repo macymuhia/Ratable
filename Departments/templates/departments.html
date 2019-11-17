@@ -1,18 +1,13 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %}
+<!-- styles -->
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}"> {% endblock %}
 
-<div>
-    <a href="">
-        <img src="https://cdn.pixabay.com/photo/2012/04/15/22/07/log-35496_960_720.png" width="30px" height="30px" alt="">
-    </a>
-</div>
+<!-- Content -->
+{% block content %}
+
 <!-- partial:index.partial.html -->
 <div class='wrapper'>
-    <h1>
-        List of departments at Amiran
-    </h1>
-    <h2>
-        Click on a department to view its details
-    </h2>
     {% for department in departments %}
     <input id='{{department.id}}' type='checkbox'>
     <label for='{{department.id}}'>
