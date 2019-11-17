@@ -15,7 +15,7 @@ This app that allows employees to post Key Perfomance Indicators (referenced as 
 
 ## Screenshot
 
-![A screenshot of the app page](https://github.com/Hillarydalie/jiraniwatch/blob/master/static/images/jirani.png "App Page")
+![A screenshot of the app page](url_here "App Page")
 
 ## Getting Started
 
