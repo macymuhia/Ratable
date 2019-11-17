@@ -88,3 +88,29 @@ def new_score(request):
 
     return render(request, 'score.html')
 
+# View fucntion for our rating metric that will be logic for the rating.
+@login_required
+def rateproject(request, id):
+
+    if request.method == "POST":
+        rating_form = RatingForm(request.POST)
+        if rating_form.is_valid():
+            area_total = []
+            area_max_total = []
+            areas = Area.objects.get(pk=id)
+            indicators = Indicators.objects.filter(area=areas)
+            area_total.append(indicators)
+            area_average = sum(area_total)/len(area_total)
+            print(area_average)
+            area_max_total.append(area_average)
+            area_max_total_average= sum(area_max_total)/len(area_max_total)
+            print(area_max_total_average)
+            reports = Reports(area_average=area_average,overall_score=area_max_total_average)
+            reports.user = request.user
+            reports.project = Departments.objects.filter(id=id).first()
+            reports.save()
+            return redirect('/')
+    else:
+        rating_form = RatingForm()
+
+    return render (request, 'reports.html', {"area_average":area_average, "area_max_total_average":area_max_total_average })
