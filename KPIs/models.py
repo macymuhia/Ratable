@@ -72,3 +72,19 @@ class Score(models.Model):
 
     def save_score(self):
         self.save()
+
+# This will hold the processed logic for our reports. 
+class Reports(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    area_average = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+    overall_score = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+
+    def __str__(self):
+        return self.overall_score
+
+    def save_report(self):
+        self.save()
