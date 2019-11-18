@@ -4,9 +4,9 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path("users", views.users, name="users"),
-    path("profile", views.profile, name="profile"),
-    path("", views.adduser, name="adduser"),
+    path("users/", views.users, name="users"),
+    path("dashboard/profile", views.profile, name="profile"),
+    path("dashboard/users/adduser/", views.adduser, name="adduser"),
     path("login", views.login, name="login"),
 #     path("", LoginView.as_view(), {
 #          "next_page": settings.LOGIN_REDIRECT_URL}, name="login",),

@@ -2,7 +2,7 @@ from django.urls import path
 from KPIs import views
 
 urlpatterns = [
-    path("kpis", views.kpis, name="kpis"),
-    path("reports", views.reports, name="reports"),
-    path("", views.comments, name="comments"),
+    path("dashboard/kpis/", views.kpis, name="kpis"),
+    path("dashboard/reports/", views.reports, name="reports"),
+    path("dashboard/kpis/comments/", views.comments, name="comments"),
 ]

@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.departments, name="departments"),
+    path("dashboard/departments/", views.departments, name="departments"),
    
 # from django.urls import path, include
 # from django.conf import settings

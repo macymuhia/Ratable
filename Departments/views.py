@@ -18,8 +18,5 @@ def departments(request):
 #             form.save()
 #             form = DepartmentCreationForm()
 
-<<<<<<< HEAD
 #     return render(request, 'add_department.html', {"form": form})
-=======
-    return render(request, 'add_department.html', {"form": form})
->>>>>>> dff68f43d6dd83ff80e916644c94b9390b8d546a
+    # return render(request, 'add_department.html', {"form": form})
