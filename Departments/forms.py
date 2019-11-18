@@ -5,11 +5,15 @@ class DepartmentCreationForm(forms.ModelForm):
     
     class Meta:
         model = Department
-        fields = ['name', 'line_manager']
+        fields = ['name']
         
 class EditDepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ['name','line_manager']
-
+        fields = ['name']
         
+# class NameForm(forms.ModelForm):
+#     class Meta:
+#         model =Department
+#         fields = ['name','line_manager']
+

@@ -1,0 +1,59 @@
+<div class="sticky-top">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">    
+      <a class="navbar-brand" href="/">Departments</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+          
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Upload Project" href="new/">
+                <img src="https://img.icons8.com/ios/50/000000/add.png" width="40" height="40">
+            </a>
+          </li>
+            <li class="nav-item dropdown" data-placement="bottom" title="Profile">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="https://img.icons8.com/dotty/80/000000/add-administrator.png" width="40" height="40">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Hello, {{departments.users}}</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="updateprofile/">Update Profile</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="logout/">Logout</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" data-placement="bottom" title="API End">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="https://img.icons8.com/dotty/80/000000/api-settings.png" width="40" height="40">
+                </a>
+                
+            </li>
+        </ul>
+        
+      <form class="form-inline searchingform" method="GET" action="searchresult/">
+          {% csrf_token %}  
+          <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+        {% else %}
+        <ul class="navbar-nav mr-auto past">
+          <li>
+              <a class="navbar-link" href="/login">LOGIN</a>
+          </li>
+          <li>
+              <a class="navbar-link" href="/register">REGISTER</a>
+          </li>
+        </ul>
+         {% endif %}
+
+        </div>
+    </nav>
+</div>

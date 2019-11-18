@@ -18,5 +18,6 @@ urlpatterns = [
          name='password_reset_complete'),
     path('group_create/', views.group_create_view, name='create_group'),
     path('group_list/', views.group_list_view, name='create_list'),
+    
 
 ]
