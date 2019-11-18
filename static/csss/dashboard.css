@@ -218,23 +218,33 @@ html, body {
 .nav-elem:hover:after {
   background: transparent;
 }
+/* dashboard */
 .nav-elem.nav-1 {
-  background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
+  background-image: url("https://ibb.co/7ns5j4V");
 }
+/* users */
 .nav-elem.nav-2 {
-  background-image: url("https://cdn.pixabay.com/photo/2016/02/19/11/27/silhouette-people-1209722__340.jpg");
+  background-image: url("https://ibb.co/vV42zp7");
 }
+/* departments */
 .nav-elem.nav-3 {
-  background-image: url("https://www.baltoncp.com/amirancomm/wp-content/uploads/sites/8/2018/11/kdn-img1-230x267.jpg");
+  background-image: url("https://ibb.co/x7xsZKP");
 }
+/* kpis */
 .nav-elem.nav-4 {
-  background-image: url("https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg");
+  background-image: url("https://ibb.co/1zNMJ97");
 }
+/* reports */
 .nav-elem.nav-5 {
-  background-image: url("https://image.shutterstock.com/image-photo/close-businesswoman-holding-graphs-hand-260nw-229854826.jpg");
+  background-image: url("https://ibb.co/h1QXh6T");
 }
+/* profile */
 .nav-elem.nav-6 {
-  background-image: url("https://cdn.pixabay.com/photo/2015/03/08/09/30/head-663997_960_720.jpg");
+  background-image: url("https://ibb.co/5FLMkRz");
+}
+/* count down */
+.nav-elem.nav-7 {
+  background-image: url("");
 }
 
 
@@ -254,7 +264,7 @@ html, body {
   background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
 }
 .section.section-1 .bg-part {
-  background-image: url("https://i.ibb.co/cwShCMP/FotoJet.jpg");
+  background-image: url("https://cdn.pixabay.com/photo/2012/03/04/00/43/architecture-22039_960_720.jpg");
 }
 .section.section-2 .left-part {
   background-image: url("https://cdn.pixabay.com/photo/2016/02/19/11/27/silhouette-people-1209722__340.jpg");
@@ -286,7 +296,12 @@ html, body {
 .section.section-6 .bg-part {
   background-image: url("https://cdn.pixabay.com/photo/2015/03/08/09/30/head-663997_960_720.jpg");
 }
-
+.section.section-7 .left-part {
+  background-image: url("");
+}
+.section.section-7 .bg-part {
+  background-image: url("");
+}
 
 .left-part,
 .bg-part {
@@ -349,7 +364,7 @@ html, body {
   cursor: pointer;
 }
 .section-heading:hover {
-  color: rgba(255, 89, 89, 0.7);
+  color: #6296CB;
 }
 
 .additional-text {
@@ -481,5 +496,5 @@ html, body {
 }
 
 .check-out a {
-  color: #ffaaaa;
+  color: #6296CB;
 }
