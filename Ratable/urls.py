@@ -24,5 +24,4 @@ urlpatterns = [
     path('departments/', include("Departments.urls")),
     path('kpis/', include('KPIs.urls')),
 
-
 ]
