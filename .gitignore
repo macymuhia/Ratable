@@ -2,7 +2,11 @@ virtual
 __pycache__/
 .vscode/
 .idea/
-.env
+# .env
 *.__pycache__
+.migrations/
 .venv/
 .virtual/
+node_modules
+/static
+package-lock.json

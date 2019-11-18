@@ -1,0 +1,106 @@
+{% extends 'base-kpi.html' %} {% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Hello There</h1>
+
+
+        <a href="{% url 'new_area' %}" class="btn btn-primary">Add Area</a>
+        <a href="{% url 'new_indicator' %}" class="btn btn-primary">Add Indicator</a>
+
+        <div class="card card-body my-5">
+            <table class="table">
+                <thead class="black white-text">
+                    <tr class="font-weight-bold">
+                        <th class="th-sm">AREA</th>
+                        <th class="th-sm">Indicators</th>
+                        <th class="th-sm">LMscore</th>
+                        <th class="th-sm">STscore</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+                    <!-- <tr scope="row col-md-12"></trscope="row>
+                        <td>}</td> -->
+
+                    {% for indicator in indicators %}
+                    </tr>
+
+                    <th> <b>{{indicator.area.name}}</b></th>
+                    <td>{{indicator.name}}</td>
+                    <td>{{indicator.line_manager_score}}</td>
+                    <td>{{indicator.staff_score}}</td>
+                    </tr>
+                    {%endfor%} {%for area in areas%} {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+
+        {%for area in areas%}
+        <div class="col-md-4 card">
+            <h3 class="text-primary">
+                {{area.name}}
+            </h3>
+            {% for indicator in indicators %} {% if area.name == indicator.area.name%}
+            <h6>
+                {{indicator.name}}
+
+                <div class="modal fade" id="exampleModal{{indicator.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{indicator.name}} - Make Your Score</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" enctype="multipart/form-data" action="/score/new">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{indicator.id}}" name="indicator">
+                                    <div class="btn-group-vertical ml-4 mt-4" method="POST" role="group" aria-label="Basic example">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary active">
+                                              <input type="radio" name="options" id="option1" value="1" autocomplete="off" checked> 1
+                                              </label>
+                                            <label class="btn btn-secondary">
+                                              <input type="radio" name="options" id="option2" value="2" autocomplete="off"> 2
+                                              </label>
+                                            <label class="btn btn-secondary">
+                                              <input type="radio" name="options" id="option3" value="3" autocomplete="off"> 3
+                                              </label>
+                                            <label class="btn btn-secondary">
+                                                  <input type="radio" name="options" id="option3" value="4" autocomplete="off"> 4
+                                              </label>
+                                            <label class="btn btn-secondary">
+                                                  <input type="radio" name="options" id="option3" value="5" autocomplete="off"> 5
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="Submit" class="btn btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h6>
+            <small>line manager score </small> {{indicator.line_manager_score}}
+            <a href="" data-toggle="modal" data-target="#exampleModal{{indicator.id}}">score</a>
+            <small>Staff score </small> {{indicator.staff_score}}
+            <a href="" data-toggle="modal" data-target="#exampleModal{{indicator.id}}">score</a> {% endif %} {%endfor%}
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

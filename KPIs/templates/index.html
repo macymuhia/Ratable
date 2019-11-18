@@ -1,0 +1,40 @@
+{% extends 'base-kpi.html' %} {% load bootstrap4 %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <title>Chart</title>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="mychart"></canvas>
+    </div>
+
+    <script>
+        let mychart = document.getElementById('mychart').getContext('2d');
+
+        let massChart = new chart(mychart, {
+            type: 'bar',
+            data: {
+                labels: ['London', 'Birmingham', 'Manchester', 'Glasgow'],
+                datasets: [{
+                    label: 'population',
+                    data: [
+                        9750500,
+                        2453700,
+                        1903100,
+                        1057600,
+                    ]
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>
+{% endblock content%}

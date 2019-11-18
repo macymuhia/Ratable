@@ -4,26 +4,24 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Department(models.Model):
     name = models.CharField(max_length=60, blank=False)
-   
-    
+    description = models.TextField(
+        max_length=300, blank=True, null=True, default='')
+
+    @classmethod
+    def get_all_departments(cls):
+        return cls.objects.all()
+
     def __str__(self):
         return self.name
 
-    def save_departments(self):
-        self.save()
-        
-    def delete_departments(self):
-        self.delete()  
-        
-    def edit_departments(self):
-        self.edit()
-        
-# class Staff(models.Model):
-#     name = models.CharField(max_length=100)
-#     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
-#     def __str__(self):
-#         return self.name
-    
+    # def save_departments(self):
+    #     self.save()
 
+    # def delete_departments(self):
+    #     self.delete()
+
+    # def update_departments(self):
+    #     self.update()

@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_DIR = BASE_DIR
+PROJECT_ROOT = BASE_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -27,6 +29,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS")
+# EMAIL_HOST = config("EMAIL_HOST")
+# EMAIL_PORT = config("EMAIL_PORT")
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 # Application definition
 
@@ -37,14 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # 'django_static_jquery',
+    "django.contrib.sites",
+
 
     # Third party
     'bootstrap3',
-    # 'widget_tweaks',
+    'widget_tweaks',
     'bootstrap4',
-    # 'jquery',
+    'fontawesome',
 
     # Own apps
     'users',
@@ -93,6 +103,7 @@ WSGI_APPLICATION = 'Ratable.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -101,6 +112,7 @@ DATABASES = {
         "PASSWORD": "1234",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -126,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -134,14 +146,48 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = 'dashbboard/'
-LOGOUT_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = 'landing_page/'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-STATIC_URL = '/static/'
+# STATIC_ROOT = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
+# STATIC_URL = '/static/'
+
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+DEFAULT_STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "static"))
+STATIC_ROOT = os.environ.get("STATIC_ROOT", DEFAULT_STATIC_ROOT)
+
+STATICFILES_DIRS = (
+    os.path.abspath(
+        os.path.join(PROJECT_DIR, "node_modules/@coreui/icons/css/")
+    ),
+    os.path.abspath(
+        os.path.join(
+            PROJECT_DIR, "node_modules/font-awesome/css/")
+    ),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/flag-icon-css/css/")),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/simple-line-icons/css/")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/jquery/dist")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/popper.js/dist")),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/bootstrap/dist/js")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/pace-progress")),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/perfect-scrollbar/dist")),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/@coreui/coreui/dist/js")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/chart.js/dist/")),
+    os.path.abspath(os.path.join(
+        PROJECT_DIR, "node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js")),
+)
+
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "/media"))

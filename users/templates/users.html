@@ -1,12 +1,451 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'csss/users.css' %}">
+	<script src="{% static 'jsss/jquery.js' %}"></script>
+	<title>Users</title>
 </head>
 <body>
-	
+	<script>
+		$(document).ready(function () {
+		$(function() {
+        $('.material-card > .mc-btn-action').click(function () {
+            var card = $(this).parent('.material-card');
+            var icon = $(this).children('i');
+            icon.addClass('fa-spin-fast');
+
+            if (card.hasClass('mc-active')) {
+                card.removeClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-arrow-left')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-bars');
+
+                }, 800);
+            } else {
+                card.addClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-bars')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-arrow-left');
+
+                }, 800);
+            }
+        });
+	});
+});
+		</script>
+		<div>
+				<a href="">
+						<img src="https://cdn.pixabay.com/photo/2012/04/15/22/07/log-35496_960_720.png" width="30px" height="30px" alt="">
+				</a>
+				<div style="padding-left: 1200px; font-size: 100px;">
+						<a href="">
+							<i class="fa fa-fw fa-user-plus"></i>
+						</a>
+					</div>
+			</div>
+
+		<hr>
+		<section class="container">
+				<h1>Marketing Department</h1>
+				<br>
+				<br>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+						<article class="material-card Purple">
+							<h2>
+								<span>Hillary Dalie</span>
+								<strong>
+									<i class="fa fa-fw fa-star"></i>
+									Operations Department
+								</strong>
+							</h2>
+							<div class="mc-content">
+								<div class="img-container">
+									<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+								</div>
+								<div class="mc-description">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								</div>
+							</div>
+							<a class="mc-btn-action">
+								<i class="fa fa-bars"></i>
+							</a>
+							<div class="mc-footer">
+								<h4>
+									Social
+								</h4>
+								<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+							</div>
+						</article>
+					</div>
+					<div class="col-md-4 col-sm-6 col-xs-12">
+							<article class="material-card Purple">
+								<h2>
+									<span>Hillary Dalie</span>
+									<strong>
+										<i class="fa fa-fw fa-star"></i>
+										Operations Department
+									</strong>
+								</h2>
+								<div class="mc-content">
+									<div class="img-container">
+										<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+									</div>
+									<div class="mc-description">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+									</div>
+								</div>
+								<a class="mc-btn-action">
+									<i class="fa fa-bars"></i>
+								</a>
+								<div class="mc-footer">
+									<h4>
+										Social
+									</h4>
+									<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+								</div>
+							</article>
+						</div>
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<article class="material-card Purple">
+							<h2>
+								<span>Hillary Dalie</span>
+								<strong>
+									<i class="fa fa-fw fa-star"></i>
+									Operations Department
+								</strong>
+							</h2>
+							<div class="mc-content">
+								<div class="img-container">
+									<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+								</div>
+								<div class="mc-description">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								</div>
+							</div>
+							<a class="mc-btn-action">
+								<i class="fa fa-bars"></i>
+							</a>
+							<div class="mc-footer">
+								<h4>
+									Social
+								</h4>
+								<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+							</div>
+						</article>
+					</div>
+					<h1>Finance Department</h1>
+				<br>
+				<br>
+					<div class="col-md-4 col-sm-6 col-xs-12">
+							<article class="material-card Purple">
+								<h2>
+									<span>Hillary Dalie</span>
+									<strong>
+										<i class="fa fa-fw fa-star"></i>
+										Operations Department
+									</strong>
+								</h2>
+								<div class="mc-content">
+									<div class="img-container">
+										<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+									</div>
+									<div class="mc-description">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+									</div>
+								</div>
+								<a class="mc-btn-action">
+									<i class="fa fa-bars"></i>
+								</a>
+								<div class="mc-footer">
+									<h4>
+										Social
+									</h4>
+									<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+								</div>
+							</article>
+						</div>
+						<div class="col-md-4 col-sm-6 col-xs-12">
+								<article class="material-card Purple">
+									<h2>
+										<span>Hillary Dalie</span>
+										<strong>
+											<i class="fa fa-fw fa-star"></i>
+											Operations Department
+										</strong>
+									</h2>
+									<div class="mc-content">
+										<div class="img-container">
+											<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+										</div>
+										<div class="mc-description">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+										</div>
+									</div>
+									<a class="mc-btn-action">
+										<i class="fa fa-bars"></i>
+									</a>
+									<div class="mc-footer">
+										<h4>
+											Social
+										</h4>
+										<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+									</div>
+								</article>
+							</div>
+							<div class="col-md-4 col-sm-6 col-xs-12">
+									<article class="material-card Purple">
+										<h2>
+											<span>Hillary Dalie</span>
+											<strong>
+												<i class="fa fa-fw fa-star"></i>
+												Operations Department
+											</strong>
+										</h2>
+										<div class="mc-content">
+											<div class="img-container">
+												<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+											</div>
+											<div class="mc-description">
+													Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+											</div>
+										</div>
+										<a class="mc-btn-action">
+											<i class="fa fa-bars"></i>
+										</a>
+										<div class="mc-footer">
+											<h4>
+												Social
+											</h4>
+											<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+										</div>
+									</article>
+								</div>
+								<h1>Operations Department</h1>
+				<br>
+				<br>
+								<div class="col-md-4 col-sm-6 col-xs-12">
+										<article class="material-card Purple">
+											<h2>
+												<span>Hillary Dalie</span>
+												<strong>
+													<i class="fa fa-fw fa-star"></i>
+													Operations Department
+												</strong>
+											</h2>
+											<div class="mc-content">
+												<div class="img-container">
+													<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+												</div>
+												<div class="mc-description">
+														Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+												</div>
+											</div>
+											<a class="mc-btn-action">
+												<i class="fa fa-bars"></i>
+											</a>
+											<div class="mc-footer">
+												<h4>
+													Social
+												</h4>
+												<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+											</div>
+										</article>
+									</div>
+									<div class="col-md-4 col-sm-6 col-xs-12">
+											<article class="material-card Purple">
+												<h2>
+													<span>Hillary Dalie</span>
+													<strong>
+														<i class="fa fa-fw fa-star"></i>
+														Operations Department
+													</strong>
+												</h2>
+												<div class="mc-content">
+													<div class="img-container">
+														<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+													</div>
+													<div class="mc-description">
+															Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+													</div>
+												</div>
+												<a class="mc-btn-action">
+													<i class="fa fa-bars"></i>
+												</a>
+												<div class="mc-footer">
+													<h4>
+														Social
+													</h4>
+													<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+												</div>
+											</article>
+										</div>
+										<div class="col-md-4 col-sm-6 col-xs-12">
+												<article class="material-card Purple">
+													<h2>
+														<span>Hillary Dalie</span>
+														<strong>
+															<i class="fa fa-fw fa-star"></i>
+															Operations Department
+														</strong>
+													</h2>
+													<div class="mc-content">
+														<div class="img-container">
+															<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+														</div>
+														<div class="mc-description">
+																Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+														</div>
+													</div>
+													<a class="mc-btn-action">
+														<i class="fa fa-bars"></i>
+													</a>
+													<div class="mc-footer">
+														<h4>
+															Social
+														</h4>
+														<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+													</div>
+												</article>
+											</div>
+											<h1>Solutions Department</h1>
+				<br>
+				<br>
+											<div class="col-md-4 col-sm-6 col-xs-12">
+													<article class="material-card Purple">
+														<h2>
+															<span>Hillary Dalie</span>
+															<strong>
+																<i class="fa fa-fw fa-star"></i>
+																Operations Department
+															</strong>
+														</h2>
+														<div class="mc-content">
+															<div class="img-container">
+																<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+															</div>
+															<div class="mc-description">
+																	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+															</div>
+														</div>
+														<a class="mc-btn-action">
+															<i class="fa fa-bars"></i>
+														</a>
+														<div class="mc-footer">
+															<h4>
+																Social
+															</h4>
+															<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+														</div>
+													</article>
+												</div>
+												<div class="col-md-4 col-sm-6 col-xs-12">
+														<article class="material-card Purple">
+															<h2>
+																<span>Hillary Dalie</span>
+																<strong>
+																	<i class="fa fa-fw fa-star"></i>
+																	Operations Department
+																</strong>
+															</h2>
+															<div class="mc-content">
+																<div class="img-container">
+																	<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+																</div>
+																<div class="mc-description">
+																		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+																</div>
+															</div>
+															<a class="mc-btn-action">
+																<i class="fa fa-bars"></i>
+															</a>
+															<div class="mc-footer">
+																<h4>
+																	Social
+																</h4>
+																<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+															</div>
+														</article>
+													</div>
+													<div class="col-md-4 col-sm-6 col-xs-12">
+															<article class="material-card Purple">
+																<h2>
+																	<span>Hillary Dalie</span>
+																	<strong>
+																		<i class="fa fa-fw fa-star"></i>
+																		Operations Department
+																	</strong>
+																</h2>
+																<div class="mc-content">
+																	<div class="img-container">
+																		<img class="img-responsive" src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg">
+																	</div>
+																	<div class="mc-description">
+																			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+																	</div>
+																</div>
+																<a class="mc-btn-action">
+																	<i class="fa fa-bars"></i>
+																</a>
+																<div class="mc-footer">
+																	<h4>
+																		Social
+																	</h4>
+																	<a href="" class="fa fa-fw fa-pencil"></a>
+								<a href="" class="fa fa-fw fa-trash-o"></a>
+								<a href="" class="fa fa-fw fa-star-half-o"></a>
+								<a href="" class="fa fa-fw fa-user"></a>
+															</article>
+														</div>
+			</section>
+			<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+			<!-- partial -->
+			  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>	
 </body>
 </html>
