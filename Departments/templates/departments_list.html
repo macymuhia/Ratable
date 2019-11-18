@@ -17,7 +17,9 @@
 		</div>
 		<p>{{ department.description }}</p>
 		
-	  </label> {% endfor %}
+	  </label> {% empty %}
+    <div class="text-center bg-warning">No Departments</div>
+    {% endfor %}
 
 </div>
 {% endblock %}
