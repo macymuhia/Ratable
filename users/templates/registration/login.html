@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Amiran Sign In</title>
-    <link rel="stylesheet" href="{% static 'csss/signin.css' %}">
-    <script src="{% static 'jsss/signin.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <script src="{% static 'js/signin.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 
@@ -23,10 +23,7 @@
                         {% csrf_token %}
                         <input type="text" placeholder="username" name="username">
                         <input type="password" placeholder="password" name="password">
-                        <div class="checkbox">
-                            <input type="checkbox" id="remember" /><label for="remember">remember me</label>
-                        </div>
-                        {% if request.GET.next %}
+                        <a href=" {% url 'password_reset' %} ">Forgot password</a> {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
                         <button class="button submit">SIGN IN</button>
                     </form>

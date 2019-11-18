@@ -4,6 +4,10 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
+    # path("users", views.users, name="users"),
+    # path("profile", views.profile, name="profile"),
+    # path("", views.adduser, name="adduser"),
+    # path("login", views.login, name="login"),
     path("", views.login_user, name="login",),
     path("logout/", LogoutView.as_view(),
          {"next_page": settings.LOGOUT_REDIRECT_URL}, name="logout",),

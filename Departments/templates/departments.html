@@ -1,107 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Departments</title>
-	<link rel="stylesheet" href="{% static 'csss/department.css' %}">
-</head>
-<body>
-	<!-- partial:index.partial.html -->
-	<div class='wrapper'>
-	  <h1>
-		List of departments at Amiran
-	  </h1>
-	  <h2>
-		Click on a department to view its details  
-	  </h2>
-	  <input id='1' type='checkbox'>
-	  <label for='1'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Marketing Department</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	  <input id='2' type='checkbox'>
-	  <label for='2'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	  <input id='3' type='checkbox'>
-	  <label for='3'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-	
-	  </label>
-	  <input id='4' type='checkbox'>
-	  <label for='4'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	  <input id='5' type='checkbox'>
-	  <label for='5'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	  <input id='6' type='checkbox'>
-	  <label for='6'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		<a href='https://codepen.io/jcoulterdesign/'>View my other stuff</a>
-	  </label>
-	  <input id='7' type='checkbox'>
-	  <label for='7'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-	
-	  </label>
-	  <input id='8' type='checkbox'>
-	  <label for='8'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	  <input id='9' type='checkbox'>
-	  <label for='9'>
-		<div>
-		  <div class='circle'></div>
-		  <span>Click me</span>
-		</div>
-		<p>Stuff about the department should be here, like a summary.</p>
-		
-	  </label>
-	</div>
-	<!-- partial -->
-	  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	</body>
-</html>
+{% extends 'base.html' %} {% load static %} {% block content %}
 
+<div>
+    <a href="">
+        <img src="https://cdn.pixabay.com/photo/2012/04/15/22/07/log-35496_960_720.png" width="30px" height="30px" alt="">
+    </a>
+</div>
+<!-- partial:index.partial.html -->
+<div class='wrapper'>
+    <h1>
+        List of departments at Amiran
+    </h1>
+    <h2>
+        Click on a department to view its details
+    </h2>
+    {% for department in departments %}
+    <input id='{{department.id}}' type='checkbox'>
+    <label for='{{department.id}}'>
+		<div>
+		  <div class='circle'></div>
+		  <span>{{ department.name }}</span>
+		</div>
+		<p>{{ department.description }}</p>
+		
+	  </label> {% endfor %}
 
-<div>Photo edited with <a href="https://www.fotojet.com/">FotoJet</a></div>
+</div>
+{% endblock %}

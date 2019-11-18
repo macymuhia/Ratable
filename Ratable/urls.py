@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('users/', include('users.urls')),
     path('departments/', include("Departments.urls")),
-    path('KPIs/', include('KPIs.urls')),
+    path('kpis/', include('KPIs.urls')),
 ]
 
 if settings.DEBUG:

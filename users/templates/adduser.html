@@ -17,317 +17,220 @@
 <body>
 		<script>
 			$(document).ready(function() {
-  let $urlWS = "https://randomuser.me/api/?results=100";
-  //let $JSON = ["results"][0]["login"];
-  /**
-   * Clase en donde defino las propiedades y metodos CRUD
-   **/
-  class CRUD {
-    Formulario(datos, titulo,formulario) {
-      $("#ModalCRUD")
-        .find(".modal-title")
-        .text(titulo);
-      // Obtengo el encabezado de la tabla
-      let $encabezado = $("#datos")
-        .parent()
-        .parent()
-        .parent()
-        .parent()
-        .find("th");
-      datos = datos === null ? $encabezado : datos;
-      let $Objdato = {};
-      // Genero la estructura JSON que mostraré en el modal
+  // Book Class: Represents a Book
+// document.querySelector('#isbn').value = Math.floor(Math.random() * 1000 + 100);
+var selectedRow = null;
+class Book {
+  constructor(title, author, isbn) {
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+  }
+}
 
-      $.each($encabezado, function(index, col) {
-        //Descarto la columna con los botones de control
-        if (!$($(datos)[index].innerHTML)[index]) {
-          $Objdato[$(col)[0].textContent] = $(datos)[index].textContent;
-        }
-        if ($($(datos)[index].innerHTML).selector === "Action") {
-          delete $Objdato[$(col)[0].textContent];
-        }
-      });
+// UI Class: Handle UI Tasks
+class UI {
+//   static displayBooks() {
+//     const books = Store.getBooks();
 
-      let $nodos = Object.keys($Objdato);
-      $("#ModalCRUD")
-        .find("form")
-        .remove();
-      let $campo = '<form id="'+formulario+'">';
-      $nodos.map(key => {
-        $campo += '<div class="form-group">';
-        $campo +=
-          '<label name="' +
-          key +
-          '" for="recipient-name" class="control-label">' +
-          key +
-          "</label>";
-        $campo +=
-          '<input name="' +
-          key +
-          '"  type="text" class="form-control" id="recipient-name" value="' +
-          ($Objdato[key] === key ? " " : $Objdato[key]) +
-          '">';
-        $campo += "</div>";
-      });
-      $campo += "</form>";
-      $("#ModalCRUD")
-        .find(".modal-body")
-        .append($campo);
-    }
-    Insertar(datos) {}
-    Eliminar(Tabla, Fila) {
-      Fila.parents("tr").addClass("animated fadeOutRight");
-      setTimeout(function() {
-        Tabla.row(Fila.parents("tr"))
-          .remove()
-          .draw();
-      }, 500);
-    }
+//     books.forEach((book) => UI.addBookToList(book));
+//   }
 
-    Modificar(datos) {}
+  static addBookToList(book) {
+    const list = document.querySelector('#book-list');
+
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${book.title}</td>
+      <td>${book.author}</td>
+      <td>${book.isbn}</td>
+      <td><a href="#" class="btn btn-success btn-sm edit">Edit</a></td>
+      <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    `;
+
+    list.appendChild(row);
+  }
+  static editBookToList(book) {
+    selectedRow.children[0].textContent = book.title;
+    selectedRow.children[1].textContent = book.author;
+    selectedRow.children[2].textContent = book.isbn;
+  }
+  static deleteBook(el) {
+    if(el.classList.contains('delete')) {
+      el.parentElement.parentElement.remove();
+      UI.showAlert('Employee Deleted', 'danger');
+    } else null
+    //   if(el.classList.contains('edit')) {
+    //   document.querySelector('#title').value = el.parentElement.parentElement.children[0].textContent;
+    //   document.querySelector('#author').value = el.parentElement.parentElement.children[1].textContent;
+    //   document.querySelector('#isbn').value = el.parentElement.parentElement.children[2].textContent;
+    // }
+  }
+  static editBook(el) {
+    
+    if(el.classList.contains('edit')) {
+      selectedRow = el.parentElement.parentElement;
+      document.querySelector('#title').value = selectedRow.children[0].textContent;
+      document.querySelector('#author').value = selectedRow.children[1].textContent;
+      document.querySelector('#isbn').value = selectedRow.children[2].textContent;
+      // document.querySelector('.edit-btn').disabled = false;
+      // document.querySelector('.add-btn').disabled = true;
+    } else null
+    
   }
 
-  $.ajax({
-    type: "GET",
-    url: $urlWS,
-    beforeSend: () => {
-      $("#datos").append(
-        '<i class="fas fa-spinner fa-pulse fa-5x" style="margin: 15% 0 0 50%; color:#343a40;"></i>'
-      );
-    }
-  })
-    .done(response => {
-      let crud = new CRUD();
-      let $nodos = Object.keys(response.results[0].login);
-      let $datos = response.results;
-      let columnas = [];
-      let datos = [];
-      columnas.push({ title: "Action" });
-      $nodos.map(title => {
-        columnas.push({ title });
-      });
-      $datos.map(({ login }) => {
-        let $dato = Object.values(login);
-        let dato = [];
-        dato.push("");
-        $dato.map(valor => {
-          dato.push(valor);
-        });
-        datos.push(dato);
-      });
-      let $tabla = $("#datos").DataTable({
-        data: datos,
-        lengthChange: false,
-        dom: "Bfrtip",
-        buttons: [
-          {
-            text:
-              '<a><i class="fas fa-plus" title="Insertar"></i><span data-toggle="modal" data-target="#ModalCRUD"> Insertar</span></a>',
-            className: "btn btn-dark",
-            action: function(e, dt, node, config) {
-              crud.Formulario(null, "Insertar registro","frmInsertar");
-            }
-          },
-          {
-            extend: "copyHtml5",
-            text:
-              '<a><i class="far fa-copy" title="Copiar"></i><span> Copiar</span></a>',
-            className: "btn btn-dark",
-            title: "Exportación de datos",
-            exportOptions: {
-              columns: ":visible"
-            }
-          },
-          {
-            extend: "excelHtml5",
-            text:
-              '<a><i class="far fa-file-excel" title="Excel"></i><span> Excel</span></a>',
-            className: "btn btn-dark",
-            title: "Exportación de datos",
-            exportOptions: {
-              columns: ":visible"
-            }
-          },
-          {
-            extend: "pdfHtml5",
-            text:
-              '<a><i class="far fa-file-pdf" title="PDF"></i><span> PDF</span></a>',
-            className: "btn btn-dark",
-            title: "Exportación de datos",
-            exportOptions: {
-              columns: ":visible"
-            }
-          },
-          {
-            extend: "csvHtml5",
-            text:
-              '<a><i class="fas fa-table" title="CSV"></i><span> CSV</span></a>',
-            className: "btn btn-dark",
-            title: "Exportación de datos",
-            exportOptions: {
-              columns: ":visible"
-            }
-          },
-          {
-            extend: "print",
-            text:
-              '<a><i class="fas fa-print" title="Imprimir"></i><span> Imprimir</span></a>',
-            className: "btn btn-dark",
-            title: "Exportación de datos",
-            exportOptions: {
-              columns: ":visible"
-            }
-          },
-          {
-            extend: "colvis",
-            text:
-              '<a><i class="far fa-eye-slash"></i><span> Columnas</span></a>',
-            className: "btn btn-dark"
-          }
-        ],
-        columns: columnas,
-        columnDefs: [
-          // Defino mi primer columna con 2 botones de control
-          {
-            targets: 0,
-            width: "40%", //considero un porcentaje de celda
-            className: "text-center",
-            data: null, // Indico que no hay datos para mapear para la primer columna
-            defaultContent:
-              '<i id="btnModificar" data-toggle="modal" data-target="#ModalCRUD" class="fas fa-edit text-success" style="cursor:pointer;"></i> <i id="btnEliminar" class="fas fa-trash-alt text-danger" style="cursor:pointer;"></i>'
-          },
-          {
-            targets: 1,
-            width: "40%",
-            className: "text-center"
-          }
-        ],
-        select: {
-          style: "single", // Necesito que solo una fila se pueda mapear
-          selector: "td:first-child"
-        },
-        responsive: true, // Necesito que se adapte a cualquier resolución
-        colReorder: true, // Ordenamiento de columnas
-        language: {
-          url:
-            "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-        }
-      });
-      /**
-       * Evento de modificar y eliminar
-       **/
+  static showAlert(message, className) {
+    const div = document.createElement('div');
+    div.className = `alert alert-${className}`;
+    
+    div.appendChild(document.createTextNode(message));
+    const container = document.querySelector('.container');
+    const main = document.querySelector('.main');
+    container.insertBefore(div, main);
+    // div.style.position = "absolute";
+    // div.style.top = "30px";
+    // div.style.left = "90%";
+    setTimeout(() => document.querySelector('.alert').remove(), 3000);
+  }
 
-      $tabla.on("click", "svg", function(e, dt, type, indexes) {
-        // Obtengo la fila a modificar
-        let $datos = $(this)
-          .parent()
-          .parent()
-          .find("td"); 
-        if ($(this)[0].id === "btnEliminar") {
-          crud.Eliminar($tabla, $(this));
-        } else {
-          crud.Formulario($datos, "Modificación de datos","frmModificar");
-        }
-      });
-    })
-    .fail((jqXHR, textStatus) => {
-      console.log("Request fallo: " + textStatus);
-    })
-    .always(() => {
-      $(".fa-spinner").remove();
-      console.log("Petición terminada");
-    });
+  static clearFields() {
+    document.querySelector('#title').value = '';
+    document.querySelector('#author').value = '';
+    document.querySelector('#isbn').value = '';
+  }
+}
 
-  $(".modal-content").resizable({
-    minHeight: 100,
-    minWidth: 100
-  });
-  $(".modal-dialog").draggable();
-  $(document).tooltip({
-    show: null,
-    position: {
-      my: "left top",
-      at: "left bottom"
-    },
-    open: (event, ui) => {
-      ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast");
-    }
-  });
+// Store Class: Handles Storage
+// class Store {
+//   static getBooks() {
+//     let books;
+//     if(localStorage.getItem('books') === null) {
+//       books = [];
+//     } else {
+//       books = JSON.parse(localStorage.getItem('books'));
+//     }
 
-  $("#ModalCRUD").on("show.bs.modal", function() {
-    let $Objeto = $(this);
-    $Objeto.find(".modal-body").css({
-      "max-height": "100%"
-    });
-  });
-  setTimeout(function() {
-    $("div.dataTables_filter input").css({
-      "border-radius": "20px",
-      "padding-left": "25px"
-    });
-    $("div.dataTables_filter label").append(
-      '<label id="iconBuscar"> <i class="fas fa-search"></i></label>'
-    );
-    $("div.dataTables_filter #iconBuscar").css({ "margin-left": "-175px" });
-    $("div.modal-header").css({ cursor: "move" });
-  }, 2000);
-  $(document).click(evt => {
-    if (evt.target.id === "btnGuardar") {
-      let form = $("#ModalCRUD").find("form label");
-      let $json = [];
-      $.map(form, valor => {
-        let $nombre = $(valor);
-        let $valor = $nombre.parent().find("input");
-$json.push({[$nombre[0].innerText] : $valor[0].value}); 
-      });
-      swal("Transacción exitosa!", JSON.stringify($json), "success");
-    }
-  });
+//     return books;
+//   }
+
+//   static addBook(book) {
+//     const books = Store.getBooks();
+//     books.push(book);
+//     localStorage.setItem('books', JSON.stringify(books));
+//   }
+
+//   static removeBook(isbn) {
+//     const books = Store.getBooks();
+
+//     books.forEach((book, index) => {
+//       if(book.isbn === isbn) {
+//         books.splice(index, 1);
+//       }
+//     });
+
+//     localStorage.setItem('books', JSON.stringify(books));
+//   }
+// }
+
+// Event: Display Books
+document.addEventListener('DOMContentLoaded',UI.displayBooks);
+
+// Event: Add a Book
+document.querySelector('#book-form').addEventListener('submit', (e) => {
+  // Prevent actual submit
+  e.preventDefault();
+
+  // Get form values
+  
+  const title = document.querySelector('#title').value;
+  const author = document.querySelector('#author').value;
+  const isbn = document.querySelector('#isbn').value;
+
+  // Validate
+  
+  if(title === '' || author === '' || isbn === '') {
+    UI.showAlert('Please fill in all fields', 'danger');
+  } else {
+    // Instatiate book
+    const book = new Book(title, author, isbn);
+  if (selectedRow == null) {
+    // Add Book to UI
+    UI.addBookToList(book);
+    selectedRow = null;
+    UI.showAlert('Employee Added', 'success');
+  } else {
+    UI.editBookToList(book);
+    selectedRow = null;
+    UI.showAlert('Employee Info Edited', 'info');
+  }
+    // Add book to store
+    // Store.addBook(book);
+    // Show success message
+    // Clear fields
+    UI.clearFields();
+  }
+});
+
+// Event: Remove a Book
+document.querySelector('#book-list').addEventListener('click', (e) => {
+  // Remove book from UI
+  UI.deleteBook(e.target);
+  UI.editBook(e.target);
+  // Remove book from store
+  // Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+  // Show success message
+  // UI.showAlert('Book Removed', 'success');
+});
 });
 				
 				</script>
-		<div id="CRUD">
-				<table id="datos" class="table table-striped table-bordered animated zoomIn" style="width:100%">
-				</table>
-				<!-- Modal -->
-				<div class="modal animated fadeInDown" id="ModalCRUD" tabindex="-1" role="dialog" aria-labelledby="MyDialogLabel">
-				  <div class="modal-dialog" role="document">
-					<div class="modal-content">
-					  <div class="modal-header">
-						<h4 class="modal-title" id="ModalCRUDlable"></h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					  </div>
-					  <div class="modal-body">
-					  </div>
-					  <div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-						<button id="btnGuardar" type="button" class="btn btn-primary">Guardar</button>
-					  </div>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			  <!-- partial -->
-				<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-			  <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
-			  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
-			  <script src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>
-			  <script src='https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js'></script>
-			  <script src='https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js'></script>
-			  <script src='https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js'></script>
-			  <script src='https://cdn.datatables.net/select/1.2.5/js/dataTables.select.min.js'></script>
-			  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/buttons.bootstrap4.min.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js'></script>
-			  <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
-			  <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js'></script>
-			  <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js'></script>
-			  <script src='https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js'></script>
-			  <script src='https://use.fontawesome.com/releases/v5.0.10/js/all.js'></script>
-			  <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
-			  <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+		<div class="container mt-5">
+      <div class="title text-center">
+        <h1 class="display-5">
+          <i class="fas fa-user-alt text-success"></i> <strong>Employee Manager</strong>
+        </h1>
+      </div>
+      <div class="main row">
+        <div class="col-sm-12 col-md-4">
+          <form id="book-form" autocomplete="off">
+            <div class="form-group">
+              <label for="title">Name</label>
+              <input type="text" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="author">Department</label>
+              <input type="text" id="author" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="isbn">Email</label>
+              <input type="text" id="isbn" class="form-control">
+            </div>
+  <!--      <input type="submit" value="Edit Book" class="btn btn-success btn-block edit-btn" disabled> -->
+            <input type="submit" value="Submit" class="btn btn-info btn-block add-btn">
+          </form>
+        </div>
+        <div class="col-sm-12 col-md-8">
+          <table class="table table-striped mt-5">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="book-list">
+              <tr><td>Tina Tasha</td>
+              <td>Finance </td>
+              <td>tinatasha@gmail.com</td>
+              <td><a href="#" class="btn btn-success btn-sm edit">Edit</a></td>
+              <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
 </body>
 </html>
