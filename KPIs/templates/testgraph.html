@@ -1,0 +1,66 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="{% static 'css/graphs.css' %}">
+    <script src="{% static 'jss/jquery.js' %}"></script>
+    <title>graphs</title>
+</head>
+<body>
+
+    {% load django_template_maths %}
+
+{% block content %}
+    {%for average in averages %}
+        <div class="card">
+            <div class="card-header">
+                {{average.indicators__area__name}}
+            </div>
+            <div class="card-body">
+                <!-- {{average.average}} -->
+                {{average.average |mul:20 }}%
+            </div>
+        </div>
+    {% endfor %}
+    <canvas id="myChart"></canvas>
+{% endblock %}
+
+    <div class="card">
+    {% for score in scores %}
+      {{user_area_total}}
+      <div class="card-header">
+        <strong>
+          {{score.indicators.area}}
+        </strong>
+      </div>
+      <div class="card-body">
+        {{score.indicators.name}} <br>
+        {{score.score}}
+        
+      </div>
+      <div class="card-footer">
+        {{score.user}}
+      </div>
+      {% if forloop.last %}
+      The average for this {{score.user.username}} from the department of is  {{user_average}}
+      {% endif %}
+
+    {% endfor %}
+
+    {%for average in averages %}
+
+        {{average.indicators__area__name}}
+        {{average.average}}
+
+    {% endfor %}
+    </div>
+</body>
+</html>
