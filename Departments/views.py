@@ -33,8 +33,6 @@ def search(request):
         context = {
             "department_users":department_users
         }
-        print('*********************************')
-        print(department_users)
         return render(request, 'departments.html', context)
     return render(request, 'departments.html')
         
