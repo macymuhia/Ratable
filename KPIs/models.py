@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
 class Area(models.Model):
     name = models.CharField(max_length=20)
+
 
     def __str__(self):
         return self.name
@@ -28,10 +31,22 @@ class Area(models.Model):
         '''
         self.update()
 
+    @classmethod
+    def get_areas(cls):
+        areas = cls.objects.all()
+        return areas
+
+
+
 class Indicators(models.Model):
     name = models.CharField(max_length=30)
     area = models.ForeignKey(Area,on_delete=models.CASCADE,null=True)
+    line_manager_score = models.FloatField(default=0)
+    staff_score =  models.FloatField(default=0)
 
+    class Meta:
+        ordering=['area']
+        
     def __str__(self):
         return self.name
 
@@ -44,5 +59,16 @@ class Indicators(models.Model):
     def delete_indica(self):
         self.delete()
 
+    @classmethod
+    def get_indicators(cls):
+        indicators = cls.objects.all()
+        return indicators
 
 
+class Score(models.Model):
+    score = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    indicators = models.ForeignKey(Indicators, on_delete=models.CASCADE, null=True)
+
+    def save_score(self):
+        self.save()

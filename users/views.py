@@ -20,219 +20,219 @@ from users.models import *
 from users.forms import *
 
 
-# Create your views here.
-# @login_required(login_url="/users/")
-# @transaction.atomic
-# def add_user_view(request):
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST)
-#         details_form = UserDetailsForm(request.POST)
-#         if user_form.is_valid() and details_form.is_valid():
-#             user = user_form.save()
-#             user.profile.bio = details_form.cleaned_data.get('bio')
-#             group = details_form.cleaned_data.get('group')
-#             department = details_form.cleaned_data.get('department')
-#             user.profile.group.add(group[0].pk)
-#             dept = Department.objects.get(pk=department.pk)
-#             user.profile.department = dept
-#             user.profile.role = details_form.cleaned_data.get('role')
-#             user.profile.save()
+Create your views here.
+@login_required(login_url="/users/")
+@transaction.atomic
+def add_user_view(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        details_form = UserDetailsForm(request.POST)
+        if user_form.is_valid() and details_form.is_valid():
+            user = user_form.save()
+            user.profile.bio = details_form.cleaned_data.get('bio')
+            group = details_form.cleaned_data.get('group')
+            department = details_form.cleaned_data.get('department')
+            user.profile.group.add(group[0].pk)
+            dept = Department.objects.get(pk=department.pk)
+            user.profile.department = dept
+            user.profile.role = details_form.cleaned_data.get('role')
+            user.profile.save()
 
-#             # Email sending functionality
-#             subject = "Activate Your Ratable Account"
-#             current_site = Site.objects.get_current()
-#             sender = "atst.acc19@gmail.com"
+            # Email sending functionality
+            subject = "Activate Your Ratable Account"
+            current_site = Site.objects.get_current()
+            sender = "atst.acc19@gmail.com"
 
-#             # passing in the context vairables
-#             text_content = render_to_string(
-#                 "registration/emails/account_activation_email.txt",
-#                 {
-#                     "user": user,
-#                     "domain": current_site.domain,
-#                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-#                     "token": account_activation_token.make_token(user),
-#                 },
-#             )
-#             html_content = render_to_string(
-#                 "registration/emails/account_activation_email.html",
-#                 {
-#                     "user": user,
-#                     "domain": current_site.domain,
-#                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-#                     "token": account_activation_token.make_token(user),
-#                 },
-#             )
+            # passing in the context vairables
+            text_content = render_to_string(
+                "registration/emails/account_activation_email.txt",
+                {
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user),
+                },
+            )
+            html_content = render_to_string(
+                "registration/emails/account_activation_email.html",
+                {
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user),
+                },
+            )
 
-#             msg = EmailMultiAlternatives(
-#                 subject, text_content, sender, [user.email])
-#             msg.attach_alternative(html_content, "text/html")
-#             msg.send()
-#             return redirect("registration/emails/account_activation_sent")
-#         else:
-#             return redirect('profile')
-#             # user_form = UserForm()
-#             # return render(request, 'registration/add_user.html', {'user_form': user_form, 'details_form': details_form})
-#     else:
-#         user_form = UserForm()
-#         details_form = UserDetailsForm()
-#     return render(request, 'registration/add_user.html', {
-#         'user_form': user_form,
-#         'details_form': details_form
-#     })
-
-
-# def account_activation_sent(request):
-#     return render(request, 'registration/emails/account_activation_sent.html')
+            msg = EmailMultiAlternatives(
+                subject, text_content, sender, [user.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            return redirect("registration/emails/account_activation_sent")
+        else:
+            return redirect('profile')
+            # user_form = UserForm()
+            # return render(request, 'registration/add_user.html', {'user_form': user_form, 'details_form': details_form})
+    else:
+        user_form = UserForm()
+        details_form = UserDetailsForm()
+    return render(request, 'registration/add_user.html', {
+        'user_form': user_form,
+        'details_form': details_form
+    })
 
 
-# def activate(request, uidb64, token):
-#     try:
-#         uid = force_text(urlsafe_base64_decode(uidb64))
-#         user = User.objects.get(pk=uid)
-#     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-#         user = None
-
-#     if user is not None and account_activation_token.check_token(user, token):
-#         user.is_active = True
-#         user.profile.email_confirmed = True
-#         user.save()
-#         login(request, user)
-#         subject = "Welcome to Ratable"
-#         sender = "atst.acc19@gmail.com"
-
-#         # passing in the context vairables
-#         text_content = render_to_string(
-#             "registration/emails/welcome_email.txt", {"user": user})
-#         html_content = render_to_string(
-#             "registration/emails/welcome_email.html", {"user": user})
-
-#         msg = EmailMultiAlternatives(
-#             subject, text_content, sender, [user.email])
-#         msg.attach_alternative(html_content, "text/html")
-#         msg.send()
-
-#         return redirect("edit_profile")
-#     else:
-#         return render(request, "registration/emails/account_activation_invalid.html")
+def account_activation_sent(request):
+    return render(request, 'registration/emails/account_activation_sent.html')
 
 
-# def login_user(request):
-#     # logout(request)
-#     next_page = ''
-#     username = password = ''
-#     if 'next' in request.POST:
-#         next_page = request.POST['next']
-#     if request.POST:
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         # import pdb
-#         # pdb.set_trace()
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#             if user.is_active:
-#                 login(request, user)
-#                 if next_page:
-#                     return redirect(next_page)
-#                 return redirect('profile')
-#     return render(request, 'registration/login.html')
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.profile.email_confirmed = True
+        user.save()
+        login(request, user)
+        subject = "Welcome to Ratable"
+        sender = "atst.acc19@gmail.com"
+
+        # passing in the context vairables
+        text_content = render_to_string(
+            "registration/emails/welcome_email.txt", {"user": user})
+        html_content = render_to_string(
+            "registration/emails/welcome_email.html", {"user": user})
+
+        msg = EmailMultiAlternatives(
+            subject, text_content, sender, [user.email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        return redirect("edit_profile")
+    else:
+        return render(request, "registration/emails/account_activation_invalid.html")
 
 
-# @login_required(login_url="/users/")
+def login_user(request):
+    # logout(request)
+    next_page = ''
+    username = password = ''
+    if 'next' in request.POST:
+        next_page = request.POST['next']
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        # import pdb
+        # pdb.set_trace()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                if next_page:
+                    return redirect(next_page)
+                return redirect('profile')
+    return render(request, 'registration/login.html')
+
+
+@login_required(login_url="/users/")
 
 
 
 # mine
+# def profile(request):
+#     return render(request, 'profile.html', {"profile":profile})
+
+# def users(request):
+#     return render(request, 'users.html', {"users":users})
+
+# def adduser(request):
+#     return render(request, 'adduser.html', {"adduser":adduser})
+
+# def login(request):
+#     return render(request, 'login.html', {"login":login})
+
+# mine
+
+@login_required(login_url="")
 def profile(request):
-    return render(request, 'profile.html', {"profile":profile})
 
-def users(request):
-    return render(request, 'users.html', {"users":users})
+    current_user = request.user
+    user_data = User.objects.get(id=current_user.id)
+    user_profile = UserProfile.objects.get(id=current_user.id)
 
-def adduser(request):
-    return render(request, 'adduser.html', {"adduser":adduser})
-
-def login(request):
-    return render(request, 'login.html', {"login":login})
-
-# mine
-
-# @login_required(login_url="")
-# def profile(request):
-
-#     current_user = request.user
-#     user_data = User.objects.get(id=current_user.id)
-#     user_profile = UserProfile.objects.get(id=current_user.id)
-
-#     return render(
-#         request,
-#         "registration/profile.html",
-#         {"user_data": user_data, "user_profile": user_profile},
-#     )
+    return render(
+        request,
+        "registration/profile.html",
+        {"user_data": user_data, "user_profile": user_profile},
+    )
 
 
-# @login_required(login_url="")  # only logged in users should access this
-# def edit_profile(request):
+@login_required(login_url="")  # only logged in users should access this
+def edit_profile(request):
 
-#     current_user = request.user
-#     user = User.objects.get(id=current_user.id)
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
 
-#     # prepopulate UserProfileForm with retrieved user values from above.
-#     user_form = UserForm(instance=user)
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
 
-#     # The sorcery begins from he
-# @login_required(login_url="")
-# def profile(request):
+    # The sorcery begins from he
+@login_required(login_url="")
+def profile(request):
 
-#     current_user = request.user
-#     user_data = User.objects.get(id=current_user.id)
-#     user_profile = UserProfile.objects.get(id=current_user.id)
+    current_user = request.user
+    user_data = User.objects.get(id=current_user.id)
+    user_profile = UserProfile.objects.get(id=current_user.id)
 
-#     return render(
-#         request,
-#         "registration/profile.html",
-#         {"user_data": user_data, "user_profile": user_profile},
-#     )
+    return render(
+        request,
+        "registration/profile.html",
+        {"user_data": user_data, "user_profile": user_profile},
+    )
 
 
-# @login_required(login_url="")  # only logged in users should access this
-# def edit_profile(request):
+@login_required(login_url="")  # only logged in users should access this
+def edit_profile(request):
 
-#     current_user = request.user
-#     user = User.objects.get(id=current_user.id)
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
 
-#     # prepopulate UserProfileForm with retrieved user values from above.
-#     user_form = UserForm(instance=user)
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
 
-#     # The sorcery begins from here, see explanation below
-#     ProfileInlineFormset = inlineformset_factory(
-#         User, UserProfile, fields=("photo", "phone", "bio")
-#     )
-#     formset = ProfileInlineFormset(instance=user)
+    # The sorcery begins from here, see explanation below
+    ProfileInlineFormset = inlineformset_factory(
+        User, UserProfile, fields=("photo", "phone", "bio")
+    )
+    formset = ProfileInlineFormset(instance=user)
 
-#     if request.user.is_authenticated and request.user.id == user.id:
-#         if request.method == "POST":
-#             user_form = UserForm(request.POST, request.FILES, instance=user)
-#             formset = ProfileInlineFormset(
-#                 request.POST, request.FILES, instance=user)
+    if request.user.is_authenticated and request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserForm(request.POST, request.FILES, instance=user)
+            formset = ProfileInlineFormset(
+                request.POST, request.FILES, instance=user)
 
-#             if user_form.is_valid():
-#                 created_user = user_form.save(commit=False)
-#                 formset = ProfileInlineFormset(
-#                     request.POST, request.FILES, instance=created_user
-#                 )
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = ProfileInlineFormset(
+                    request.POST, request.FILES, instance=created_user
+                )
 
-#                 if formset.is_valid():
-#                     created_user.save()
-#                     formset.save()
-#                     return redirect("profile")
+                if formset.is_valid():
+                    created_user.save()
+                    formset.save()
+                    return redirect("profile")
 
-#         return render(
-#             request,
-#             "registration/edit_profile.html",
-#             {"noodle": user.id, "noodle_form": user_form, "formset": formset},
-#         )
-#     else:
-#         raise PermissionDenied
+        return render(
+            request,
+            "registration/edit_profile.html",
+            {"noodle": user.id, "noodle_form": user_form, "formset": formset},
+        )
+    else:
+        raise PermissionDenied
     current_user = request.user
     user_data = User.objects.get(id=current_user.id)
     user_profile = UserProfile.objects.get(id=current_user.id)
