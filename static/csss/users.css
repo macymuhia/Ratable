@@ -468,81 +468,6 @@
 .material-card.Purple.mc-active .mc-btn-action {
   border-color: #F3E5F5;
 }
-.material-card.Deep-Purple h2 {
-  background-color: #6296CB;
-}
-.material-card.Deep-Purple h2:after {
-  border-top-color: #6296CB;
-  border-right-color: #6296CB;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Deep-Purple h2:before {
-  border-top-color: transparent;
-  border-right-color: #6296CB;
-  border-bottom-color: #6296CB;
-  border-left-color: transparent;
-}
-.material-card.Deep-Purple.mc-active h2:before {
-  border-top-color: transparent;
-  border-right-color: #6296CB;
-  border-bottom-color: #6296CB;
-  border-left-color: transparent;
-}
-.material-card.Deep-Purple.mc-active h2:after {
-  border-top-color:#6296CB;
-  border-right-color: #6296CB;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Deep-Purple .mc-btn-action {
-  background-color: #6296CB;
-}
-.material-card.Deep-Purple .mc-btn-action:hover {
-  background-color: #6296CB;
-}
-.material-card.Deep-Purple .mc-footer h4 {
-  color: #6296CB;
-}
-.material-card.Deep-Purple .mc-footer a {
-  background-color: #6296CB;
-}
-.material-card.Deep-Purple.mc-active .mc-content {
-  background-color: #EDE7F6;
-}
-.material-card.Deep-Purple.mc-active .mc-footer {
-  background-color: #D1C4E9;
-}
-.material-card.Deep-Purple.mc-active .mc-btn-action {
-  border-color: #EDE7F6;
-}
-.material-card.Indigo h2 {
-  background-color: #3F51B5;
-}
-.material-card.Indigo h2:after {
-  border-top-color: #3F51B5;
-  border-right-color: #3F51B5;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Indigo h2:before {
-  border-top-color: transparent;
-  border-right-color: #1A237E;
-  border-bottom-color: #1A237E;
-  border-left-color: transparent;
-}
-.material-card.Indigo.mc-active h2:before {
-  border-top-color: transparent;
-  border-right-color: #3F51B5;
-  border-bottom-color: #3F51B5;
-  border-left-color: transparent;
-}
-.material-card.Indigo.mc-active h2:after {
-  border-top-color: #1A237E;
-  border-right-color: #1A237E;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
 .material-card.Indigo .mc-btn-action {
   background-color: #3F51B5;
 }
@@ -1237,7 +1162,7 @@
   border-color: #ECEFF1;
 }
 body {
-  background-color: #ECEFF1;
+  background-color: #6296CB;
   color: #37474F;
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
