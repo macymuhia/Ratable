@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from Departments.models import Department
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 # Create your models here.
 
 class Area(models.Model):

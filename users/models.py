@@ -35,7 +35,7 @@ class UserProfile(models.Model):
     group = models.ManyToManyField(CustomGroup)
     role = models.CharField(max_length=30, default='')
     department = models.ForeignKey(
-        Department, null=True, blank=True, on_delete=models.DO_NOTHING)
+        Department, null=True, blank=True, on_delete=models.DO_NOTHING,related_name='department')
 
     class Meta:
         permissions = [

@@ -13,7 +13,21 @@
     <h2>
         Click on a department to view its details
     </h2>
-    {% for department in departments %}
+    <form action="{% url 'search' %}" method ="GET">
+        <input type="search" name="search" id="" placeholder="Search department">
+        <button type="submit">Search</button>
+    </form>
+    
+        {% if department_users %}
+        <h2>Users</h2>
+        {% for user in department_users %}
+            {{user}}
+
+            {% empty %}
+            <h3>No users</h3>
+        {% endfor %}
+        {% endif %}
+        {% for department in departments %}
     <input id='{{department.id}}' type='checkbox'>
     <label for='{{department.id}}'>
 		<div>
