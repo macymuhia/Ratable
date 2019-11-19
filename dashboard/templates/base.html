@@ -1,4 +1,4 @@
-{% load static %} {% load fontawesome %}
+{% load static %} {% load bootstrap3 %} {% load fontawesome %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,10 @@
     <link href="{% static 'coreui-icons.min.css' %}" rel="stylesheet">
     <link href="{% static 'flag-icon.min.css' %}" rel="stylesheet">
     <link href="{% static 'font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'simple-line-icons.css' %}" rel="stylesheet"> {% block styles %} {% endblock %}
+    <link href="{% static 'simple-line-icons.css' %}" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
+    <!-- Styles -->
+    {% block styles %} {% bootstrap_css %} {% fontawesome_stylesheet %} {% endblock %}
     <title>
         {% block title %} Ratable {% endblock %}
     </title>
@@ -44,7 +47,7 @@
     <script src="{% static 'Chart.min.js' %}"></script>
     <script src="{% static 'custom-tooltips.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    {% block scripts %} {% endblock %}
+    {% block scripts %} {% bootstrap_javascript %} {% endblock %}
 </body>
 
 </html>
