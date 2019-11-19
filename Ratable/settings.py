@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrap4',
     'fontawesome',
+    'django_template_maths',
 
     # Own apps
     'users',
@@ -191,3 +192,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "/media"))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "fc_column2d/templates/static"),
+]
