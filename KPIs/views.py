@@ -112,5 +112,5 @@ def area_report(request):
     print(averages)
 
 
-    return render(request, 'testgraph.html', {"averages":averages})
+    return render(request, 'base-test.html', {"averages":averages})
 
