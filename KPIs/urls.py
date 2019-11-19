@@ -15,6 +15,6 @@ urlpatterns=[
     path('indicator/new/', views.new_indicator, name='new_indicator'),
     path('score/new',views.new_score,name='new_score'),
     path("kpis", views.kpis, name="kpis"),
-    path("reports", views.reports, name="reports"),
-    path("", views.comments, name="comments"),
+    path("dashboard/reports/", views.reports, name="reports"),
+    path("dashboard/kpis/comments/", views.comments, name="comments")
 ]
