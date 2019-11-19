@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from Departments.models import Department
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -69,6 +71,22 @@ class Score(models.Model):
     score = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     indicators = models.ForeignKey(Indicators, on_delete=models.CASCADE, null=True)
-
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
     def save_score(self):
+        self.save()
+
+# This will hold the processed logic for our reports. 
+class Reports(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    area_average = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+    overall_score = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+
+    def __str__(self):
+        return self.overall_score
+
+    def save_report(self):
         self.save()

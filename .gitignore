@@ -6,6 +6,7 @@ __pycache__/
 *.__pycache__
 .migrations/
 .venv/
+.virtual/
 node_modules
 /static
 package-lock.json

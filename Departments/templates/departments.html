@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div>
+    <a href="">
+        <img src="https://cdn.pixabay.com/photo/2012/04/15/22/07/log-35496_960_720.png" width="30px" height="30px" alt="">
+    </a>
+</div>
+<!-- partial:index.partial.html -->
+<div class='wrapper'>
+    <h1>
+        List of departments at Amiran
+    </h1>
+    <h2>
+        Click on a department to view its details
+    </h2>
+    <form action="{% url 'search' %}" method ="GET">
+        <input type="search" name="search" id="" placeholder="Search department">
+        <button type="submit">Search</button>
+    </form>
+    
+        {% if department_users %}
+        <h2>Users</h2>
+        {% for user in department_users %}
+            {{user}}
+
+            {% empty %}
+            <h3>No users</h3>
+        {% endfor %}
+        {% endif %}
+        {% for department in departments %}
+    <input id='{{department.id}}' type='checkbox'>
+    <label for='{{department.id}}'>
+		<div>
+		  <div class='circle'></div>
+		  <span>{{ department.name }}</span>
+		</div>
+		<p>{{ department.description }}</p>
+		
+	  </label> {% endfor %}
+
+</div>
+{% endblock %}
