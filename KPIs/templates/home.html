@@ -64,7 +64,7 @@
                                   </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" enctype="multipart/form-data" action="/score/new">
+                                <form method="POST" enctype="multipart/form-data" action="/kpis/score/new">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{indicator.id}}" name="indicator">
                                     <div class="btn-group-vertical ml-4 mt-4" method="POST" role="group" aria-label="Basic example">
