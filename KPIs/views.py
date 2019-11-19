@@ -1,4 +1,4 @@
-
+from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -62,6 +62,7 @@ def new_indicator(request):
         if form.is_valid():
             
             post = form.save(commit = False)
+
             post.save()
             
         return redirect('/')
@@ -77,7 +78,7 @@ def new_score(request):
 
         score = request.POST.get('options')
         ind = request.POST.get('indicator')
-
+        print(score)
         Score(
             score=score,
             indicators_id=ind,
@@ -88,29 +89,28 @@ def new_score(request):
 
     return render(request, 'score.html')
 
-# View fucntion for our rating metric that will be logic for the rating.
-@login_required
-def rateproject(request, id):
+# View function for our rating metric that will be logic for the rating.
 
-    if request.method == "POST":
-        rating_form = RatingForm(request.POST)
-        if rating_form.is_valid():
-            area_total = []
-            area_max_total = []
-            areas = Area.objects.get(pk=id)
-            indicators = Indicators.objects.filter(area=areas)
-            area_total.append(indicators)
-            area_average = sum(area_total)/len(area_total)
-            print(area_average)
-            area_max_total.append(area_average)
-            area_max_total_average= sum(area_max_total)/len(area_max_total)
-            print(area_max_total_average)
-            reports = Reports(area_average=area_average,overall_score=area_max_total_average)
-            reports.user = request.user
-            reports.project = Departments.objects.filter(id=id).first()
-            reports.save()
-            return redirect('/')
-    else:
-        rating_form = RatingForm()
+def score_reports(request):
+    area = Area.objects.all()
+    scores = Score.objects.filter(user=request.user).all()
+    department = Department.objects.all()
+    user_total = []
+    user_area_total = []
+    users = User.objects.all()
+    
+    for i in scores:
+        user_total.append(i.score)
+    user_average = sum(user_total)/len(user_total)
+    return render(request, 'reports.html', {"scores":scores, "department":department, "users":users, "user_average":user_average})
 
-    return render (request, 'reports.html', {"area_average":area_average, "area_max_total_average":area_max_total_average })
+def area_report(request):
+    area = Area.objects.all()   
+    indicator = Indicators.objects.all()
+    scores = Score.objects.all()
+    averages = Score.objects.values('indicators__area__name').annotate(average=Avg('score'))
+    print(averages)
+
+
+    return render(request, 'testgraph.html', {"averages":averages})
+
