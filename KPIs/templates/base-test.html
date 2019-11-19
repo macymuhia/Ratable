@@ -78,7 +78,9 @@
             function drawChart() {
               var data = google.visualization.arrayToDataTable([
               ['Areas', 'Indicator Ratings'],
-              
+              {%for average in averages %}
+                    ['{{average.indicators__area__name}}', {{average.average |mul:20 }} ],
+              {% endfor %}
             ]);
 
               // Optional; add a title and set the width and height of the chart
