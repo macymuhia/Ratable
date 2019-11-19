@@ -5,7 +5,9 @@
 
 <!-- Content -->
 {% block content %}
-
+<a href=" {% url 'add_department' %} ">
+    <input class="btn btn-primary" type="button" value="Add Department">
+</a>
 <!-- partial:index.partial.html -->
 <div class='wrapper'>
     {% for department in departments %}
@@ -18,7 +20,7 @@
 		<p>{{ department.description }}</p>
 		
 	  </label> {% empty %}
-    <div class="text-center bg-warning">No Departments</div>
+    <div class="text-center">No Departments Yet</div>
     {% endfor %}
 
 </div>
