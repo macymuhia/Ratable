@@ -21,7 +21,7 @@ urlpatterns = [
     path('reset/done/', PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
     path('group_create/', views.group_create_view, name='create_group'),
-    path('group_list/', views.group_list_view, name='create_list'),
+    path('group_list/', views.group_list_view, name='list_groups'),
     path('add_user/', views.add_user_view, name='add_user'),
     path("account_activation_sent/", views.account_activation_sent,
          name="account_activation_sent"),
