@@ -22,13 +22,13 @@ $(document).ready(function () {
     return $('.box').toggleClass('open');
   });
 
-}).call(this);	
+}).call(this);
 });
 		</script>
 		
-
 		
-	<div class="prof">
+		
+	<div class="profile">
 		<div class="photo"><img src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720__340.jpg"/></div>
 		<div class="content">
 		  <div class="text">
@@ -37,8 +37,13 @@ $(document).ready(function () {
 		  </div>
 		  <div class="btn"><span></span></div>
 		</div>
-		<div class="box"></i><i class="fa fa-pencil"></i><i class="fa fa-line-chart"></i><i class="fa fa-sign-out"></i></div>
+		<div class="box"><i class="fa fa-pencil"></i>
+			<i style="display: none;" class=""></i>
+			<i class="fa fa-line-chart"></i>
+			<i style="display: none;" class=""></i>
+			<i class="fa fa-sign-out"></i></div>
 	  </div>
-
+	  
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js'></script>
 </body>
 </html>
