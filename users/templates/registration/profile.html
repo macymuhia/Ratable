@@ -1,1 +1,11 @@
-<h1>hello</h1>
+{% extends 'base.html' %} {% load bootstrap3 %} {% load static %} {% load fontawesome %}
+
+<!-- Content -->
+{% block content %}
+<h3> {{user.username}} </h3>
+
+
+<a href=" {% url 'edit_profile' %} ">
+    <input class="btn btn-primary" type="button" value="Edit profile">
+</a>
+{% endblock %}
