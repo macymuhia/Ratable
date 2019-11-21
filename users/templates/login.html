@@ -28,7 +28,9 @@
                         </div>
                         {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
-                        <button class="button submit">SIGN IN</button>
+                        <a href="{% url 'dashboard' %}">
+                            <button  class="button submit">SIGN IN</button>
+                        </a>
                     </form>
                 </div>
             </div>
