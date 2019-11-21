@@ -10,6 +10,9 @@ class Department(models.Model):
     description = models.TextField(
         max_length=300, blank=True, null=True, default='')
 
+    class Meta:
+        db_table = 'departments_department'
+
     @classmethod
     def get_all_departments(cls):
         return cls.objects.all()

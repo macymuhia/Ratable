@@ -43,7 +43,7 @@
                             <i class="nav-icon icon-star"></i> Add Indicators</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'new_score' %}">
+                        <a class="nav-link" href="{% url 'welcome' %}">
                             <i class="nav-icon icon-star"></i> Score</a>
                     </li>
 
@@ -53,13 +53,13 @@
                 <a class="nav-link nav-dropdown-toggle" href="#">
                     <i class="nav-icon icon-bell"></i> Reports</a>
                 <ul class="nav-dropdown-items">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="notifications/alerts.html">
-                            <i class="nav-icon icon-bell"></i> Department</a>
-                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="notifications/badge.html">
-                            <i class="nav-icon icon-bell"></i> Users</a>
+                        <a class="nav-link" href="{% url 'reports' %}">
+                            <i class="nav-icon icon-bell"></i> My report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'averages' %}">
+                            <i class="nav-icon icon-bell"></i> Manager report</a>
                     </li>
 
                 </ul>

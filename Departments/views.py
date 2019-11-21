@@ -26,6 +26,7 @@ def list_departments_view(request):
     return render(request, 'departments_list.html', context)
 
 
+@login_required(login_url="/users/")
 def search(request):
     if 'search' in request.GET and request.GET['search']:
         search_term = request.GET['search']
