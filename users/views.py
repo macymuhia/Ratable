@@ -135,24 +135,6 @@ def login_user(request):
     return render(request, 'registration/login.html')
 
 
-# mine
-# def profile(request):
-#     return render(request, 'profile.html', {"profile": profile})
-
-
-# def users(request):
-#     return render(request, 'users.html', {"users": users})
-
-
-# def adduser(request):
-#     return render(request, 'adduser.html', {"adduser": adduser})
-
-
-# def login(request):
-#     return render(request, 'login.html', {"login": login})
-
-# mine
-
 @login_required(login_url="/users/")
 def profile(request):
 
