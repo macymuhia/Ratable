@@ -28,9 +28,15 @@
                         </div>
                         {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
-                        <a href="{% url 'dashboard' %}">
-                            <button  class="button submit">SIGN IN</button>
-                        </a>
+                        <button  class="button submit">SIGN IN</button>
+                        <br>
+                        <br>
+                        <hr width="310px">
+                        
+                        
+                      <a style="color:#f6f6f6;" href="">  <h6 style="color: #f6f6f6;">
+                          Forgot Password?
+                    </h6></a>
                     </form>
                 </div>
             </div>

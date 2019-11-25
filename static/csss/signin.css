@@ -133,7 +133,7 @@ button {
 
 button:hover {
   background: #C2CADB;
-  color: #f6f6f6;
+  color: #FFFFFF;
   transition: background-color 1s ease-out;
 }
 
@@ -226,3 +226,4 @@ input[type=checkbox] {
   color: black;
   transition: .5s all ease;
 }
+
