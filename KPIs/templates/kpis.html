@@ -16,6 +16,178 @@
 </head>
 
 <body>
+		<script>
+				$(document).ready(function () {
+					function $$(selector, context) {
+  var context = context || document;
+  var elements = context.querySelectorAll(selector);
+  var nodesArr = [].slice.call(elements);
+  return nodesArr.length === 1 ? nodesArr[0] : nodesArr;
+};
+
+var $emotesArr = $$('.fb-emote');
+var numOfEmotes = $emotesArr.length;
+
+var $dragCont = $$('.fb-cont__drag-cont');
+var $activeEmote = $$('.fb-active-emote');
+var $leftEye = $$('.fb-active-emote__eye--left');
+var $rightEye = $$('.fb-active-emote__eye--right');
+var $smile = $$('.fb-active-emote__smile');
+
+var emoteColors = {
+  terrible: '#f8b696',
+  bad: '#f9c686',
+  default: '#ffd68c'
+}
+
+var animTime = 0.5;
+
+$emotesArr.forEach(function($emote, i) {
+  var progressStep = i / (numOfEmotes - 1);
+  $emote.dataset.progress = progressStep;
+  
+  $emote.addEventListener('click', function() {
+    var progressTo = +this.dataset.progress;
+    var type = this.dataset.emote;
+    var $target = document.querySelector('#fb-emote-' + type);
+    var $lEye = $target.querySelector('.fb-emote__eye--left');
+    var $rEye = $target.querySelector('.fb-emote__eye--right');
+    var leftEyeTargetD = $lEye.getAttribute('d');
+    var rightEyeTargetD = $rEye.getAttribute('d');
+    var smileTargetD = $target.querySelector('.fb-emote__smile').getAttribute('d');
+    var bgColor = emoteColors[type];
+    if (!bgColor) bgColor = emoteColors.default;
+    
+    $$('.fb-emote.s--active').classList.remove('s--active');
+    this.classList.add('s--active');
+    
+    TweenMax.to($activeEmote, animTime, {backgroundColor: bgColor});
+    TweenMax.to($dragCont, animTime, {x: progressTo * 100 + '%'});
+    TweenMax.to($leftEye, animTime, {morphSVG: $lEye});
+    TweenMax.to($rightEye, animTime, {morphSVG: $rEye});
+    TweenMax.to($smile, animTime, {attr: {d: smileTargetD}});
+  });
+});
+				});
+				</script>
+	<!-- partial:index.partial.html -->
+	<br>
+	<br>
+	<h1><span class="blue"></span><span class="blue"></span> <span style="text-align: center;" class="yellow"><a href="" target="_blank">COMMUNICATION</a></h2>
+	<br>
+	<br>
+	<table class="container">
+		<thead>
+			<tr>
+				<th><h1>Indicators</h1></th>
+				<th><h1>Star rating</h1></th>
+				<th><h1>Comment button</h1></th>
+				<th><h1>Edit / Delete</h1></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Indicator 1</td>
+				<td>
+					<!-- star rating (done!!!!!!) -->
+					<form>
+							<div class="stars">
+								<input type="radio" name="star" class="star-1" id="star-1" />
+								<label class="star-1" for="star-1">1</label>
+								<input type="radio" name="star" class="star-2" id="star-2" />
+								<label class="star-2" for="star-2">2</label>
+								<input type="radio" name="star" class="star-3" id="star-3" />
+								<label class="star-3" for="star-3">3</label>
+								<input type="radio" name="star" class="star-4" id="star-4" />
+								<label class="star-4" for="star-4">4</label>
+								<input type="radio" name="star" class="star-5" id="star-5" />
+								<label class="star-5" for="star-5">5</label>
+								<span></span>
+							</div>
+						</form>
+				</td>
+				<td>
+					<!-- comment button modal -->
+				</td>
+				<td>
+					<!-- edit and delete icons -->
+					<i class="fa fa-pencil" aria-hidden="true"></i>
+
+					<i class="fa fa-trash-o" aria-hidden="true"></i>
+
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	<!-- partial -->
+	<svg class="fb-emotes-svg" style="display: none;">
+			<symbol id="fb-emote-terrible" data-emote="terrible" viewBox="0 0 100 100">
+			  <path class="fb-emote__eye fb-emote__eye--left" d="M32,25 l10,10 a10,10 0 0,1 -20,0 a10,10 0 0,1 10,-10"/>
+			  <path class="fb-emote__eye fb-emote__eye--right" d="M58,35 l10,-10 a10,10 0 0,1 0,20 a10,10 0 0,1 -10,-10"/>
+			  <path class="fb-emote__smile" d="M30,68 q20,-13 40,0 M30,68 q20,-13 40,0"/>
+			</symbol>
+			<symbol id="fb-emote-bad" data-emote="bad" viewBox="0 0 100 100">
+			  <path class="fb-emote__eye fb-emote__eye--left" d="M22,35 l10,-10 a10,10 0 0,1 0,20 a10,10 0 0,1 -10,-10"/>
+			  <path class="fb-emote__eye fb-emote__eye--right" d="M68,25 l10,10 a10,10 0 0,1 -20,0 a10,10 0 0,1 10,-10"/>
+			  <path class="fb-emote__smile" d="M30,68 q20,-10 40,0 M30,68 q20,-10 40,0"/>
+			</symbol>
+			<symbol id="fb-emote-okay" viewBox="0 0 100 100">
+			  <path class="fb-emote__eye fb-emote__eye--left" d="M32,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__eye fb-emote__eye--right" d="M68,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__smile" d="M35,73 q20,-4 35,-8 M35,73 q20,-4 35,-8"/>
+			</symbol>
+			<symbol id="fb-emote-good" viewBox="0 0 100 100">
+			  <path class="fb-emote__eye fb-emote__eye--left" d="M32,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__eye fb-emote__eye--right" d="M68,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__smile" d="M30,68 q20,10 40,0 M30,68 q20,10 40,0"/>
+			</symbol>
+			<symbol id="fb-emote-great" viewBox="0 0 100 100">
+			  <path class="fb-emote__eye fb-emote__eye--left" d="M32,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__eye fb-emote__eye--right" d="M68,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+			  <path class="fb-emote__smile" d="M30,68 q20,15 40,0 M30,68 q20,0 40,0"/>
+			</symbol>
+		  </svg>
+		  
+		  <div class="fb-cont">
+			<div class="fb-heading">What is your general rating for area: Communication?</div>
+			<div class="fb-cont__inner">
+			  <div class="fb-emote" data-emote="terrible">
+				<svg><use xlink:href="#fb-emote-terrible"/></svg>
+				<p class="fb-emote__caption">Terrible</p>
+			  </div>
+			  <div class="fb-emote" data-emote="bad">
+				<svg><use xlink:href="#fb-emote-bad"/></svg>
+				<p class="fb-emote__caption">Bad</p>
+			  </div>
+			  <div class="fb-emote s--active" data-emote="okay">
+				<svg><use xlink:href="#fb-emote-okay"/></svg>
+				<p class="fb-emote__caption">Okay</p>
+			  </div>
+			  <div class="fb-emote" data-emote="good">
+				<svg><use xlink:href="#fb-emote-good"/></svg>
+				<p class="fb-emote__caption">Good</p>
+			  </div>
+			  <div class="fb-emote" data-emote="great">
+				<svg><use xlink:href="#fb-emote-great"/></svg>
+				<p class="fb-emote__caption">Great</p>
+			  </div>
+			  <div class="fb-cont__drag-cont">
+				<div class="fb-active-emote">
+				  <svg viewBox="0 0 100 100">
+					<path class="fb-active-emote__eye fb-active-emote__eye--left" d="M32,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+					<path class="fb-active-emote__eye fb-active-emote__eye--right" d="M68,25 a10,10 0 0,1 0,20 a10,10 0 0,1 0,-20"/>
+					<path class="fb-active-emote__smile" d="M35,73 q20,-4 35,-8 M35,73 q20,-4 35,-8"/>
+				  </svg>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- partial -->
+			<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js?r=182'></script>
+		  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js'></script>
+		  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+	</body>
     <script>
         $(document).ready(function() {
             function Quiz(questions) {

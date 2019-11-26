@@ -137,7 +137,98 @@ def login_user(request):
 
 @login_required(login_url="/users/")
 def profile(request):
+#     return render(request, 'profile.html', {"profile":profile})
 
+# def users(request):
+#     return render(request, 'users.html', {"users":users})
+
+# def adduser(request):
+#     return render(request, 'adduser.html', {"adduser":adduser})
+
+# def login(request):
+#     return render(request, 'login.html', {"login":login})
+
+# def edit_profile(request):
+#     return render(request, 'edit_profile.html', {"edit_profile":edit_profile})
+# mine
+
+@login_required(login_url="")
+def profile(request):
+
+    current_user = request.user
+    user_data = User.objects.get(id=current_user.id)
+    user_profile = UserProfile.objects.get(id=current_user.id)
+
+    return render(
+        request,
+        "registration/profile.html",
+        {"user_data": user_data, "user_profile": user_profile},
+    )
+
+
+@login_required(login_url="")  # only logged in users should access this
+def edit_profile(request):
+
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
+
+    # The sorcery begins from he
+@login_required(login_url="")
+def profile(request):
+
+    current_user = request.user
+    user_data = User.objects.get(id=current_user.id)
+    user_profile = UserProfile.objects.get(id=current_user.id)
+
+    return render(
+        request,
+        "registration/profile.html",
+        {"user_data": user_data, "user_profile": user_profile},
+    )
+
+
+@login_required(login_url="")  # only logged in users should access this
+def edit_profile(request):
+
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
+
+    # The sorcery begins from here, see explanation below
+    ProfileInlineFormset = inlineformset_factory(
+        User, UserProfile, fields=("photo", "phone", "bio")
+    )
+    formset = ProfileInlineFormset(instance=user)
+
+    if request.user.is_authenticated and request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserForm(request.POST, request.FILES, instance=user)
+            formset = ProfileInlineFormset(
+                request.POST, request.FILES, instance=user)
+
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = ProfileInlineFormset(
+                    request.POST, request.FILES, instance=created_user
+                )
+
+                if formset.is_valid():
+                    created_user.save()
+                    formset.save()
+                    return redirect("profile")
+
+        return render(
+            request,
+            "registration/edit_profile.html",
+            {"noodle": user.id, "noodle_form": user_form, "formset": formset},
+        )
+    else:
+        raise PermissionDenied
     current_user = request.user
     user_data = User.objects.get(id=current_user.id)
     user_profile = UserProfile.objects.get(id=current_user.id)
@@ -191,7 +282,6 @@ def edit_profile(request):
         raise PermissionDenied
 
 
-@login_required(login_url="/users/")
 def group_create_view(request):
     perms = Permission.objects.all()
     form = CustomGroupForm(request.POST)
@@ -208,7 +298,6 @@ def group_create_view(request):
     return render(request, "groups/group_create.html", context)
 
 
-@login_required(login_url="/users/")
 def group_list_view(request):
     queryset = CustomGroup.objects.all()  # list of objects
     context = {
@@ -217,6 +306,5 @@ def group_list_view(request):
     return render(request, "groups/group_list.html", context)
 
 
-@login_required(login_url="/users/")
 def group_delete_view(request):
     pass
