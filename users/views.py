@@ -137,7 +137,7 @@ def login_user(request):
 
 @login_required(login_url="/users/")
 def profile(request):
-#     return render(request, 'profile.html', {"profile":profile})
+    return render(request, 'profile.html', {"profile":profile})
 
 # def users(request):
 #     return render(request, 'users.html', {"users":users})
