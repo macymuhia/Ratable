@@ -1,0 +1,71 @@
+{% load static %} {% load fontawesome %}
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="nav-icon icon-speedometer"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-star"></i> Users</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href=" {% url 'list_groups' %} ">
+                            <i class="nav-icon icon-star"></i> User groups
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_user' %}">
+                            <i class="nav-icon icon-star"></i> Users</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'department_list' %} ">
+                    <i class="nav-icon icon-speedometer"></i> Departments
+                </a>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="{% url 'areas' %}">
+                    <i class="nav-icon icon-star"></i> KPIs</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_area' %}">
+                            <i class="nav-icon icon-star"></i> Add Areas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_indicator' %}">
+                            <i class="nav-icon icon-star"></i> Add Indicators</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'welcome' %}">
+                            <i class="nav-icon icon-star"></i> Score</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-bell"></i> Reports</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reports' %}">
+                            <i class="nav-icon icon-bell"></i> My report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'averages' %}">
+                            <i class="nav-icon icon-bell"></i> Manager report</a>
+                    </li>
+
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>

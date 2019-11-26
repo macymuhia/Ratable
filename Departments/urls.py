@@ -1,13 +1,13 @@
-# from django.urls import path
-# from . import views
-
-# urlpatterns = [
-#     path("dashboard/departments/", views.departments, name="departments"),
-   
-from django.urls import path, include
+from django.urls import path
 from django.conf import settings
-from Departments import views
+from . import views
 
-urlpatterns = [                                             path("dashboard/departments/", views.departments, name="departments"),
-    # path('add_department/', views.add_department_view, name='add_department'),
+
+urlpatterns = [
+    path("", views.department_list_view, name='department_list'),
+    path('create/', views.department_create_view,
+         name='department_create'),
+    path('add_department/', views.add_department_view, name='add_department'),
+    path('search/', views.search, name='search'),
+
 ]

@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Amiran Sign In</title>
+<<<<<<< HEAD:users/templates/login.html
+    <link rel="stylesheet" href="{% static 'csss/signin.css' %}">
+    <link rel="stylesheet" href="{% static 'csss/moving_line.css' %}">
+    <script src="{% static 'jsss/jquery.js' %}"></script>
+=======
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <script src="{% static 'js/signin.js' %}"></script>
+>>>>>>> develop:users/templates/registration/login.html
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+</head>
+
+<body>
+        <script>
+                $(document).ready(function () {
+                    let rect = document.getElementById("rect");
+let username = document.getElementById("username");
+let password = document.getElementById("password");
+
+function handle1() {
+	rect.setAttribute("class", "rect2");
+}
+
+function handle2() {
+	rect.setAttribute("class", "rect1");
+}
+
+//For codepen header!!!
+
+                });
+                </script>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <div class="welcome">
+            <div class="pinkbox">
+                <div class="signup nodisplay">
+                </div>
+                <div class="signin">
+                    <form method="POST" action="/users/" class="more-padding" autocomplete="off">
+                        {% csrf_token %}
+<<<<<<< HEAD:users/templates/login.html
+                        <input id='username' class='text' onfocus="handle2()" class='inc2' type="text" name="Username" placeholder='Username' value="">
+                        <input id='password' class='pass' onfocus="handle1()" class='inc1' type="pass" name="Password" placeholder='Password' value="">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember" /><label for="remember">remember me</label>
+                        </div>
+                        {% if request.GET.next %}
+=======
+                        <input type="text" placeholder="username" name="username">
+                        <input type="password" placeholder="password" name="password">
+                        <a href=" {% url 'password_reset' %} ">Forgot password</a> {% if request.GET.next %}
+>>>>>>> develop:users/templates/registration/login.html
+                        <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
+                        <button  class="button submit">SIGN IN</button>
+                        <br>
+                        <br>
+                        <hr width="250px">
+                        
+                        
+                      <a style="color:#f6f6f6;" href="">  <h6 style="color: #f6f6f6;">
+                          Forgot Password?
+                    </h6></a>
+                    </form>
+                </div>
+            </div>
+            <div class="rightbox">
+                <img class="flower" src="{% static 'images/10-2.svg' %}" />
+                <p class="account"></p>
+                <h1>Tomorrow's Technology Today</h1>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<<<<<<< HEAD:users/templates/login.html
+=======
+    <script src="{% static 'js/scripts.js' %}"></script>
+>>>>>>> develop:users/templates/registration/login.html
+
+
+</body>
+
+</html>

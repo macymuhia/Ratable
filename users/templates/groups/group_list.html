@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% load static %} {% load fontawesome %}
+<!-- content -->
+{% block content %}
+<a href=" {% url 'create_group' %} "><input class="btn btn-primary" type="button" value="Add Group"></a>
+<ul>
+    {% for group in object_list %}
+
+    <li>
+        {{ group.name }}
+    </li>
+    {% empty %}
+    <p class="text-center">No Groups Yet</p>
+    {% endfor %}
+</ul>
+{% endblock %}

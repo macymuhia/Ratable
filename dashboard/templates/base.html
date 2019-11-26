@@ -1,0 +1,54 @@
+{% load static %} {% load bootstrap3 %} {% load fontawesome %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/department.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'material-icons.css' %}">
+    <link href="{% static 'coreui-icons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flag-icon.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'simple-line-icons.css' %}" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
+    <!-- Styles -->
+    {% block styles %} {% bootstrap_css %} {% fontawesome_stylesheet %} {% endblock %}
+    <title>
+        {% block title %} Ratable {% endblock %}
+    </title>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <!-- include header -->
+    {% include "navbar.html" %}
+    <!-- body app body-->
+    <div class="app-body">
+
+        <!-- include side bar-->
+        {% include "sidebar.html" %}
+        <main class="main">
+            {% block content %} {% endblock %}
+        </main>
+    </div>
+
+
+    <!-- scripts -->
+    <!-- CoreUI and necessary plugins-->
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'pace.min.js' %}"></script>
+    <script src="{% static 'perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'coreui.min.js' %}"></script>
+    <!-- Plugins and scripts required by this view-->
+    <script src="{% static 'Chart.min.js' %}"></script>
+    <script src="{% static 'custom-tooltips.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block scripts %} {% bootstrap_javascript %} {% endblock %}
+</body>
+
+</html>

@@ -1,24 +1,20 @@
-{% load static %}
-{% load bootstrap4 %}
+{% load static %} {% load bootstrap4 %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
-	
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="{% static 'csss/kpis.css' %}">
-	<link rel="stylesheet" href="{% static 'csss/emojis.css' %}">
-	<link rel="stylesheet" href="{% static 'csss/star_rating.css' %}">
-	<script src="{% static 'jsss/jquery.js' %}"></script>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://use.fontawesome.com/334ac443eb.js"></script>
-	<title>KPIS</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/kpis.css' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>KPIS</title>
 </head>
+
 <body>
 		<script>
 				$(document).ready(function () {
@@ -192,4 +188,134 @@ $emotesArr.forEach(function($emote, i) {
 		  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js'></script>
 		  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
 	</body>
+    <script>
+        $(document).ready(function() {
+            function Quiz(questions) {
+                this.score = 0;
+                this.questions = questions;
+                this.questionIndex = 0;
+            }
+
+            Quiz.prototype.getQuestionIndex = function() {
+                return this.questions[this.questionIndex]
+            }
+
+            Quiz.prototype.isEnded = function() {
+                return this.questions.length === this.questionIndex;
+            }
+
+            Quiz.prototype.guess = function(answer) {
+
+                if (this.getQuestionIndex().correctAnswer(answer)) {
+                    this.score++;
+                }
+
+                this.questionIndex++;
+            }
+
+
+
+
+
+
+            function Question(text, choices, answer) {
+                this.text = text;
+                this.choices = choices;
+                this.answer = answer;
+            }
+
+            Question.prototype.correctAnswer = function(choice) {
+                return choice === this.answer;
+            }
+
+
+
+
+
+
+            function populate() {
+                if (quiz.isEnded()) {
+                    showScores();
+                } else {
+                    var element = document.getElementById('question');
+                    element.innerHTML = quiz.getQuestionIndex().text;
+
+                    //show choices
+                    var choices = quiz.getQuestionIndex().choices;
+                    for (var i = 0; i < choices.length; i++) {
+                        var element = document.getElementById('choice' + i);
+                        element.innerHTML = choices[i];
+
+                        guess("btn" + i, choices[i]);
+                    }
+
+                    showProgress();
+                }
+            }
+
+
+            function guess(id, guess) {
+                var button = document.getElementById(id);
+                button.onclick = function() {
+                    quiz.guess(guess);
+                    populate();
+                }
+            }
+
+
+            function showProgress() {
+                var currentQuestionNumber = quiz.questionIndex + 1;
+                var element = document.getElementById('progress');
+                element.innerHTML = "Questions " + currentQuestionNumber + " of " + quiz.questions.length;
+            }
+
+
+            function showScores() {
+                var gameOverHTML = "<h1>DONE!</h1>";
+                gameOverHTML += "<br> <br> <br> <br> <br> <br><h2 id='score'>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your ratings have been forwarded to your respective line manager.</h2>";
+                var element = document.getElementById('quiz');
+                element.innerHTML = gameOverHTML;
+            }
+
+
+            var questions = [
+                new Question("ATTENDANCE", ["1", "2", "3", "4", "5"], "5"),
+                new Question("TIME WORK", ["1", "2", "3", "4", "5"], "5"),
+                new Question("TIME MANAGEMENT", ["1", "2", "3", "4", "5"], "5"),
+                new Question("CUSTOMER SATISFACTION", ["1", "2", "3", "4", "5"], "5"),
+            ];
+
+            var quiz = new Quiz(questions);
+
+            populate();
+        });
+    </script>
+    <div class="container">
+        <div id="quiz">
+            <h1>KEY PERFORMANCE INDICATORS</h1>
+
+            <hr style="margin-bottom: 20px">
+
+            <p id="question"></p>
+
+            <div class="button-grp">
+                <button id="btn0"><span id="choice0"></span></button>
+                <button id="btn1"><span id="choice1"></span></button>
+                <button id="btn2"><span id="choice2"></span></button>
+                <button id="btn3"><span id="choice3"></span></button>
+            </div>
+
+            <hr style="margin-top: 50px">
+
+            <footer>
+                <p id="progress">Rate yourself according to the scale</p>
+            </footer>
+        </div>
+    </div>
+
+    <script type="text/JavaScript" src="js/quiz controller.js"></script>
+    <script type="text/JavaScript" src="js/question.js"></script>
+    <script type="text/JavaScript" src="js/app.js"></script>
+</body>
+
 </html>

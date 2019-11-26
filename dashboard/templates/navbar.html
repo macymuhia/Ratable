@@ -1,0 +1,29 @@
+{% load static %} {% load fontawesome %}
+<header class="app-header navbar">
+    <a class="navbar-brand" href="#">
+        <img class="navbar-brand-full" src="{% static 'images/10-2.svg' %}" width="140" height="50" alt="CoreUI Logo">
+    </a>
+    <button class="navbar-toggler-icon sidebar-minimizer" type="button"></button>
+
+
+    <ul class="nav navbar-nav ml-auto">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img class="img-avatar" src="{% static 'img/avatars/6.jpg' %}" alt="profile_pic">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+
+                <div class="dropdown-header text-center">
+                    <strong>Settings</strong>
+                </div>
+                <a class="dropdown-item" href="{% url 'profile' %}">
+                    <i class="fa fa-user"></i> Profile</a>
+
+                <a class="dropdown-item" href="{% url 'logout' %}">
+                    <i class="fa fa-lock"></i> Logout</a>
+            </div>
+        </li>
+    </ul>
+
+</header>
