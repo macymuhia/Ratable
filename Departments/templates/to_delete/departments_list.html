@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %}
+<!-- styles -->
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}"> {% endblock %}
+
+<!-- Content -->
+{% block content %}
+<a href=" {% url 'add_department' %} ">
+    <input class="btn btn-primary" type="button" value="Add Department">
+</a>
+<!-- partial:index.partial.html -->
+<div class='wrapper'>
+    {% for department in departments %}
+    <input id='{{department.id}}' type='checkbox'>
+    <label for='{{department.id}}'>
+		<div>
+		  <div class='circle'></div>
+		  <span>{{ department.name }}</span>
+		</div>
+		<p>{{ department.description }}</p>
+		
+	  </label> {% empty %}
+    <div class="text-center">No Departments Yet</div>
+    {% endfor %}
+
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.urls import path, include, re_path
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordChangeView, PasswordChangeDoneView
 from django.conf import settings
 from . import views
 
@@ -20,8 +20,12 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+    #     path('password-change/', views.PasswordChangeView.as_view(),
+    #          name='password_change'),
+    #     path('password-change/done/', views.PasswordChangeDoneView.as_view(),
+    #          name='password_change_done'),
     path('group_create/', views.group_create_view, name='create_group'),
-    path('group_list/', views.group_list_view, name='create_list'),
+    path('group_list/', views.group_list_view, name='list_groups'),
     path('add_user/', views.add_user_view, name='add_user'),
     path("account_activation_sent/", views.account_activation_sent,
          name="account_activation_sent"),

@@ -1,5 +1,4 @@
-{% extends 'base-kpi.html' %} {% block content %}
-
+{% extends 'base.html' %} {% load bootstrap3 %} {% load static %} {% block content %}
 <div class="row">
     <div class="col-sm-12">
         <h1>Hello There</h1>
@@ -54,7 +53,7 @@
             <h6>
                 {{indicator.name}}
 
-                <div class="modal fade" id="exampleModal{{indicator.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="{{indicator.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -94,9 +93,9 @@
                 </div>
             </h6>
             <small>line manager score </small> {{indicator.line_manager_score}}
-            <a href="" data-toggle="modal" data-target="#exampleModal{{indicator.id}}">score</a>
+            <a href="" data-toggle="modal" data-target="#{{indicator.id}}">score</a>
             <small>Staff score </small> {{indicator.staff_score}}
-            <a href="" data-toggle="modal" data-target="#exampleModal{{indicator.id}}">score</a> {% endif %} {%endfor%}
+            <a href="" data-toggle="modal" data-target="#{{indicator.id}}">score</a> {% endif %} {%endfor%}
         </div>
 
         {% endfor %}

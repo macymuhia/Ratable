@@ -9,6 +9,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Area(models.Model):
     name = models.CharField(max_length=20)
 
+    class Meta:
+        db_table = 'kpis_area'
 
     def __str__(self):
         return self.name
@@ -18,14 +20,12 @@ class Area(models.Model):
         method used the save the areas added.
         '''
         self.save()
-        
 
     def delete_area(self):
         '''
         method used the delete the areas added.
         '''
         self.delete()
-
 
     def update_area(self):
         '''
@@ -39,25 +39,25 @@ class Area(models.Model):
         return areas
 
 
-
 class Indicators(models.Model):
     name = models.CharField(max_length=30)
-    area = models.ForeignKey(Area,on_delete=models.CASCADE,null=True)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
     line_manager_score = models.FloatField(default=0)
-    staff_score =  models.FloatField(default=0)
+    staff_score = models.FloatField(default=0)
 
     class Meta:
-        ordering=['area']
-        
+        db_table = 'kpis_indicators'
+        ordering = ['area']
+
     def __str__(self):
         return self.name
 
     def save_indica(self):
         self.save()
-    
+
     def update_indica(self):
         self.update()
-    
+
     def delete_indica(self):
         self.delete()
 
@@ -70,12 +70,18 @@ class Indicators(models.Model):
 class Score(models.Model):
     score = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    indicators = models.ForeignKey(Indicators, on_delete=models.CASCADE, null=True)
+    indicators = models.ForeignKey(
+        Indicators, on_delete=models.CASCADE, null=True)
     area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
+
     def save_score(self):
         self.save()
 
-# This will hold the processed logic for our reports. 
+    class Meta:
+        db_table = 'kpis_score'
+
+
+# This will hold the processed logic for our reports.
 class Reports(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
@@ -90,3 +96,6 @@ class Reports(models.Model):
 
     def save_report(self):
         self.save()
+
+    class Meta:
+        db_table = 'kpis_reports'

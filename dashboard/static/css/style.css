@@ -7,6 +7,10 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+.nav-dropdown-items .a.nav-link {
+    margin-left: 100px;
+}
+
 :root {
     --blue: #20a8d8;
     --indigo: #6610f2;
@@ -13464,6 +13468,7 @@ canvas {
 
 .sidebar .nav-dropdown.open>.nav-dropdown-items {
     max-height: 1500px;
+    padding-left: 20px;
 }
 
 .sidebar .nav-dropdown.open .nav-link {

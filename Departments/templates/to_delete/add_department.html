@@ -1,15 +1,13 @@
-{% extends 'base.html' %} {% load bootstrap3 %} {% load static %} {% load fontawesome %}
-<!-- content -->
+{% extends 'base.html' %} {% load bootstrap3 %} {% load static %}
+<!-- Content -->
 {% block content %}
 <form action="" method="post">
-    {% csrf_token %}
-    <!-- Create group form -->
+    <div class="col-md-4"></div>
     <div class="col-md-4">
         {% csrf_token %} {% bootstrap_form form %}
         <input class="btn btn-primary" type="submit" value="Save">
     </div>
-    <!-- Looping through -->
-
+    <div class="col-md-4"></div>
 
 </form>
 {% endblock %}

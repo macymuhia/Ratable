@@ -1,20 +1,15 @@
 from django import forms
-from Departments.models import Department
+from Departments.models import *
 
 
 class DepartmentCreationForm(forms.ModelForm):
 
     class Meta:
         model = Department
-        fields = ['name']
-        
+        fields = ['name', 'description']
+
+
 class EditDepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ['name']
-        
-# class NameForm(forms.ModelForm):
-#     class Meta:
-#         model =Department
-#         fields = ['name','line_manager']
-
+        fields = ['name', 'description']
