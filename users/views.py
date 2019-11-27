@@ -211,6 +211,7 @@ def edit_profile(request):
 
 
 @login_required(login_url="/users/")
+@permission_required('users.add_group', 'users.add_customgroup' raise_exception=True)
 def group_create_view(request):
     perms = Permission.objects.all()
     form = CustomGroupForm(request.POST)
@@ -228,6 +229,7 @@ def group_create_view(request):
 
 
 @login_required(login_url="/users/")
+@permission_required('users.view_group', 'users.view_customgroup' raise_exception=True)
 def group_list_view(request):
     queryset = CustomGroup.objects.all()  # list of objects
     context = {
