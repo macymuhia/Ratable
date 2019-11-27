@@ -4,11 +4,17 @@
   user-select: none;
 }
 
+body, html {
+  margin: 0;
+  background: #C2CADB;
+  color: #6296CB;
+}
+
 body {
   font-family: "Raleway", "Microsoft JhengHei", Arial, sans-serif;
 }
 
-.prof {
+.profile {
   width: 330px;
   height: 100px;
   position: absolute;
@@ -16,7 +22,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
-  background-color: #fafafa;
+  background-color: #FFFFFF;
   box-shadow: 0 0 2rem #babbbc;
   animation: show-profile 0.5s forwards ease-in-out;
 }
@@ -25,10 +31,10 @@ body {
     width: 0;
   }
 }
-.prof .photo, .prof .content {
+.profile .photo, .profile .content {
   box-sizing: border-box;
 }
-.prof .photo {
+.profile .photo {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -44,10 +50,10 @@ body {
     transform: rotate(-360deg);
   }
 }
-.prof .photo img {
+.profile .photo img {
   width: 100%;
 }
-.prof .content {
+.profile .content {
   padding: 10px;
   overflow: hidden;
   position: absolute;
@@ -56,7 +62,7 @@ body {
   top: 0;
   left: 0;
 }
-.prof .content::before {
+.profile .content::before {
   content: "";
   position: absolute;
   width: 230px;
@@ -67,18 +73,18 @@ body {
   z-index: -1;
   transform: rotate(-8deg);
 }
-.prof .content .text {
+.profile .content .text {
   margin-top: 20px;
   margin-left: 50px;
 }
-.prof .content .text h3, .prof .content .text h6 {
+.profile .content .text h3, .profile .content .text h6 {
   font-weight: normal;
   margin: 3px 0;
   letter-spacing: 0.5px;
   white-space: nowrap;
 }
-.prof .content .btn {
-  background-color: #abc;
+.profile .content .btn {
+  background-color: #C2CADB;
   width: 50px;
   height: 50px;
   position: absolute;
@@ -101,10 +107,10 @@ body {
     transform: scale(1);
   }
 }
-.prof .content .btn:hover {
+.profile .content .btn:hover {
   box-shadow: 0 0 0 5px rgba(170, 187, 204, 0.5);
 }
-.prof .content .btn span {
+.profile .content .btn span {
   width: 60%;
   height: 2px;
   position: absolute;
@@ -114,7 +120,7 @@ body {
   transform: translateY(-50%);
   animation: to-hamburger 0.3s forwards ease-in-out;
 }
-.prof .content .btn span::before, .prof .content .btn span::after {
+.profile .content .btn span::before, .profile .content .btn span::after {
   content: "";
   width: 100%;
   height: 2px;
@@ -124,23 +130,23 @@ body {
   transform: rotate(0deg);
   right: 0;
 }
-.prof .content .btn span::before {
+.profile .content .btn span::before {
   margin-top: -7px;
 }
-.prof .content .btn span::after {
+.profile .content .btn span::after {
   margin-top: 7px;
 }
-.prof .content .btn.active span {
+.profile .content .btn.active span {
   animation: to-arrow 0.3s forwards ease-in-out;
 }
-.prof .content .btn.active span::before, .profile .content .btn.active span::after {
+.profile .content .btn.active span::before, .profile .content .btn.active span::after {
   width: 60%;
   right: -1px;
 }
-.prof .content .btn.active span::before {
+.profile .content .btn.active span::before {
   transform: rotate(45deg);
 }
-.prof .content .btn.active span::after {
+.profile .content .btn.active span::after {
   transform: rotate(-45deg);
 }
 @keyframes to-hamburger {
@@ -156,7 +162,7 @@ body {
     transform: translateY(-50%) rotate(180deg);
   }
 }
-.prof .box {
+.profile .box {
   width: 150px;
   height: 150px;
   opacity: 0;
@@ -168,7 +174,7 @@ body {
   transform: translate(-50%, -50%);
   transition-duration: 0.3s;
 }
-.prof .box i {
+.profile .box i {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -182,74 +188,33 @@ body {
   box-shadow: 0 0 0.5rem #babbbc;
   transition-duration: 0.3s;
 }
-.prof .box i:hover {
+.profile .box i:hover {
   transition-delay: initial !important;
   box-shadow: 0 0 0 5px #babbbc;
 }
-.prof .box.open {
+.profile .box.open {
   opacity: 1;
 }
-.prof .box.open i {
+.profile .box.open i {
   left: 60px;
 }
-.prof .box.open i:nth-of-type(1) {
+.profile .box.open i:nth-of-type(1) {
   transform: rotate(-90deg) translateX(120px) rotate(90deg);
   transition-delay: 0s;
 }
-.prof .box.open i:nth-of-type(2) {
+.profile .box.open i:nth-of-type(2) {
   transform: rotate(-45deg) translateX(120px) rotate(45deg);
   transition-delay: 0.1s;
 }
-.prof .box.open i:nth-of-type(3) {
+.profile .box.open i:nth-of-type(3) {
   transform: rotate(0deg) translateX(120px) rotate(0deg);
   transition-delay: 0.2s;
 }
-.prof .box.open i:nth-of-type(4) {
+.profile .box.open i:nth-of-type(4) {
   transform: rotate(45deg) translateX(120px) rotate(-45deg);
   transition-delay: 0.3s;
 }
-.prof .box.open i:nth-of-type(5) {
+.profile .box.open i:nth-of-type(5) {
   transform: rotate(90deg) translateX(120px) rotate(-90deg);
   transition-delay: 0.4s;
 }
-
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	background: #C2CADB;
-  }
-  
-  svg {
-	width: 50vw;
-	opacity: .7;
-  }
-  
-  path {
-	fill: transparent;
-  }
-  
-  img {
-	position: fixed;
-	z-index: -1;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-			transform: translate(-50%, -50%);
-	width: 30vw;
-  }
-  
-  text {
-	font-size: 8px;
-	fill: transparent;
-	stroke: #fff;
-	stroke-width: 0.3;
-	font-family: arial, cursive;
-	font-weight: bold;
-  }
-  
-  #text-1 {
-	fill: #fff;
-	stroke: none;
-  }

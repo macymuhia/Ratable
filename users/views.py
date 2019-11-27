@@ -132,7 +132,7 @@ def login_user(request):
                 login(request, user)
                 if next_page:
                     return redirect(next_page)
-                return redirect('landing_page')
+                return redirect('dashboard')
     return render(request, 'registration/login.html')
 
 
@@ -211,7 +211,7 @@ def edit_profile(request):
 
 
 @login_required(login_url="/users/")
-@permission_required('users.add_group', 'users.add_customgroup' raise_exception=True)
+@permission_required('users.add_group', 'users.add_customgroup', raise_exception=True)
 def group_create_view(request):
     perms = Permission.objects.all()
     form = CustomGroupForm(request.POST)
@@ -229,7 +229,7 @@ def group_create_view(request):
 
 
 @login_required(login_url="/users/")
-@permission_required('users.view_group', 'users.view_customgroup' raise_exception=True)
+@permission_required('users.view_group', 'users.view_customgroup', raise_exception=True)
 def group_list_view(request):
     queryset = CustomGroup.objects.all()  # list of objects
     context = {
@@ -238,6 +238,5 @@ def group_list_view(request):
     return render(request, "groups/group_list.html", context)
 
 
-@login_required(login_url="/users/")
 def group_delete_view(request):
     pass

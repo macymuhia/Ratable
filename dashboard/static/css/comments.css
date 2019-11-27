@@ -68,7 +68,7 @@ Chat Title
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
-  text-transform: uppercase;
+  text-transform: uppercasdashboard/kpis/comments/e;
   text-align: left;
   padding: 10px 10px 10px 50px;
 }
@@ -106,7 +106,7 @@ Messages
 --------------------*/
 .messages {
   flex: 1 1 auto;
-  color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
   overflow: hidden;
   position: relative;
   width: 100%;
