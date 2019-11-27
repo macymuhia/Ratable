@@ -23,7 +23,7 @@ These instructions will help get you started and your copy of the project up and
 
 ### Prerequisites
 
-You will need to have the following. 
+You will need to have the following.
 
 ```
 - [x] Python version 3.6 - Readily available on any linux distro one may be using.
@@ -57,6 +57,14 @@ source <preffered_environment_name>/bin/activate
 ```
 pip install -r requirements.txt
 ```
+- [ ] Install npm for the js library.
+```
+    sudo apt install npm
+```
+- [ ] Perform collectstatic to link out JS Library.
+```
+python3.6 manage.py collectstatic
+```
 - [ ] The last thing is to test and make sure everything is running fine. We shall use this command.
 ```
 python3.6 manage.py runserver
@@ -74,24 +82,29 @@ Ensure all the tests ran and pass. If you need to add any features in the models
 
 ## Bugs
 
-No bugs have so far been reported as of 11th of October 2019. If you find any do not hesitate to contact me. 
-[GitHub](http://hillarydalie.github.com), [Mail](hidalie@gmail.com)
+No bugs have so far been reported as of 11th of October 2019. If you find any do not hesitate to contact us via the repo link.
+[GitHub](http:/https://github.com/macymuhia/Ratable)
 
 ## Built With
 
 * [Django](https://www.djangoproject.com/) - This is a python framework used for most of this project.
+* [Python](https://www.python.org/) - This was used for our business logic used for most of this project.
 * [HTML5](https://www.w3schools.com/html/html5_intro.asp) - Mark up language for web pages.
 * [CSS](https://www.w3schools.com/css/default.asp) - Used to style HTML pages.
 * [BOOTSTRAP](https://getbootstrap.com/) - Bootstrap is an open source toolkit for developing with HTML, CSS, and JS.
 * [JQuery](https://www.jquery.com/) - A javascript library used for addding javascript functionality to webpages.
+* [AJAX](https://www.jquery.com/) - This is a javascript library to use XML request to update pages.
 
 ## Contributors
 
 This is my sole work. No contirbutors in this project. If you have forked and used this repository, kindly add my profile link in your list of contributors.
 
 ## Authors
-
-* **Hillary Dalie**
+* **Mercy Muhia** - Scrum Master
+* **Julliet Kathure** - Department Structure
+* **Naomi Sigu** - KPI Scoring
+* **Hillary Dalie** - Ratings & Data Representation
+* **Tina Tasha** - UI/UX Developmet
 
 
 ## License
@@ -100,7 +113,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hillary Dalie.
+* Amiran Communications LTD.
 * Moringa School.
                                               Copyright Reserved  (c) 2019
 
