@@ -100,7 +100,7 @@ def new_score(request):
             user=request.user
         ).save()
 
-        return redirect('/')
+        return redirect('/kpis/')
 
     return render(request, 'score.html')
 

@@ -1,53 +1,37 @@
 {% extends 'base.html' %} {% load static%}
 
-<!DOCTYPE html>
-<html lang="en">
+        {% block content %}
+        <div class="jumbotron">
+            <div class="row">
+                {% for score in scores %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{{score.indicators.area}}</strong>
+                        </div>
+                        <div class="card-body">
+                            {{score.indicators.name}} <hr> {{score.score}}
+                        </div>
+                        <div class="card-footer">
+                            This rating was done by {{score.user}}
+                        </div>
+                    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/graphs.css' %}">
-    <script src="{% static 'jss/jquery.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
-    <title>graphs</title>
-</head>
-
-<body>
-
-    <div class="card">
-        {% for score in scores %} {{user_area_total}}
-        <div class="card-header">
-            <strong>
-          {{score.indicators.area}}
-        </strong>
+                </div>
+                {% if forloop.last %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Your Average Rating</strong>
+                        </div>
+                        <div class="card-body">
+                            <strong>The average for {{score.user.username}} is {{user_average}} {% endif %} {% empty %}</strong>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="card-body">
-            {{score.indicators.name}} <br> {{score.score}}
 
-        </div>
-        <div class="card-footer">
-            {{score.user}}
-        </div>
-        {% if forloop.last %} The average for this {{score.user.username}} from the department of is {{user_average}} {% endif %} {% empty %}
-        <p>No data</p>
-        {% endfor %} {%for average in averages %} {{average.indicators__area__name}} {{average.average}} {% endfor %}
-    </div>
 
-function oMousePos(canvas, evt) {
-  var ClientRect = canvas.getBoundingClientRect();
-  return { //objeto
-    x: Math.round(evt.clientX - ClientRect.left),
-    y: Math.round(evt.clientY - ClientRect.top)
-  }
-}
-				});
-        </script>
-
-	<div class="wrapper">
-		<canvas id='c'></canvas>
-		<div class="label">text</div>
-    </div>
-</body>
-
-</html>
+        {% endblock %}
