@@ -43,7 +43,7 @@ def new_area(request):
 
     if request.method == 'POST':
 
-#         form = AddArea(request.POST)
+        form = AddArea(request.POST)
 
         if form.is_valid():
 
@@ -52,7 +52,7 @@ def new_area(request):
 
         return redirect('areas')
 
-#     else:
+    else:
 
         form = AddArea()
 

@@ -12,6 +12,12 @@ class UserForm(forms.ModelForm):
         fields = ['username', 'first_name', 'last_name', "email"]
 
 
+class UserSetPasswordForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['password1', 'password2']
+
+
 class UserDetailsForm(forms.ModelForm):
 
     class Meta:

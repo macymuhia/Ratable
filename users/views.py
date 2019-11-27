@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -22,6 +22,7 @@ from users.forms import *
 
 # Create your views here.
 @login_required(login_url="/users/")
+@permission_required('users.add_user', raise_exception=True)
 @transaction.atomic
 def add_user_view(request):
     if request.method == 'POST':
@@ -67,7 +68,7 @@ def add_user_view(request):
                 subject, text_content, sender, [user.email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            return redirect("registration/emails/account_activation_sent")
+            return redirect("account_activation_sent")
         else:
             return redirect('profile')
             # user_form = UserForm()
@@ -111,7 +112,7 @@ def activate(request, uidb64, token):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        return redirect("edit_profile")
+        return redirect("reset")
     else:
         return render(request, "registration/emails/account_activation_invalid.html")
 
@@ -131,104 +132,30 @@ def login_user(request):
                 login(request, user)
                 if next_page:
                     return redirect(next_page)
-                return redirect('landing_page')
+                return redirect('dashboard')
     return render(request, 'registration/login.html')
+
+
+def set_password_view(request):
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    form = UserSetPasswordForm(request.POST, instance=user)
+    print(form.data)
+    print(form.fields)
+    if request.method == "POST":
+
+        if form.is_valid():
+            print("valid")
+            password = form.cleaned_data['password2']
+            form.save()
+            return redirect("edit_profile")
+
+    return render(request, 'registration/password_set_form.html', {'user': user, 'form': form})
 
 
 @login_required(login_url="/users/")
 def profile(request):
-#     return render(request, 'profile.html', {"profile":profile})
 
-# def users(request):
-#     return render(request, 'users.html', {"users":users})
-
-# def adduser(request):
-#     return render(request, 'adduser.html', {"adduser":adduser})
-
-# def login(request):
-#     return render(request, 'login.html', {"login":login})
-
-# def edit_profile(request):
-#     return render(request, 'edit_profile.html', {"edit_profile":edit_profile})
-# mine
-
-@login_required(login_url="")
-def profile(request):
-
-    current_user = request.user
-    user_data = User.objects.get(id=current_user.id)
-    user_profile = UserProfile.objects.get(id=current_user.id)
-
-    return render(
-        request,
-        "registration/profile.html",
-        {"user_data": user_data, "user_profile": user_profile},
-    )
-
-
-@login_required(login_url="")  # only logged in users should access this
-def edit_profile(request):
-
-    current_user = request.user
-    user = User.objects.get(id=current_user.id)
-
-    # prepopulate UserProfileForm with retrieved user values from above.
-    user_form = UserForm(instance=user)
-
-    # The sorcery begins from he
-@login_required(login_url="")
-def profile(request):
-
-    current_user = request.user
-    user_data = User.objects.get(id=current_user.id)
-    user_profile = UserProfile.objects.get(id=current_user.id)
-
-    return render(
-        request,
-        "registration/profile.html",
-        {"user_data": user_data, "user_profile": user_profile},
-    )
-
-
-@login_required(login_url="")  # only logged in users should access this
-def edit_profile(request):
-
-    current_user = request.user
-    user = User.objects.get(id=current_user.id)
-
-    # prepopulate UserProfileForm with retrieved user values from above.
-    user_form = UserForm(instance=user)
-
-    # The sorcery begins from here, see explanation below
-    ProfileInlineFormset = inlineformset_factory(
-        User, UserProfile, fields=("photo", "phone", "bio")
-    )
-    formset = ProfileInlineFormset(instance=user)
-
-    if request.user.is_authenticated and request.user.id == user.id:
-        if request.method == "POST":
-            user_form = UserForm(request.POST, request.FILES, instance=user)
-            formset = ProfileInlineFormset(
-                request.POST, request.FILES, instance=user)
-
-            if user_form.is_valid():
-                created_user = user_form.save(commit=False)
-                formset = ProfileInlineFormset(
-                    request.POST, request.FILES, instance=created_user
-                )
-
-                if formset.is_valid():
-                    created_user.save()
-                    formset.save()
-                    return redirect("profile")
-
-        return render(
-            request,
-            "registration/edit_profile.html",
-            {"noodle": user.id, "noodle_form": user_form, "formset": formset},
-        )
-    else:
-        raise PermissionDenied
     current_user = request.user
     user_data = User.objects.get(id=current_user.id)
     user_profile = UserProfile.objects.get(id=current_user.id)
@@ -276,12 +203,15 @@ def edit_profile(request):
         return render(
             request,
             "registration/edit_profile.html",
-            {"noodle": user.id, "noodle_form": user_form, "formset": formset},
+            {"noodle": user.id, "noodle_form": user_form,
+                "formset": formset, "user": user},
         )
     else:
         raise PermissionDenied
 
 
+@login_required(login_url="/users/")
+@permission_required('users.add_group', 'users.add_customgroup', raise_exception=True)
 def group_create_view(request):
     perms = Permission.objects.all()
     form = CustomGroupForm(request.POST)
@@ -298,6 +228,8 @@ def group_create_view(request):
     return render(request, "groups/group_create.html", context)
 
 
+@login_required(login_url="/users/")
+@permission_required('users.view_group', 'users.view_customgroup', raise_exception=True)
 def group_list_view(request):
     queryset = CustomGroup.objects.all()  # list of objects
     context = {

@@ -10,6 +10,24 @@
     </div>
     <!-- Looping through -->
 
+    <!-- To delete -->
+    <p>**************************************</p>
+    <hr>
+    <p>**************************************</p>
+
+    {% regroup perms by perms.content_type.model as perm_list %}
+    <ul>
+        {% for perm in perm_list %}
+        <li>{{ perm.grouper }}
+            <ul>
+                {% for p in perms %}
+                <li>{{ p.name }}: {{ p.codename }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- To delete -->
 
 </form>
 {% endblock %}
