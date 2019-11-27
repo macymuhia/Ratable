@@ -36,20 +36,3 @@
 
         {% endblock %}
 {% for score in scores %} {{user_area_total}}
-<div class="card">
-                    <div class="card-header">
-                        <strong>
-                      {{score.indicators.area}}
-                    </strong>
-                    </div>
-                    <div class="card-body">
-                        {{score.indicators.name}} <br> {{score.score}}
-
-                    </div>
-                    <div class="card-footer">
-                        {{score.user}}
-                    </div>
-                    {% if forloop.last %} The average for this {{score.user.username}} from the department of is {{user_average}} {% endif %} {% empty %}
-                    <p>No data</p>
-                    {% endfor %} {%for average in averages %} {{average.indicators__area__name}} {{average.average}} {% endfor %}
-                </div>
