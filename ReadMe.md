@@ -15,7 +15,7 @@ This app that allows employees to post Key Perfomance Indicators (referenced as 
 
 ## Screenshot
 
-![A screenshot of the app page](url_here "App Page")
+![A screenshot of the app page]( "App Page")
 
 ## Getting Started
 
