@@ -1,5 +1,5 @@
 from django.urls import path, include, re_path
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordChangeView, PasswordChangeDoneView, SetPasswordForm
 from django.conf import settings
 from . import views
 
@@ -13,11 +13,12 @@ urlpatterns = [
          {"next_page": settings.LOGOUT_REDIRECT_URL}, name="logout",),
     path('profile/', views.profile, name="profile"),
     path('edit_profile/', views.edit_profile, name="edit_profile"),
-    path('password-reset/', PasswordResetView.as_view(), name='password_reset'),
+    path("reset/", views.set_password_view, name="reset"),
+    path('password-reset/', PasswordResetConfirmView.as_view(), name='password_set'),
     path('password-reset/done/', PasswordResetDoneView.as_view(),
          name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
-         name='password_reset_confirm'),
+    #     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+    #          name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
     #     path('password-change/', views.PasswordChangeView.as_view(),

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -22,6 +22,7 @@ from users.forms import *
 
 # Create your views here.
 @login_required(login_url="/users/")
+@permission_required('users.add_user', raise_exception=True)
 @transaction.atomic
 def add_user_view(request):
     if request.method == 'POST':
@@ -67,7 +68,7 @@ def add_user_view(request):
                 subject, text_content, sender, [user.email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            return redirect("registration/emails/account_activation_sent")
+            return redirect("account_activation_sent")
         else:
             return redirect('profile')
             # user_form = UserForm()
@@ -111,7 +112,7 @@ def activate(request, uidb64, token):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        return redirect("edit_profile")
+        return redirect("reset")
     else:
         return render(request, "registration/emails/account_activation_invalid.html")
 
@@ -133,6 +134,23 @@ def login_user(request):
                     return redirect(next_page)
                 return redirect('landing_page')
     return render(request, 'registration/login.html')
+
+
+def set_password_view(request):
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    form = UserSetPasswordForm(request.POST, instance=user)
+    print(form.data)
+    print(form.fields)
+    if request.method == "POST":
+
+        if form.is_valid():
+            print("valid")
+            password = form.cleaned_data['password2']
+            form.save()
+            return redirect("edit_profile")
+
+    return render(request, 'registration/password_set_form.html', {'user': user, 'form': form})
 
 
 @login_required(login_url="/users/")
@@ -185,7 +203,8 @@ def edit_profile(request):
         return render(
             request,
             "registration/edit_profile.html",
-            {"noodle": user.id, "noodle_form": user_form, "formset": formset},
+            {"noodle": user.id, "noodle_form": user_form,
+                "formset": formset, "user": user},
         )
     else:
         raise PermissionDenied

@@ -23,7 +23,7 @@
                         {% csrf_token %}
                         <input type="text" placeholder="username" name="username">
                         <input type="password" placeholder="password" name="password">
-                        <a href=" {% url 'password_reset' %} ">Forgot password</a> {% if request.GET.next %}
+                        <a href="#">Forgot password</a> {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
                         <button class="button submit">SIGN IN</button>
                     </form>
