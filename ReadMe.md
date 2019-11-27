@@ -61,6 +61,10 @@ pip install -r requirements.txt
 ```
     sudo apt install npm
 ```
+- [ ] Install npm in your virtual environment. Ensure you are in the environment before running this command.
+```
+    npm i
+```
 - [ ] Perform collectstatic to link out JS Library.
 ```
 python3.6 manage.py collectstatic
