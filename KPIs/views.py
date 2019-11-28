@@ -1,18 +1,12 @@
 from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .forms import *
 from .models import *
 
+
 # Create your views here.
-
-
-@login_required(login_url="/users/")
-def kpis(request):
-    return render(request, 'kpis.html', {"kpis": kpis})
-
-
 @login_required(login_url="/users/")
 def welcome(request):
     areas = Area.objects.all()
@@ -22,23 +16,7 @@ def welcome(request):
 
 
 @login_required(login_url="/users/")
-@login_required
-def score(request):
-    current_user = request.user
-    return render(request, 'score.html')
-
-
-@login_required(login_url="/users/")
-def reports(request):
-    return render(request, 'reports.html', {"reports": reports})
-
-
-@login_required(login_url="/users/")
-def comments(request):
-    return render(request, 'comments.html')
-
-
-@login_required(login_url="/users/")
+@permission_required('KPIs.add_area', raise_exception=True)
 def new_area(request):
 
     if request.method == 'POST':
@@ -57,12 +35,6 @@ def new_area(request):
         form = AddArea()
 
     return render(request, 'addarea.html', {"form": form})
-
-
-@login_required(login_url="/users/")
-def areas(request):
-    areas = Area.objects.all()
-    return render(request, 'home.html', {"areas": areas})
 
 
 @login_required(login_url="/users/")
@@ -87,6 +59,63 @@ def new_indicator(request):
     return render(request, 'addindicator.html', {"form": form})
 
 
+# View function for our rating metric that will be logic for the rating.
+@login_required(login_url="/users/")
+@permission_required('KPIs.view_reports', raise_exception=True)
+def score_reports(request):
+    area = Area.objects.all()
+    scores = Score.objects.filter(user=request.user).all()
+    department = Department.objects.all()
+    user_total = []
+    user_area_total = []
+    users = User.objects.all()
+
+    for i in scores:
+        user_total.append(i.score)
+    user_average = sum(user_total)/len(user_total)
+    return render(request, 'reports.html', {"scores": scores, "department": department, "users": users, "user_average": user_average})
+
+
+@login_required(login_url="/users/")
+@permission_required('KPIs.view_reports', raise_exception=True)
+def area_report(request):
+    area = Area.objects.all()
+    indicator = Indicators.objects.all()
+    scores = Score.objects.all()
+    averages = Score.objects.values(
+        'indicators__area__name').annotate(average=Avg('score'))
+    print(averages)
+
+    return render(request, 'base-test.html', {"averages": averages})
+
+
+@login_required(login_url="/users/")
+def kpis(request):
+    return render(request, 'kpis.html', {"kpis": kpis})
+
+
+@login_required(login_url="/users/")
+def score(request):
+    current_user = request.user
+    return render(request, 'score.html')
+
+
+@login_required(login_url="/users/")
+def reports(request):
+    return render(request, 'reports.html', {"reports": reports})
+
+
+@login_required(login_url="/users/")
+def comments(request):
+    return render(request, 'comments.html')
+
+
+@login_required(login_url="/users/")
+def areas(request):
+    areas = Area.objects.all()
+    return render(request, 'home.html', {"areas": areas})
+
+
 @login_required(login_url="/users/")
 def new_score(request):
     if request.method == 'POST':
@@ -103,32 +132,3 @@ def new_score(request):
         return redirect('/kpis/')
 
     return render(request, 'score.html')
-
-# View function for our rating metric that will be logic for the rating.
-
-
-@login_required(login_url="/users/")
-def score_reports(request):
-    area = Area.objects.all()
-    scores = Score.objects.filter(user=request.user).all()
-    department = Department.objects.all()
-    user_total = []
-    user_area_total = []
-    users = User.objects.all()
-
-    for i in scores:
-        user_total.append(i.score)
-    user_average = sum(user_total)/len(user_total)
-    return render(request, 'reports.html', {"scores": scores, "department": department, "users": users, "user_average": user_average})
-
-
-@login_required(login_url="/users/")
-def area_report(request):
-    area = Area.objects.all()
-    indicator = Indicators.objects.all()
-    scores = Score.objects.all()
-    averages = Score.objects.values(
-        'indicators__area__name').annotate(average=Avg('score'))
-    print(averages)
-
-    return render(request, 'base-test.html', {"averages": averages})
