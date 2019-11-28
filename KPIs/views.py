@@ -12,7 +12,7 @@ def welcome(request):
     areas = Area.objects.all()
     indicators = Indicators.objects.all()
     print(indicators)
-    return render(request, 'home.html', {"areas": areas, "indicators": indicators})
+    return render(request, 'home-test.html', {"areas": areas, "indicators": indicators})
 
 
 @login_required(login_url="/users/")
@@ -57,6 +57,24 @@ def new_indicator(request):
         form = AddIndicator()
 
     return render(request, 'addindicator.html', {"form": form})
+
+
+@login_required(login_url="/users/")
+def new_score(request):
+    if request.method == 'POST':
+
+        score = request.POST.get('options')
+        ind = request.POST.get('indicator')
+        print(score)
+        Score(
+            score=score,
+            indicators_id=ind,
+            user=request.user
+        ).save()
+
+        return redirect('/kpis/')
+
+    return render(request, 'score.html')
 
 
 # View function for our rating metric that will be logic for the rating.
@@ -114,21 +132,3 @@ def comments(request):
 def areas(request):
     areas = Area.objects.all()
     return render(request, 'home.html', {"areas": areas})
-
-
-@login_required(login_url="/users/")
-def new_score(request):
-    if request.method == 'POST':
-
-        score = request.POST.get('options')
-        ind = request.POST.get('indicator')
-        print(score)
-        Score(
-            score=score,
-            indicators_id=ind,
-            user=request.user
-        ).save()
-
-        return redirect('/kpis/')
-
-    return render(request, 'score.html')

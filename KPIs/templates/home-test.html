@@ -22,14 +22,20 @@
 
                     <!-- <tr scope="row col-md-12"></trscope="row>
                         <td>}</td> -->
-
-                    {% for indicator in indicators %}
+                    {% regroup indicators by area as list%}
+                    <!-- loop -->
+                    {% for item in list %}
                     </tr>
 
-                    <th> <b>{{indicator.area.name}}</b></th>
-                    <td>{{indicator.name}}</td>
-                    <td>{{indicator.line_manager_score}}</td>
-                    <td>{{indicator.staff_score}}</td>
+                    <th> <b>{{item.grouper}}</b></th>
+                    {% for ind in item.list %}
+                    <tr>
+                        <td></td>
+                        <td>{{ind.name}}</td>
+                        <td>{{ind.line_manager_score}}</td>
+                        <td>{{ind.staff_score}}</td>
+                    </tr>
+                    {% endfor %}
                     </tr>
                     {%endfor%} {%for area in areas%} {% endfor %}
 
