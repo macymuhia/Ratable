@@ -47,6 +47,10 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    @classmethod
+    def get_users_of_department(cls, id):
+        return cls.objects.filter(department_id=id)
+
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

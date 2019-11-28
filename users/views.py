@@ -211,6 +211,13 @@ def edit_profile(request):
 
 
 @login_required(login_url="/users/")
+# @permission_required('users.view_group', 'users.add_customgroup', raise_exception=True)
+def users_list_view(request):
+    users = User.objects.all()
+    return render(request, 'registration/users_list.html', {"users": users})
+
+
+@login_required(login_url="/users/")
 @permission_required('users.add_group', 'users.add_customgroup', raise_exception=True)
 def group_create_view(request):
     perms = Permission.objects.all()

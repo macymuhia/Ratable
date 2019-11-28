@@ -1,44 +1,22 @@
 from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .forms import *
 from .models import *
 
+
 # Create your views here.
-
-
-@login_required(login_url="/users/")
-def kpis(request):
-    return render(request, 'kpis.html', {"kpis": kpis})
-
-
 @login_required(login_url="/users/")
 def welcome(request):
     areas = Area.objects.all()
     indicators = Indicators.objects.all()
     print(indicators)
-    return render(request, 'home.html', {"areas": areas, "indicators": indicators})
+    return render(request, 'home-test.html', {"areas": areas, "indicators": indicators})
 
 
 @login_required(login_url="/users/")
-@login_required
-def score(request):
-    current_user = request.user
-    return render(request, 'score.html')
-
-
-@login_required(login_url="/users/")
-def reports(request):
-    return render(request, 'reports.html', {"reports": reports})
-
-
-@login_required(login_url="/users/")
-def comments(request):
-    return render(request, 'comments.html')
-
-
-@login_required(login_url="/users/")
+@permission_required('KPIs.add_area', raise_exception=True)
 def new_area(request):
 
     if request.method == 'POST':
@@ -57,12 +35,6 @@ def new_area(request):
         form = AddArea()
 
     return render(request, 'addarea.html', {"form": form})
-
-
-@login_required(login_url="/users/")
-def areas(request):
-    areas = Area.objects.all()
-    return render(request, 'home.html', {"areas": areas})
 
 
 @login_required(login_url="/users/")
@@ -104,10 +76,10 @@ def new_score(request):
 
     return render(request, 'score.html')
 
+
 # View function for our rating metric that will be logic for the rating.
-
-
 @login_required(login_url="/users/")
+@permission_required('KPIs.view_reports', raise_exception=True)
 def score_reports(request):
     area = Area.objects.all()
     scores = Score.objects.filter(user=request.user).all()
@@ -123,6 +95,7 @@ def score_reports(request):
 
 
 @login_required(login_url="/users/")
+@permission_required('KPIs.view_reports', raise_exception=True)
 def area_report(request):
     area = Area.objects.all()
     indicator = Indicators.objects.all()
@@ -132,3 +105,30 @@ def area_report(request):
     print(averages)
 
     return render(request, 'base-test.html', {"averages": averages})
+
+
+@login_required(login_url="/users/")
+def kpis(request):
+    return render(request, 'kpis.html', {"kpis": kpis})
+
+
+@login_required(login_url="/users/")
+def score(request):
+    current_user = request.user
+    return render(request, 'score.html')
+
+
+@login_required(login_url="/users/")
+def reports(request):
+    return render(request, 'reports.html', {"reports": reports})
+
+
+@login_required(login_url="/users/")
+def comments(request):
+    return render(request, 'comments.html')
+
+
+@login_required(login_url="/users/")
+def areas(request):
+    areas = Area.objects.all()
+    return render(request, 'home.html', {"areas": areas})
