@@ -3,13 +3,29 @@
 {% block content %}
 <a href=" {% url 'create_group' %} "><input class="btn btn-primary" type="button" value="Add Group"></a>
 <ul>
-    {% for group in object_list %}
 
-    <li>
-        {{ group.name }}
-    </li>
-    {% empty %}
-    <p class="text-center">No Groups Yet</p>
-    {% endfor %}
+
+    <div class="wrapper">
+        {% for group in object_list %}
+        <input id='{{group.id}}' type='checkbox'>
+        <label for='{{group.id}}'>
+        <span>{{ group.name }}</span>
+    </label> {% empty %}
+        <p class="text-center">No Groups Yet</p>
+        {% endfor %}
+    </div>
+
 </ul>
 {% endblock %}
+<!-- {% for department in departments %}
+<input id='{{department.id}}' type='checkbox'>
+<label for='{{department.id}}'>
+                    <div>
+                        <span>{{ department.name }}</span>
+                        <div class="circle"></div>
+                    </div>
+                    <p>{{ department.description }}</p>
+                    
+                  </label> {% empty %}
+        <div class="text-center">No Departments Yet</div>
+        {% endfor %} -->
