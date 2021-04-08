@@ -1,6 +1,6 @@
 autopep8==1.4.4
 beautifulsoup4==4.8.1
-Django==2.2.4
+Django==2.2.20
 django-bootstrap3==11.1.0
 django-bootstrap4==1.0.1
 django-decouple==2.1
